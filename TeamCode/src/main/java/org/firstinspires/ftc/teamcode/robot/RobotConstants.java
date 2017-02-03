@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.robot;
 public class RobotConstants {
 
     static String TAG = "FTC APP";
+    public static final String teleOpTag = "Tele-Op : ";
+    public static final String autoOpTag = "Autonomous : ";
 
     static String frontLeftMotor = "FL";
     static String frontRightMotor = "FR";

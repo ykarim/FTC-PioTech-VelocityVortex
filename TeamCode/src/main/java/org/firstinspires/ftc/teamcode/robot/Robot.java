@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.robot;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -55,27 +56,31 @@ public class Robot {
      * Initializes all drive and ball motors in USING ENCODERS mode
      * @param hwMap
      */
-    public void initAutoOp(HardwareMap hwMap) {
+    public void initAutoOp(LinearOpMode opMode, HardwareMap hwMap) {
         this.hwMap = hwMap;
 
         initDrive();
         initBall();
-        initCap();
-        initSensors();
+//        initCap();
+//        initSensors();
 
         for(DcMotor driveMotor : driveMotors) {
+            driveMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            opMode.idle();
             driveMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             driveMotor.setDirection(DcMotorSimple.Direction.FORWARD);
             driveMotor.setPower(0);
         }
         for(DcMotor ballMotor : ballMotors) {
+            ballMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            opMode.idle();
             ballMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             ballMotor.setDirection(DcMotorSimple.Direction.FORWARD);
             ballMotor.setPower(0);
         }
-        cap.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        cap.setDirection(DcMotorSimple.Direction.FORWARD);
-        cap.setPower(0);
+//        cap.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        cap.setDirection(DcMotorSimple.Direction.FORWARD);
+//        cap.setPower(0);
     }
 
     private void initDrive() {

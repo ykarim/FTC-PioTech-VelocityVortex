@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.robot;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
@@ -80,48 +81,50 @@ public class RobotMovement {
      * @param direction
      * @param distance
      */
-    private void move(Direction direction, double distance) {
+    public void move(LinearOpMode opMode, Direction direction, double distance) {
         int flTarget = 0;
         int frTarget = 0;
         int blTarget = 0;
         int brTarget = 0;
 
-        if (direction == Direction.NORTH) {
-            flTarget = robot.fl.getCurrentPosition() - (int) (distance * RobotConstants.INCHES_PER_TICK);
-            frTarget = robot.fr.getCurrentPosition() + (int) (distance * RobotConstants.INCHES_PER_TICK);
-            blTarget = robot.bl.getCurrentPosition() - (int) (distance * RobotConstants.INCHES_PER_TICK);
-            brTarget = robot.br.getTargetPosition() + (int) (distance * RobotConstants.INCHES_PER_TICK);
-        } else if (direction == Direction.SOUTH) {
-            flTarget = robot.fl.getCurrentPosition() + (int) (distance * RobotConstants.INCHES_PER_TICK);
-            frTarget = robot.fr.getCurrentPosition() - (int) (distance * RobotConstants.INCHES_PER_TICK);
-            blTarget = robot.bl.getCurrentPosition() + (int) (distance * RobotConstants.INCHES_PER_TICK);
-            brTarget = robot.br.getTargetPosition() - (int) (distance * RobotConstants.INCHES_PER_TICK);
-        } else if (direction == Direction.EAST) {
-            flTarget = robot.fl.getCurrentPosition() - (int) (distance * RobotConstants.INCHES_PER_TICK);
-            frTarget = robot.fr.getCurrentPosition() - (int) (distance * RobotConstants.INCHES_PER_TICK);
-            blTarget = robot.bl.getCurrentPosition() + (int) (distance * RobotConstants.INCHES_PER_TICK);
-            brTarget = robot.br.getTargetPosition() + (int) (distance * RobotConstants.INCHES_PER_TICK);
-        } else if (direction == Direction.WEST) {
-            flTarget = robot.fl.getCurrentPosition() + (int) (distance * RobotConstants.INCHES_PER_TICK);
-            frTarget = robot.fr.getCurrentPosition() + (int) (distance * RobotConstants.INCHES_PER_TICK);
-            blTarget = robot.bl.getCurrentPosition() - (int) (distance * RobotConstants.INCHES_PER_TICK);
-            brTarget = robot.br.getTargetPosition() - (int) (distance * RobotConstants.INCHES_PER_TICK);
+        if (opMode.opModeIsActive()) {
+            if (direction == Direction.NORTH) {
+                flTarget = robot.fl.getCurrentPosition() - (int) (distance * RobotConstants.INCHES_PER_TICK);
+                frTarget = robot.fr.getCurrentPosition() + (int) (distance * RobotConstants.INCHES_PER_TICK);
+                blTarget = robot.bl.getCurrentPosition() - (int) (distance * RobotConstants.INCHES_PER_TICK);
+                brTarget = robot.br.getTargetPosition() + (int) (distance * RobotConstants.INCHES_PER_TICK);
+            } else if (direction == Direction.SOUTH) {
+                flTarget = robot.fl.getCurrentPosition() + (int) (distance * RobotConstants.INCHES_PER_TICK);
+                frTarget = robot.fr.getCurrentPosition() - (int) (distance * RobotConstants.INCHES_PER_TICK);
+                blTarget = robot.bl.getCurrentPosition() + (int) (distance * RobotConstants.INCHES_PER_TICK);
+                brTarget = robot.br.getTargetPosition() - (int) (distance * RobotConstants.INCHES_PER_TICK);
+            } else if (direction == Direction.EAST) {
+                flTarget = robot.fl.getCurrentPosition() - (int) (distance * RobotConstants.INCHES_PER_TICK);
+                frTarget = robot.fr.getCurrentPosition() - (int) (distance * RobotConstants.INCHES_PER_TICK);
+                blTarget = robot.bl.getCurrentPosition() + (int) (distance * RobotConstants.INCHES_PER_TICK);
+                brTarget = robot.br.getTargetPosition() + (int) (distance * RobotConstants.INCHES_PER_TICK);
+            } else if (direction == Direction.WEST) {
+                flTarget = robot.fl.getCurrentPosition() + (int) (distance * RobotConstants.INCHES_PER_TICK);
+                frTarget = robot.fr.getCurrentPosition() + (int) (distance * RobotConstants.INCHES_PER_TICK);
+                blTarget = robot.bl.getCurrentPosition() - (int) (distance * RobotConstants.INCHES_PER_TICK);
+                brTarget = robot.br.getTargetPosition() - (int) (distance * RobotConstants.INCHES_PER_TICK);
+            }
+
+            robot.fl.setTargetPosition(flTarget);
+            robot.fr.setTargetPosition(frTarget);
+            robot.bl.setTargetPosition(blTarget);
+            robot.br.setTargetPosition(brTarget);
+
+            robot.setDriveMotorMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.setDriveMotorPower(RobotConstants.moveSpeed);
+
+            while (opMode.opModeIsActive() && robot.fl.isBusy() & robot.fr.isBusy()
+                    && robot.bl.isBusy() && robot.br.isBusy()) {
+            }
+
+            robot.setDriveMotorPower(0);
+            robot.setDriveMotorMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
-
-        robot.fl.setTargetPosition(flTarget);
-        robot.fr.setTargetPosition(frTarget);
-        robot.bl.setTargetPosition(blTarget);
-        robot.br.setTargetPosition(brTarget);
-
-        robot.setDriveMotorMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.setDriveMotorPower(RobotConstants.moveSpeed);
-
-        while (robot.fl.isBusy() && robot.fr.isBusy()
-                && robot.bl.isBusy() && robot.br.isBusy()) { }
-
-        robot.setDriveMotorPower(0);
-        robot.setDriveMotorMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.setDriveMotorMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     /**
@@ -131,7 +134,7 @@ public class RobotMovement {
      * @param direction LEFT or RIGHT
      * @param angle in degrees
      */
-    public void rotate(Direction direction, double angle) {
+    public void rotate(LinearOpMode opMode, Direction direction, double angle) {
         double radians = Math.toRadians(angle);
         double distanceToMove = radians * RobotConstants.distFromCenterToWheel;
 
@@ -141,16 +144,18 @@ public class RobotMovement {
         int blTarget = 0;
         int brTarget = 0;
 
-        if (direction == Direction.ROTATE_LEFT) {
-            flTarget = robot.fl.getCurrentPosition() + (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
-            frTarget = robot.fr.getCurrentPosition() + (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
-            blTarget = robot.bl.getCurrentPosition() + (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
-            brTarget = robot.br.getTargetPosition() + (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
-        } else if (direction == Direction.ROTATE_RIGHT) {
-            flTarget = robot.fl.getCurrentPosition() - (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
-            frTarget = robot.fr.getCurrentPosition() - (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
-            blTarget = robot.bl.getCurrentPosition() - (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
-            brTarget = robot.br.getTargetPosition() - (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
+        if (opMode.opModeIsActive()) {
+            if (direction == Direction.ROTATE_LEFT) {
+                flTarget = robot.fl.getCurrentPosition() + (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
+                frTarget = robot.fr.getCurrentPosition() + (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
+                blTarget = robot.bl.getCurrentPosition() + (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
+                brTarget = robot.br.getTargetPosition() + (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
+            } else if (direction == Direction.ROTATE_RIGHT) {
+                flTarget = robot.fl.getCurrentPosition() - (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
+                frTarget = robot.fr.getCurrentPosition() - (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
+                blTarget = robot.bl.getCurrentPosition() - (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
+                brTarget = robot.br.getTargetPosition() - (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
+            }
         }
 
         robot.fl.setTargetPosition(flTarget);
@@ -161,27 +166,10 @@ public class RobotMovement {
         robot.setDriveMotorMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.setDriveMotorPower(RobotConstants.moveSpeed);
 
-        while (robot.fl.isBusy() && robot.fr.isBusy()
+        while (opMode.opModeIsActive() && robot.fl.isBusy() && robot.fr.isBusy()
                 && robot.bl.isBusy() && robot.br.isBusy()) { }
 
         robot.setDriveMotorPower(0);
-        robot.setDriveMotorMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.setDriveMotorMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
-
-    public void moveForward(double dist) {
-        move(Direction.NORTH, dist);
-    }
-
-    public void moveBackward(double dist) {
-        move(Direction.SOUTH, dist);
-    }
-
-    public void moveRight(double dist) {
-        move(Direction.EAST, dist);
-    }
-
-    public void moveLeft(double dist) {
-        move(Direction.WEST, dist);
     }
 }
