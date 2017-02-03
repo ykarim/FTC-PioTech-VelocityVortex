@@ -34,11 +34,30 @@ public class MainTeleOp extends OpMode{
         } else if (gamepad2.x) {
             while (gamepad2.x) { }
             robotUtilities.continuousIntake();
+        } else if (gamepad2.y) {
+            while (gamepad2.y) {
+            }
+            robotUtilities.continuousShoot();
+        } else if (gamepad2.left_bumper) {
+            while (gamepad2.left_bumper) {}
+            RobotConstants.intakeSpeed += 0.05;
+        } else if (gamepad2.right_bumper) {
+            while (gamepad2.right_bumper) {}
+            RobotConstants.intakeSpeed -= 0.05;
+        } else if (inThresholdRange(gamepad2.left_trigger)) {
+            while (inThresholdRange(gamepad2.left_trigger)) {
+            }
+            RobotConstants.shootSpeed += 0.05;
+        } else if (inThresholdRange(gamepad2.right_trigger)) {
+            while (inThresholdRange(gamepad2.right_trigger)) {}
+            RobotConstants.shootSpeed -= 0.05;
         } else {
             if(!robotUtilities.continuousIntake) {
                 robot.intake.setPower(0);
             }
-            robot.shoot.setPower(0);
+            if (!robotUtilities.continuousShoot) {
+                robot.shoot.setPower(0);
+            }
 //            robot.cap.setPower(0);
         }
     }

@@ -5,6 +5,7 @@ public class RobotUtilities {
     private Robot robot = null;
 
     public boolean continuousIntake = false;
+    public boolean continuousShoot = false;
 
     public void init(Robot robot) {
         this.robot = robot;
@@ -37,6 +38,16 @@ public class RobotUtilities {
         } else {
             continuousIntake = false;
             robot.intake.setPower(0);
+        }
+    }
+
+    public void continuousShoot() {
+        if (!continuousShoot) {
+            continuousShoot = true;
+            robot.shoot.setPower(RobotConstants.shootSpeed);
+        } else {
+            continuousShoot = false;
+            robot.shoot.setPower(0);
         }
     }
 }
