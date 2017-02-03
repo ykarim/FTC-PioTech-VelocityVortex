@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -6,15 +6,13 @@ public class RobotMovement {
 
     private Robot robot = null;
 
-    enum Direction {
+    public enum Direction {
         NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST,
-        ROTATE_LEFT, ROTATE_RIGHT
+        ROTATE_LEFT, ROTATE_RIGHT, NONE
     }
 
-    public void init(Robot robot, double moveSpeed, double rotateSpeed) {
+    public void init(Robot robot) {
         this.robot = robot;
-        RobotConstants.moveSpeed = moveSpeed;
-        RobotConstants.rotateSpeed = rotateSpeed;
     }
 
     public void move(Direction direction) {
@@ -58,6 +56,11 @@ public class RobotMovement {
             robot.fr.setPower(0);
             robot.bl.setPower(0);
             robot.br.setPower(-RobotConstants.moveSpeed);
+        } else if (direction == Direction.NONE) {
+            robot.fl.setPower(0);
+            robot.fr.setPower(0);
+            robot.bl.setPower(0);
+            robot.br.setPower(0);
         }
     }
 

@@ -1,8 +1,10 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.robot;
 
 public class RobotUtilities {
 
     private Robot robot = null;
+
+    public boolean continuousIntake = false;
 
     public void init(Robot robot) {
         this.robot = robot;
@@ -24,6 +26,16 @@ public class RobotUtilities {
         if (condition) {
             robot.intake.setPower(RobotConstants.intakeSpeed);
         } else {
+            robot.intake.setPower(0);
+        }
+    }
+
+    public void continuousIntake() {
+        if (!continuousIntake) {
+            continuousIntake = true;
+            robot.intake.setPower(RobotConstants.intakeSpeed);
+        } else {
+            continuousIntake = false;
             robot.intake.setPower(0);
         }
     }
