@@ -20,5 +20,10 @@ class RobotConstants {
     static final double     DRIVE_GEAR_REDUCTION = 1.0 ;
     static final double INCHES_PER_TICK = (ENCODER_TICKS_PER_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER * Math.PI);
-    static final double distFromCenterToWheel = Math.sqrt(162);
+
+    static double moveSpeed = 1.0;
+    static double rotateSpeed = 0.5;
+    static double intakeSpeed = 1.0;
+    static double shootSpeed = 1.0;
+    static double capSpeed = 1.0;
 }
