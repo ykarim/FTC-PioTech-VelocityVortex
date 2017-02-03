@@ -105,4 +105,16 @@ public class Robot {
     private void initSensors() {
         lightSensor = hwMap.opticalDistanceSensor.get(RobotConstants.opticalSensor);
     }
+
+    public void setDriveMotorMode(DcMotor.RunMode mode) {
+        for (DcMotor motor : driveMotors) {
+            motor.setMode(mode);
+        }
+    }
+
+    public void setDriveMotorPower(double power) {
+        for (DcMotor motor : driveMotors) {
+            motor.setPower(power);
+        }
+    }
 }
