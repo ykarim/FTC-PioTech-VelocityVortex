@@ -27,5 +27,5 @@ public class RobotConstants {
     public static double shootSpeed = 1.0;
     public static double capSpeed = 1.0;
 
-    public static double gamepadThreshold = 0.3;
+    public static double gamepadThreshold = 0.15;
 }
