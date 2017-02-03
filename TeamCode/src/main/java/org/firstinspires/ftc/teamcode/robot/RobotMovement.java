@@ -56,6 +56,14 @@ public class RobotMovement {
             robot.fr.setPower(0);
             robot.bl.setPower(0);
             robot.br.setPower(-RobotConstants.moveSpeed);
+        } else if (direction == Direction.ROTATE_LEFT) {
+            for (DcMotor motor : robot.driveMotors) {
+                motor.setPower(RobotConstants.rotateSpeed);
+            }
+        } else if (direction == Direction.ROTATE_RIGHT) {
+            for (DcMotor motor : robot.driveMotors) {
+                motor.setPower(-RobotConstants.rotateSpeed);
+            }
         } else if (direction == Direction.NONE) {
             robot.fl.setPower(0);
             robot.fr.setPower(0);
@@ -111,18 +119,6 @@ public class RobotMovement {
         robot.setDriveMotorPower(0);
         robot.setDriveMotorMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.setDriveMotorMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
-
-    public void rotate(Direction direction) {
-        if (direction == Direction.ROTATE_LEFT) {
-            for (DcMotor motor : robot.driveMotors) {
-                motor.setPower(RobotConstants.rotateSpeed);
-            }
-        } else if (direction == Direction.ROTATE_RIGHT) {
-            for (DcMotor motor : robot.driveMotors) {
-                motor.setPower(-RobotConstants.rotateSpeed);
-            }
-        }
     }
 
     public void moveForward(double dist) {

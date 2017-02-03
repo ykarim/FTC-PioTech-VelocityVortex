@@ -27,22 +27,19 @@ public class MainTeleOp extends OpMode{
     @Override
     public void loop() {
         robotMovement.move(convertGamepadToMovement());
-        if (inThresholdRange(gamepad1.left_trigger)) {
-            robotMovement.rotate(RobotMovement.Direction.ROTATE_LEFT);
-        } else if (inThresholdRange(gamepad1.right_trigger)) {
-            robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT);
-        } else if (inThresholdRange(gamepad2.left_stick_y)) {
+        if (inThresholdRange(gamepad2.left_stick_y)) {
             convertGamepadToIntake(gamepad2.left_stick_y);
         } else if (inThresholdRange(gamepad2.right_stick_y)) {
             convertGamepadToShoot(gamepad2.right_stick_y);
         } else if (gamepad2.x) {
+            while (gamepad2.x) { }
             robotUtilities.continuousIntake();
         } else {
             if(!robotUtilities.continuousIntake) {
                 robot.intake.setPower(0);
             }
             robot.shoot.setPower(0);
-            robot.cap.setPower(0);
+//            robot.cap.setPower(0);
         }
     }
 
@@ -64,6 +61,10 @@ public class MainTeleOp extends OpMode{
         } else if (gamepad1.left_stick_x < -RobotConstants.gamepadThreshold &&
                 !inThresholdRange(gamepad1.left_stick_y)) {
             return RobotMovement.Direction.WEST;
+        } else if (inThresholdRange(gamepad1.left_trigger)) {
+            return RobotMovement.Direction.ROTATE_LEFT;
+        } else if (inThresholdRange(gamepad1.right_trigger)) {
+            return RobotMovement.Direction.ROTATE_RIGHT;
         } else {
             return RobotMovement.Direction.NONE;
         }

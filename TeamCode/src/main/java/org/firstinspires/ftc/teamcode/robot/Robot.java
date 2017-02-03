@@ -34,7 +34,7 @@ public class Robot {
         this.hwMap = hwMap;
         initDrive();
         initBall();
-        initCap();
+//        initCap();
 
         for(DcMotor driveMotor : driveMotors) {
             driveMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -46,9 +46,9 @@ public class Robot {
             ballMotor.setDirection(DcMotorSimple.Direction.FORWARD);
             ballMotor.setPower(0);
         }
-        cap.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        cap.setDirection(DcMotorSimple.Direction.FORWARD);
-        cap.setPower(0);
+//        cap.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        cap.setDirection(DcMotorSimple.Direction.FORWARD);
+//        cap.setPower(0);
     }
 
     /**
