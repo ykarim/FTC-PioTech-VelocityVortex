@@ -27,7 +27,7 @@ public class AutoMoveTest extends LinearOpMode{
             telemetry.addData(RobotConstants.autoOpTag, robot.fr.getCurrentPosition());
             telemetry.addData(RobotConstants.autoOpTag, robot.bl.getCurrentPosition());
             telemetry.addData(RobotConstants.autoOpTag, robot.br.getCurrentPosition());
-            robotMovement.move(this, RobotMovement.Direction.NORTH, 20.0);
+            robotMovement.move(RobotMovement.Direction.NORTH, 20.0);
             telemetry.addData(RobotConstants.autoOpTag, robot.fl.getTargetPosition());
             telemetry.addData(RobotConstants.autoOpTag, robot.fr.getTargetPosition());
             telemetry.addData(RobotConstants.autoOpTag, robot.bl.getTargetPosition());
@@ -39,7 +39,7 @@ public class AutoMoveTest extends LinearOpMode{
             telemetry.addData(RobotConstants.autoOpTag, robot.fr.getCurrentPosition());
             telemetry.addData(RobotConstants.autoOpTag, robot.bl.getCurrentPosition());
             telemetry.addData(RobotConstants.autoOpTag, robot.br.getCurrentPosition());
-            robotMovement.move(this, RobotMovement.Direction.SOUTH, 20.0);
+            robotMovement.move(RobotMovement.Direction.SOUTH, 20.0);
             telemetry.addData(RobotConstants.autoOpTag, robot.fl.getTargetPosition());
             telemetry.addData(RobotConstants.autoOpTag, robot.fr.getTargetPosition());
             telemetry.addData(RobotConstants.autoOpTag, robot.bl.getTargetPosition());
@@ -51,7 +51,7 @@ public class AutoMoveTest extends LinearOpMode{
             telemetry.addData(RobotConstants.autoOpTag, robot.fr.getCurrentPosition());
             telemetry.addData(RobotConstants.autoOpTag, robot.bl.getCurrentPosition());
             telemetry.addData(RobotConstants.autoOpTag, robot.br.getCurrentPosition());
-            robotMovement.move(this, RobotMovement.Direction.EAST, 20.0);
+            robotMovement.move(RobotMovement.Direction.EAST, 20.0);
             telemetry.addData(RobotConstants.autoOpTag, robot.fl.getTargetPosition());
             telemetry.addData(RobotConstants.autoOpTag, robot.fr.getTargetPosition());
             telemetry.addData(RobotConstants.autoOpTag, robot.bl.getTargetPosition());
@@ -63,7 +63,7 @@ public class AutoMoveTest extends LinearOpMode{
             telemetry.addData(RobotConstants.autoOpTag, robot.fr.getCurrentPosition());
             telemetry.addData(RobotConstants.autoOpTag, robot.bl.getCurrentPosition());
             telemetry.addData(RobotConstants.autoOpTag, robot.br.getCurrentPosition());
-            robotMovement.move(this, RobotMovement.Direction.WEST, 20.0);
+            robotMovement.move(RobotMovement.Direction.WEST, 20.0);
             telemetry.addData(RobotConstants.autoOpTag, robot.fl.getTargetPosition());
             telemetry.addData(RobotConstants.autoOpTag, robot.fr.getTargetPosition());
             telemetry.addData(RobotConstants.autoOpTag, robot.bl.getTargetPosition());
@@ -75,7 +75,7 @@ public class AutoMoveTest extends LinearOpMode{
             telemetry.addData(RobotConstants.autoOpTag, robot.fr.getCurrentPosition());
             telemetry.addData(RobotConstants.autoOpTag, robot.bl.getCurrentPosition());
             telemetry.addData(RobotConstants.autoOpTag, robot.br.getCurrentPosition());
-            robotMovement.rotate(this, RobotMovement.Direction.ROTATE_RIGHT, 90);
+            robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, 90);
             telemetry.addData(RobotConstants.autoOpTag, robot.fl.getTargetPosition());
             telemetry.addData(RobotConstants.autoOpTag, robot.fr.getTargetPosition());
             telemetry.addData(RobotConstants.autoOpTag, robot.bl.getTargetPosition());
@@ -87,7 +87,7 @@ public class AutoMoveTest extends LinearOpMode{
             telemetry.addData(RobotConstants.autoOpTag, robot.fr.getCurrentPosition());
             telemetry.addData(RobotConstants.autoOpTag, robot.bl.getCurrentPosition());
             telemetry.addData(RobotConstants.autoOpTag, robot.br.getCurrentPosition());
-            robotMovement.rotate(this, RobotMovement.Direction.ROTATE_LEFT, 90);
+            robotMovement.rotate(RobotMovement.Direction.ROTATE_LEFT, 90);
             telemetry.addData(RobotConstants.autoOpTag, robot.fl.getTargetPosition());
             telemetry.addData(RobotConstants.autoOpTag, robot.fr.getTargetPosition());
             telemetry.addData(RobotConstants.autoOpTag, robot.bl.getTargetPosition());
