@@ -26,6 +26,7 @@ public class AutoBeaconTest extends LinearVisionOpMode{
 
     @Override
     public void runOpMode() throws InterruptedException{
+        waitFor(getDelay());
         waitForVisionStart();
         initVision();
 
@@ -122,5 +123,27 @@ public class AutoBeaconTest extends LinearVisionOpMode{
             return RED_ALLIANCE;
         }
         return 0;
+    }
+
+    /**
+     * Returns int of millis to wait before running program
+     * @return
+     */
+    private int getDelay() {
+        Integer delay = Integer.parseInt(FtcRobotControllerActivity.autoDelay.getText().toString());
+        return (delay * 1000);
+    }
+
+    /**
+     * Wait a period of time. This will be non-blocking, so Thread away!
+     * @param millis time to wait in milliseconds.
+     */
+    private final void waitFor(long millis) {
+        long stopTime = System.currentTimeMillis() + millis;
+        while(opModeIsActive() && System.currentTimeMillis() < stopTime) {
+            try {
+                waitOneFullHardwareCycle();
+            } catch(Exception ex) {}
+        }
     }
 }
