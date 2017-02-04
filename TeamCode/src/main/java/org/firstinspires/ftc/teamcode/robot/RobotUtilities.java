@@ -63,6 +63,6 @@ public class RobotUtilities {
         robotMovement.move(direction);
 
         while (robot.lightSensor.getLightDetected() > RobotConstants.whiteLineValue) { }
-        robot.setDriveMotorPower(0);
+        robotMovement.move(RobotMovement.Direction.NONE);
     }
 }
