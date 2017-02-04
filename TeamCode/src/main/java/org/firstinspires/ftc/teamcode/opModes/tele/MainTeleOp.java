@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.robot.RobotConstants;
 import org.firstinspires.ftc.teamcode.robot.RobotMovement;
 import org.firstinspires.ftc.teamcode.robot.RobotUtilities;
 
-@TeleOp (name = "TeleOp", group = "main")
+@TeleOp (name = "TeleOp", group = "tele")
 public class MainTeleOp extends OpMode{
 
     Robot robot = new Robot();

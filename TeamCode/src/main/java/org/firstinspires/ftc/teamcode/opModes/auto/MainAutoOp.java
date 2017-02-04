@@ -14,15 +14,13 @@ import org.lasarobotics.vision.opmode.extensions.CameraControlExtension;
 import org.lasarobotics.vision.util.ScreenOrientation;
 import org.opencv.core.Size;
 
-@Autonomous(name = "Double Beacon Test", group = "AutoTest")
-public class AutoBeaconTest extends LinearVisionOpMode{
+@Autonomous (name = "AutoOp", group = "auto")
+public class MainAutoOp extends LinearVisionOpMode {
 
-    private Robot robot = new Robot();
-    private RobotMovement robotMovement = new RobotMovement();
-    private RobotUtilities robotUtilities = new RobotUtilities();
-
-    private final int RED_ALLIANCE = 1;
-    private final int BLUE_ALLIANCE = 2;
+    private Robot leo = new Robot();
+    private RobotMovement robotMovement = new RobotMovement(leo);
+    private RobotUtilities robotUtilities = new RobotUtilities(leo);
+    private final String TAG = RobotConstants.autoOpTag + "Main : ";
 
     @Override
     public void runOpMode() throws InterruptedException{
@@ -30,60 +28,36 @@ public class AutoBeaconTest extends LinearVisionOpMode{
         waitForVisionStart();
         initVision();
 
-        robot.initAutoOp(this, hardwareMap);
-        robotMovement.init(robot);
-        robotUtilities.init(robot);
+        Robot.TeamColor teamColor = getTeamColor();
 
-        int teamColor = getTeamColor();
-        boolean blueLeft, blueRight, redLeft, redRight;
-
+        addToTelemetry("READY on " + teamColor.getTeamColor());
         waitForStart();
 
         while (opModeIsActive()) {
-            robotMovement.move(RobotMovement.Direction.NORTH, 36);
+            robotMovement.move(RobotMovement.Direction.NORTH, 12);
+            robotUtilities.shootDoubleBall(this);
+            addToTelemetry("Shot Two Balls");
+
+            robotMovement.move(RobotMovement.Direction.NORTH, 24);
             robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, 90);
             robotMovement.move(RobotMovement.Direction.NORTH, 48);
             robotUtilities.alignWithLine(RobotMovement.Direction.EAST);
+            addToTelemetry("Aligned with line for beacon 1");
 
-            blueLeft = beacon.getAnalysis().isLeftBlue();
-            blueRight = beacon.getAnalysis().isRightBlue();
-            redLeft = beacon.getAnalysis().isLeftRed();
-            redRight = beacon.getAnalysis().isRightRed();
-
-            if (teamColor == BLUE_ALLIANCE) {
-                if (blueLeft) {
-                    telemetry.addData(RobotConstants.autoOpTag, "Hit Blue Beacon One on Left");
-                } else if (blueRight) {
-                    telemetry.addData(RobotConstants.autoOpTag, "Hit Blue Beacon One on Right");
-                }
-            } else if (teamColor == RED_ALLIANCE) {
-                if (redLeft) {
-                    telemetry.addData(RobotConstants.autoOpTag, "Hit Red Beacon One on Left");
-                } else if (redRight) {
-                    telemetry.addData(RobotConstants.autoOpTag, "Hit Red Beacon One on Right");
-                }
-            }
+            robotUtilities.pushBeaconButton(beacon.getAnalysis(), teamColor);
+            addToTelemetry("Pushed beacon 1");
 
             robotUtilities.alignWithLine(RobotMovement.Direction.WEST);
+            addToTelemetry("Aligned with line for beacon 2");
 
-            blueLeft = beacon.getAnalysis().isLeftBlue();
-            redLeft = beacon.getAnalysis().isLeftRed();
+            robotUtilities.pushBeaconButton(beacon.getAnalysis(), teamColor);
+            addToTelemetry("Pushed beacon 2");
 
-            if (teamColor == BLUE_ALLIANCE) {
-                if (blueLeft) {
-                    telemetry.addData(RobotConstants.autoOpTag, "Hit Blue Beacon Two on Left");
-                } else if (blueRight) {
-                    telemetry.addData(RobotConstants.autoOpTag, "Hit Blue Beacon Two on Right");
-                }
-            } else if (teamColor == RED_ALLIANCE) {
-                if (redLeft) {
-                    telemetry.addData(RobotConstants.autoOpTag, "Hit Red Beacon Two on Left");
-                } else if (redRight) {
-                    telemetry.addData(RobotConstants.autoOpTag, "Hit Red Beacon Two on Right");
-                }
-            }
+            robotMovement.move(RobotMovement.Direction.EAST, 12);
+            robotMovement.move(RobotMovement.Direction.SOUTH, 36);
+            addToTelemetry("Moved to center");
 
-            telemetry.update();
+            addToTelemetry("DONE");
             requestOpModeStop();
         }
     }
@@ -111,18 +85,18 @@ public class AutoBeaconTest extends LinearVisionOpMode{
 
     /**
      * Reads Team Color from FtcRobotControllerActivity
-     * @return int representing team color (RED_ALLIANCE or BLUE_ALLIANCE)
+     * @return Robot.TeamColor
      */
-    private int getTeamColor() {
+    private Robot.TeamColor getTeamColor() {
         boolean blueChecked = FtcRobotControllerActivity.blueTeamColor.isChecked();
         boolean redChecked = FtcRobotControllerActivity.redTeamColor.isChecked();
 
         if(blueChecked) {
-            return BLUE_ALLIANCE;
+            return Robot.TeamColor.BLUE;
         } else if(redChecked) {
-            return RED_ALLIANCE;
+            return Robot.TeamColor.RED;
         }
-        return 0;
+        return Robot.TeamColor.NONE;
     }
 
     /**
@@ -137,6 +111,12 @@ public class AutoBeaconTest extends LinearVisionOpMode{
         }
     }
 
+    private void addToTelemetry (String... msg) {
+        for (String text : msg) {
+            telemetry.addData(TAG, text);
+        }
+        telemetry.update();
+    }
     /**
      * Wait a period of time. This will be non-blocking, so Thread away!
      * @param sec time to wait in seconds.

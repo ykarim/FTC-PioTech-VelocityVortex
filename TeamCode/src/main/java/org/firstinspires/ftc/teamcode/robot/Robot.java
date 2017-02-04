@@ -29,6 +29,20 @@ public class Robot {
 
     public OpticalDistanceSensor lightSensor = null; //Distance Sensor (Config == "OPTICAL")
 
+    public enum TeamColor {
+        RED("R"), BLUE("B"), NONE("N");
+
+        private final String teamColor;
+
+        TeamColor(String teamColor) {
+            this.teamColor = teamColor;
+        }
+
+        public String getTeamColor() {
+            return teamColor;
+        }
+    }
+
     /**
      * Initializes all drive and ball motors in NO ENCODERS mode
      * @param hwMap

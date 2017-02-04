@@ -11,7 +11,7 @@ public class RobotMovement {
         ROTATE_LEFT, ROTATE_RIGHT, NONE
     }
 
-    public void init(Robot robot) {
+    public RobotMovement(Robot robot) {
         this.robot = robot;
     }
 

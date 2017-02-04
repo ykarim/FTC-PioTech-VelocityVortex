@@ -30,6 +30,8 @@ public class RobotConstants {
     public static double shootSpeed = 1.0;
     public static double capSpeed = 1.0;
 
+    public static int shotWaitPeriod = 3; //seconds to wait before shooting ball
+
     public static double gamepadThreshold = 0.15;
 
     public static final double whiteLineValue = 0.4;
