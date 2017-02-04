@@ -50,4 +50,19 @@ public class RobotUtilities {
             robot.shoot.setPower(0);
         }
     }
+
+    /**
+     * Aligns ODS by moving left or right given which side line is located on
+     * @param direction
+     */
+    public void alignWithLine(RobotMovement.Direction direction) {
+        robot.lightSensor.enableLed(true);
+
+        RobotMovement robotMovement = new RobotMovement();
+        robotMovement.init(robot);
+        robotMovement.move(direction);
+
+        while (robot.lightSensor.getLightDetected() > RobotConstants.whiteLineValue) { }
+        robot.setDriveMotorPower(0);
+    }
 }

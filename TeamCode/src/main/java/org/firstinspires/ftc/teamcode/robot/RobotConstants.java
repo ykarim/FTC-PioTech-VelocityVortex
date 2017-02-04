@@ -31,4 +31,6 @@ public class RobotConstants {
     public static double capSpeed = 1.0;
 
     public static double gamepadThreshold = 0.15;
+
+    public static final double whiteLineValue = 0.4;
 }

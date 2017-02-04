@@ -262,17 +262,17 @@ public class FtcRobotControllerActivity extends Activity {
     readNetworkType(NETWORK_TYPE_FILENAME);
     bindToService();
 
-    opModeGroup = (RadioGroup) findViewById(R.id.opmode);
+    opModeGroup = (RadioGroup) findViewById(R.id.teamcolor);
 
     opModeGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
       @Override
       public void onCheckedChanged(RadioGroup radioGroup, int id) {
-        SharedPreferences sharedpreferences = getSharedPreferences("OpMode", Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = getSharedPreferences("Color", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
-        if (id == R.id.AutoOpMode) {
-          editor.putString("OpMode", "AUTO").apply();
-        } else if (id == R.id.TeleOpMode) {
-          editor.putString("OpMode", "TELE").apply();
+        if (id == R.id.redMode) {
+          editor.putString("Color", "RED").apply();
+        } else if (id == R.id.blueMode) {
+          editor.putString("Color", "BLUE").apply();
         }
       }
     });

@@ -83,22 +83,22 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/textDeviceName"
-        android:id="@+id/opmode"
+        android:id="@+id/teamcolor"
         android:layout_alignBottom="@+id/menu_buttons">
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/TeleOpMode"
-            android:text="Tele Op"
+            android:id="@+id/blueMode"
+            android:text="Blue"
             android:textColor="@color/white"
             android:checked="true" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/AutoOpMode"
-            android:text="Autonomous"
+            android:id="@+id/redMode"
+            android:text="Red"
             android:textColor="@color/white" />
     </RadioGroup>
 

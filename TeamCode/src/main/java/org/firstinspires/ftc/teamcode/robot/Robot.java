@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 
+import org.lasarobotics.vision.opmode.LinearVisionOpMode;
+
 import java.util.ArrayList;
 
 public class Robot {
@@ -74,6 +76,35 @@ public class Robot {
         for(DcMotor ballMotor : ballMotors) {
             ballMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             opMode.idle();
+            ballMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            ballMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+            ballMotor.setPower(0);
+        }
+//        cap.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        cap.setDirection(DcMotorSimple.Direction.FORWARD);
+//        cap.setPower(0);
+    }
+
+    /**
+     * Initializes all drive and ball motors in USING ENCODERS mode
+     * @param hwMap
+     */
+    public void initAutoOp(LinearVisionOpMode opMode, HardwareMap hwMap) {
+        this.hwMap = hwMap;
+
+        initDrive();
+        initBall();
+//        initCap();
+//        initSensors();
+
+        for(DcMotor driveMotor : driveMotors) {
+            driveMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            driveMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            driveMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+            driveMotor.setPower(0);
+        }
+        for(DcMotor ballMotor : ballMotors) {
+            ballMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             ballMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             ballMotor.setDirection(DcMotorSimple.Direction.FORWARD);
             ballMotor.setPower(0);
