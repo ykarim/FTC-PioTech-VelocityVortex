@@ -54,7 +54,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.google.blocks.ftcrobotcontroller.BlocksActivity;
@@ -126,7 +126,8 @@ public class FtcRobotControllerActivity extends Activity {
   protected TextView textOpMode;
   protected TextView textErrorMessage;
   protected ImmersiveMode immersion;
-  protected RadioGroup opModeGroup;
+  public static RadioButton redTeamColor;
+  public static RadioButton blueTeamColor;
 
   protected UpdateUI updateUI;
   protected Dimmer dimmer;
@@ -262,20 +263,8 @@ public class FtcRobotControllerActivity extends Activity {
     readNetworkType(NETWORK_TYPE_FILENAME);
     bindToService();
 
-    opModeGroup = (RadioGroup) findViewById(R.id.teamcolor);
-
-    opModeGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-      @Override
-      public void onCheckedChanged(RadioGroup radioGroup, int id) {
-        SharedPreferences sharedpreferences = getSharedPreferences("Color", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        if (id == R.id.redMode) {
-          editor.putString("Color", "RED").apply();
-        } else if (id == R.id.blueMode) {
-          editor.putString("Color", "BLUE").apply();
-        }
-      }
-    });
+    blueTeamColor = (RadioButton) findViewById(R.id.blueMode);
+    redTeamColor = (RadioButton) findViewById(R.id.redMode);
   }
 
   protected UpdateUI createUpdateUI() {

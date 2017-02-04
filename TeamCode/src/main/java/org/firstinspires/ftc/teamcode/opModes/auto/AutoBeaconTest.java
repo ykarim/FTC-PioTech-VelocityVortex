@@ -1,11 +1,8 @@
 package org.firstinspires.ftc.teamcode.opModes.auto;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.RobotConstants;
 import org.firstinspires.ftc.teamcode.robot.RobotMovement;
@@ -37,7 +34,6 @@ public class AutoBeaconTest extends LinearVisionOpMode{
         robotUtilities.init(robot);
 
         int teamColor = getTeamColor();
-//        int teamColor = BLUE_ALLIANCE;
         boolean blueLeft, blueRight, redLeft, redRight;
 
         waitForStart();
@@ -113,16 +109,16 @@ public class AutoBeaconTest extends LinearVisionOpMode{
     }
 
     /**
-     * Reads Team Color from SharedPreferences
+     * Reads Team Color from FtcRobotControllerActivity
      * @return int representing team color (RED_ALLIANCE or BLUE_ALLIANCE)
      */
     private int getTeamColor() {
-        Activity activity = (Activity) hardwareMap.appContext;
-        SharedPreferences preferences = activity.getSharedPreferences("Color", Context.MODE_PRIVATE);
+        boolean blueChecked = FtcRobotControllerActivity.blueTeamColor.isChecked();
+        boolean redChecked = FtcRobotControllerActivity.redTeamColor.isChecked();
 
-        if(preferences.getString("Color", "") == "BLUE") {
+        if(blueChecked) {
             return BLUE_ALLIANCE;
-        } else if(preferences.getString("Color", "") == "RED") {
+        } else if(redChecked) {
             return RED_ALLIANCE;
         }
         return 0;
