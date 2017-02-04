@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 public class RobotMovement {
 
     private Robot robot = null;
+    private boolean inverted = false;
 
     public enum Direction {
         NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST,
@@ -163,5 +164,15 @@ public class RobotMovement {
 
         robot.setDriveMotorPower(0);
         robot.setDriveMotorMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+    public void invertDirection() {
+        if (inverted) {
+            inverted = true;
+            RobotConstants.moveSpeed = -RobotConstants.moveSpeed;
+        } else {
+            inverted = false;
+            RobotConstants.moveSpeed = -RobotConstants.moveSpeed;
+        }
     }
 }
