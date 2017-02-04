@@ -126,19 +126,23 @@ public class AutoBeaconTest extends LinearVisionOpMode{
     }
 
     /**
-     * Returns int of millis to wait before running program
+     * Returns int of sec to wait before running program
      * @return
      */
     private int getDelay() {
-        Integer delay = Integer.parseInt(FtcRobotControllerActivity.autoDelay.getText().toString());
-        return (delay * 1000);
+        try {
+            return Integer.parseInt(FtcRobotControllerActivity.autoDelay.getText().toString());
+        } catch (NumberFormatException nfe) {
+            return 0;
+        }
     }
 
     /**
      * Wait a period of time. This will be non-blocking, so Thread away!
-     * @param millis time to wait in milliseconds.
+     * @param sec time to wait in seconds.
      */
-    private final void waitFor(long millis) {
+    private void waitFor(int sec) {
+        long millis = sec * 1000;
         long stopTime = System.currentTimeMillis() + millis;
         while(opModeIsActive() && System.currentTimeMillis() < stopTime) {
             try {
