@@ -12,14 +12,12 @@ import org.firstinspires.ftc.teamcode.robot.RobotUtilities;
 public class MainTeleOp extends OpMode{
 
     Robot robot = new Robot();
-    RobotMovement robotMovement = new RobotMovement();
-    RobotUtilities robotUtilities = new RobotUtilities();
+    RobotMovement robotMovement = new RobotMovement(robot);
+    RobotUtilities robotUtilities = new RobotUtilities(robot);
 
     @Override
     public void init() {
         robot.initTeleOp(hardwareMap);
-        robotMovement.init(robot);
-        robotUtilities.init(robot);
         gamepad1.setJoystickDeadzone(.1f);
         gamepad2.setJoystickDeadzone(.1f);
     }

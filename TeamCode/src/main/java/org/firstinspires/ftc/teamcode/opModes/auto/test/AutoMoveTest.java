@@ -11,11 +11,10 @@ import org.firstinspires.ftc.teamcode.robot.RobotMovement;
 public class AutoMoveTest extends LinearOpMode{
 
     private Robot robot = new Robot();
-    private RobotMovement robotMovement = new RobotMovement();
+    private RobotMovement robotMovement = new RobotMovement(robot);
 
     public void runOpMode() {
         robot.initAutoOp(this, hardwareMap);
-        robotMovement.init(robot);
 
         telemetry.addData(RobotConstants.autoOpTag, "Start");
         telemetry.update();
