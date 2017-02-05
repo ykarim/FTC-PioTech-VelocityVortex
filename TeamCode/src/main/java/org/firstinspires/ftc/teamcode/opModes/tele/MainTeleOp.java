@@ -29,12 +29,12 @@ public class MainTeleOp extends OpMode{
     @Override
     public void loop() {
         updateTelemetryData();
+
         robotMovement.move(convertGamepadToMovement());
-        if (inThresholdRange(gamepad2.left_stick_y)) {
-            convertGamepadToIntake(gamepad2.left_stick_y);
-        } else if (inThresholdRange(gamepad2.right_stick_y)) {
-            convertGamepadToShoot(gamepad2.right_stick_y);
-        } else if (gamepad1.x) {
+        convertGamepadToIntake(gamepad2.left_stick_y);
+        convertGamepadToShoot(gamepad2.right_stick_y);
+
+        if (gamepad1.x) {
             while (gamepad1.x) {}
 //            robotUtilities.toggleBeaconPresser(robot.leftBeacon);
         } else if (gamepad1.y) {
@@ -65,12 +65,6 @@ public class MainTeleOp extends OpMode{
             while (inThresholdRange(gamepad2.right_trigger)) {}
             RobotConstants.shootSpeed -= 0.05;
         } else {
-            if(!robotUtilities.continuousIntake) {
-                robot.intake.setPower(0);
-            }
-            if (!robotUtilities.continuousShoot) {
-                robot.shoot.setPower(0);
-            }
 //            robot.cap.setPower(0);
         }
     }
@@ -107,6 +101,10 @@ public class MainTeleOp extends OpMode{
             robot.intake.setPower(RobotConstants.intakeSpeed);
         } else if (value < -RobotConstants.gamepadThreshold) {
             robot.intake.setPower(-RobotConstants.intakeSpeed);
+        } else {
+            if (!robotUtilities.continuousIntake) {
+                robot.intake.setPower(0);
+            }
         }
     }
 
@@ -115,6 +113,10 @@ public class MainTeleOp extends OpMode{
             robot.shoot.setPower(RobotConstants.shootSpeed);
         } else if (value < -RobotConstants.gamepadThreshold) {
             robot.shoot.setPower(-RobotConstants.shootSpeed);
+        } else {
+            if (!robotUtilities.continuousShoot) {
+                robot.shoot.setPower(0);
+            }
         }
     }
 
