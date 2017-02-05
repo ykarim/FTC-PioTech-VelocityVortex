@@ -15,6 +15,9 @@ public class RobotConstants {
     static String shootMotor = "SHOOT";
     static String capMotor = "CAP";
 
+    static String leftBeaconServo = "LBEACON";
+    static String rightBeaconServo = "RBEACON";
+
     static String opticalSensor = "OPTICAL";
 
     static final int ENCODER_TICKS_PER_REV = 1120;
@@ -29,6 +32,13 @@ public class RobotConstants {
     public static double intakeSpeed = 1.0;
     public static double shootSpeed = 1.0;
     public static double capSpeed = 1.0;
+
+    static double SERVO_HOME = 0.3;
+    static double SERVO_MIN = 0.2;
+    static double SERVO_MAX = 0.9;
+    static double leftBeaconPusherPosition = SERVO_HOME;
+    static double rightBeaconPusherPosition = SERVO_HOME;
+    static double beaconPusherSpeed = 0.05;
 
     public static int shotWaitPeriod = 3; //seconds to wait before shooting ball
 

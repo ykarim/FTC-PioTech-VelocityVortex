@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.robot;
 
+import com.qualcomm.robotcore.hardware.Servo;
+
 import org.lasarobotics.vision.ftc.resq.Beacon;
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 
@@ -10,6 +12,9 @@ public class RobotUtilities {
     public boolean continuousIntake = false;
     public boolean continuousShoot = false;
 
+    private boolean leftBeaconPusherExtended = false;
+    private boolean rightBeaconPusherExtended = false;
+
     public RobotUtilities(Robot robot) {
         this.robot = robot;
     }
@@ -18,8 +23,39 @@ public class RobotUtilities {
         //TODO
     }
 
+    public void toggleBeaconPresser(Servo servo) {
+        if (servo == robot.leftBeacon) {
+            if (!leftBeaconPusherExtended) {
+                while (RobotConstants.leftBeaconPusherPosition != RobotConstants.SERVO_MAX) {
+                    RobotConstants.leftBeaconPusherPosition += RobotConstants.beaconPusherSpeed;
+                    servo.setPosition(RobotConstants.leftBeaconPusherPosition);
+                }
+                leftBeaconPusherExtended = true;
+            } else {
+                while (RobotConstants.leftBeaconPusherPosition != RobotConstants.SERVO_MIN) {
+                    RobotConstants.leftBeaconPusherPosition -= RobotConstants.beaconPusherSpeed;
+                    servo.setPosition(RobotConstants.leftBeaconPusherPosition);
+                }
+                leftBeaconPusherExtended = false;
+            }
+        } else if (servo == robot.rightBeacon) {
+            if (!rightBeaconPusherExtended) {
+                while (RobotConstants.rightBeaconPusherPosition != RobotConstants.SERVO_MAX + RobotConstants.beaconPusherSpeed) {
+                    RobotConstants.rightBeaconPusherPosition += RobotConstants.beaconPusherSpeed;
+                    servo.setPosition(RobotConstants.rightBeaconPusherPosition);
+                }
+                rightBeaconPusherExtended = true;
+            } else {
+                while (RobotConstants.rightBeaconPusherPosition != RobotConstants.SERVO_MIN) {
+                    RobotConstants.rightBeaconPusherPosition -= RobotConstants.beaconPusherSpeed;
+                    servo.setPosition(RobotConstants.rightBeaconPusherPosition);
+                }
+                rightBeaconPusherExtended = false;
+            }
+        }
+    }
+
     public void pushBeaconButton(Beacon.BeaconAnalysis analysis, Robot.TeamColor teamColor) {
-        //TODO: Extend beacon buttons
         boolean leftBlue, leftRed, rightBlue, rightRed;
 
         leftBlue = analysis.isLeftBlue();
@@ -29,15 +65,19 @@ public class RobotUtilities {
 
         if (teamColor == Robot.TeamColor.BLUE) {
             if (leftBlue) {
-                //Push left beacon button
+                toggleBeaconPresser(robot.leftBeacon);
+                toggleBeaconPresser(robot.leftBeacon);
             } else if (rightBlue) {
-                //Push right beacon button
+                toggleBeaconPresser(robot.rightBeacon);
+                toggleBeaconPresser(robot.rightBeacon);
             }
         } else if (teamColor == Robot.TeamColor.RED) {
             if (leftRed) {
-                //Push left beacon button
+                toggleBeaconPresser(robot.leftBeacon);
+                toggleBeaconPresser(robot.leftBeacon);
             } else if (rightRed) {
-                //Push right beacon button
+                toggleBeaconPresser(robot.rightBeacon);
+                toggleBeaconPresser(robot.rightBeacon);
             }
         }
     }

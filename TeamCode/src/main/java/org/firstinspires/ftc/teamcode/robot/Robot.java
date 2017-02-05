@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 
@@ -23,6 +24,9 @@ public class Robot {
     public DcMotor shoot = null; //Shoot Motor (Config == "SHOOT")
 
     public DcMotor cap = null; //Cap Motor (Config == "CAP")
+
+    public Servo leftBeacon = null; //Left Beacon Pusher (Config == "LBEACON")
+    public Servo rightBeacon = null; //Right Beacon Pusher (Config == "RBEACON")
 
     public ArrayList<DcMotor> driveMotors = new ArrayList<>(); //stores all drive motors
     public ArrayList<DcMotor> ballMotors = new ArrayList<>(); //stores all ball motors (intake, shoot)
@@ -52,6 +56,7 @@ public class Robot {
         initDrive();
         initBall();
 //        initCap();
+//        initServos();
 
         for(DcMotor driveMotor : driveMotors) {
             driveMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -78,6 +83,7 @@ public class Robot {
         initDrive();
         initBall();
 //        initCap();
+//        initServos();
 //        initSensors();
 
         for(DcMotor driveMotor : driveMotors) {
@@ -150,6 +156,14 @@ public class Robot {
 
     private void initCap() {
         cap = hwMap.dcMotor.get(RobotConstants.capMotor);
+    }
+
+    private void initServos() {
+        leftBeacon = hwMap.servo.get(RobotConstants.leftBeaconServo);
+        rightBeacon = hwMap.servo.get(RobotConstants.rightBeaconServo);
+
+        leftBeacon.setPosition(RobotConstants.leftBeaconPusherPosition);
+        rightBeacon.setPosition(RobotConstants.rightBeaconPusherPosition);
     }
 
     private void initSensors() {

@@ -34,6 +34,12 @@ public class MainTeleOp extends OpMode{
             convertGamepadToIntake(gamepad2.left_stick_y);
         } else if (inThresholdRange(gamepad2.right_stick_y)) {
             convertGamepadToShoot(gamepad2.right_stick_y);
+        } else if (gamepad1.x) {
+            while (gamepad1.x) {}
+//            robotUtilities.toggleBeaconPresser(robot.leftBeacon);
+        } else if (gamepad1.y) {
+            while (gamepad1.y) {}
+//            robotUtilities.toggleBeaconPresser(robot.rightBeacon);
         } else if (gamepad1.left_bumper) {
             while (gamepad1.left_bumper) {}
             robotMovement.invertDirection();
