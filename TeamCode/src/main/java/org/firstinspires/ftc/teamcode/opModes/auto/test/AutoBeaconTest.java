@@ -38,7 +38,7 @@ public class AutoBeaconTest extends LinearVisionOpMode{
             robotMovement.move(RobotMovement.Direction.NORTH, 36);
             robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, 90);
             robotMovement.move(RobotMovement.Direction.NORTH, 48);
-            robotUtilities.alignWithLine(RobotMovement.Direction.EAST);
+            robotUtilities.alignWithLine(RobotMovement.Direction.EAST, 5);
 
             blueLeft = beacon.getAnalysis().isLeftBlue();
             blueRight = beacon.getAnalysis().isRightBlue();
@@ -59,7 +59,7 @@ public class AutoBeaconTest extends LinearVisionOpMode{
                 }
             }
 
-            robotUtilities.alignWithLine(RobotMovement.Direction.WEST);
+            robotUtilities.alignWithLine(RobotMovement.Direction.WEST, 5);
 
             blueLeft = beacon.getAnalysis().isLeftBlue();
             redLeft = beacon.getAnalysis().isLeftRed();

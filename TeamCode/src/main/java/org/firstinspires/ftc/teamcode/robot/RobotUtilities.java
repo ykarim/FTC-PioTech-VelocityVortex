@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.lasarobotics.vision.ftc.resq.Beacon;
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 
+import static java.lang.System.currentTimeMillis;
+
 public class RobotUtilities {
 
     private Robot robot = null;
@@ -144,20 +146,23 @@ public class RobotUtilities {
      * Aligns ODS by moving left or right given which side line is located on
      * @param direction
      */
-    public void alignWithLine(RobotMovement.Direction direction) {
+    public void alignWithLine(RobotMovement.Direction direction, int timeoutSec) {
+        long stop = System.currentTimeMillis() + (timeoutSec * 1000);
         robot.lightSensor.enableLed(true);
 
         RobotMovement robotMovement = new RobotMovement(robot);
         robotMovement.move(direction);
 
-        while (robot.lightSensor.getLightDetected() > RobotConstants.whiteLineValue) { }
+        while (robot.lightSensor.getLightDetected() < RobotConstants.whiteLineValue
+                && System.currentTimeMillis() != stop) { }
         robotMovement.move(RobotMovement.Direction.NONE);
+        robot.lightSensor.enableLed(false);
     }
 
     private void waitFor(LinearVisionOpMode opMode, int sec) {
         long millis = sec * 1000;
-        long stopTime = System.currentTimeMillis() + millis;
-        while(opMode.opModeIsActive() && System.currentTimeMillis() < stopTime) {
+        long stopTime = currentTimeMillis() + millis;
+        while(opMode.opModeIsActive() && currentTimeMillis() < stopTime) {
             try {
                 opMode.waitOneFullHardwareCycle();
             } catch(Exception ex) {}

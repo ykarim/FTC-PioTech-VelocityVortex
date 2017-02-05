@@ -47,5 +47,5 @@ public class RobotConstants {
 
     public static double gamepadThreshold = 0.15;
 
-    public static final double whiteLineValue = 0.4;
+    public static final double whiteLineValue = 0.2;
 }

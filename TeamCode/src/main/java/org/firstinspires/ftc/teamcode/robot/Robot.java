@@ -57,6 +57,7 @@ public class Robot {
         initBall();
 //        initCap();
 //        initServos();
+        initSensors();
 
         for(DcMotor driveMotor : driveMotors) {
             driveMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -84,7 +85,7 @@ public class Robot {
         initBall();
 //        initCap();
 //        initServos();
-//        initSensors();
+        initSensors();
 
         for(DcMotor driveMotor : driveMotors) {
             driveMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
