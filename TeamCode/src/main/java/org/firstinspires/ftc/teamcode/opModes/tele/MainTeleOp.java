@@ -197,6 +197,7 @@ public class MainTeleOp extends OpMode{
         telemetry.addData(TAG, "Intake Speed : " + RobotConstants.intakeSpeed);
         telemetry.addData(TAG, "Shoot Speed : " + RobotConstants.shootSpeed);
 
+        telemetry.addData(TAG, "Inverted : " + robotMovement.getInverted());
         telemetry.update();
     }
 }

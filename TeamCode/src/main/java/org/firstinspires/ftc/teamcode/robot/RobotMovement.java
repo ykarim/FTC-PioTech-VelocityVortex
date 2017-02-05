@@ -175,4 +175,8 @@ public class RobotMovement {
             RobotConstants.moveSpeed = -RobotConstants.moveSpeed;
         }
     }
+
+    public boolean getInverted() {
+        return inverted;
+    }
 }
