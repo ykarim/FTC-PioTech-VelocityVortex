@@ -116,7 +116,7 @@ public class Robot {
         initDrive();
         initBall();
 //        initCap();
-//        initSensors();
+        initSensors();
 
         for(DcMotor driveMotor : driveMotors) {
             driveMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

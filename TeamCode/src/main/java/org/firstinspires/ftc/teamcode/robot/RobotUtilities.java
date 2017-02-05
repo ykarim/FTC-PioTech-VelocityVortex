@@ -17,6 +17,8 @@ public class RobotUtilities {
     private boolean leftBeaconPusherExtended = false;
     private boolean rightBeaconPusherExtended = false;
 
+    private boolean lightLED = false;
+
     public RobotUtilities(Robot robot) {
         this.robot = robot;
     }
@@ -54,6 +56,16 @@ public class RobotUtilities {
                 }
                 rightBeaconPusherExtended = false;
             }
+        }
+    }
+
+    public void toggleLightLED() {
+        if (lightLED) {
+            lightLED = false;
+            robot.lightSensor.enableLed(lightLED);
+        } else {
+            lightLED = true;
+            robot.lightSensor.enableLed(lightLED);
         }
     }
 
@@ -148,7 +160,7 @@ public class RobotUtilities {
      */
     public void alignWithLine(RobotMovement.Direction direction, int timeoutSec) {
         long stop = System.currentTimeMillis() + (timeoutSec * 1000);
-        robot.lightSensor.enableLed(true);
+        toggleLightLED();
 
         RobotMovement robotMovement = new RobotMovement(robot);
         robotMovement.move(direction);
@@ -156,7 +168,7 @@ public class RobotUtilities {
         while (robot.lightSensor.getLightDetected() < RobotConstants.whiteLineValue
                 && System.currentTimeMillis() != stop) { }
         robotMovement.move(RobotMovement.Direction.NONE);
-        robot.lightSensor.enableLed(false);
+        toggleLightLED();
     }
 
     private void waitFor(LinearVisionOpMode opMode, int sec) {

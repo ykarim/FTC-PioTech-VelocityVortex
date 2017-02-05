@@ -23,6 +23,7 @@ public class ODSTest extends OpMode{
     public void init() {
         telemetry.addData(TAG, "Status : INITIALIZING");
         robot.initTeleOp(hardwareMap);
+        robotUtilities.toggleLightLED();
         gamepad1.setJoystickDeadzone(.1f);
         gamepad2.setJoystickDeadzone(.1f);
 
@@ -40,6 +41,9 @@ public class ODSTest extends OpMode{
         } else if (gamepad1.y) {
             while (gamepad1.y) {}
             robotUtilities.alignWithLine(RobotMovement.Direction.EAST, 5);
+        } else if (gamepad1.x) {
+            while (gamepad1.x) {}
+            robotUtilities.toggleLightLED();
         }
     }
 
