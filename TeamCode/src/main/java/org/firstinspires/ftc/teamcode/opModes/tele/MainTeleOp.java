@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.opModes.tele;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.RobotConstants;
@@ -34,36 +35,89 @@ public class MainTeleOp extends OpMode{
         convertGamepadToIntake(gamepad2.left_stick_y);
         convertGamepadToShoot(gamepad2.right_stick_y);
 
-        if (gamepad1.x) {
+        if (gamepad1.a) { //Gamepad 1 - X Button
+
+            //Unimplemented
+
+        } else if (gamepad1.b) { //Gamepad 1 - B Button
+
+            //Unimplemented
+
+        } else if (gamepad1.x) { //Gamepad 1 - X Button : Toggles left beacon pusher
+
             while (gamepad1.x) {}
 //            robotUtilities.toggleBeaconPresser(robot.leftBeacon);
-        } else if (gamepad1.y) {
+
+        } else if (gamepad1.y) { //Gamepad 1 - Y Button : Toggles right beacon pusher
+
             while (gamepad1.y) {}
 //            robotUtilities.toggleBeaconPresser(robot.rightBeacon);
-        } else if (gamepad1.left_bumper) {
+
+        } else if (gamepad1.left_bumper) { // Gamepad 1 - Left Bumper : Inverts Robot Direction
+
             while (gamepad1.left_bumper) {}
             robotMovement.invertDirection();
-        } else if (gamepad1.right_bumper) {
-            while (gamepad1.right_bumper) {}
+
+        } else if (gamepad1.right_bumper) { //Gamepad 1 - Right Bumper : Movement Kill Switch
+
+            while (gamepad1.right_bumper) {
+            }
             robotMovement.move(RobotMovement.Direction.NONE);
-        } else if (gamepad2.x) {
+
+        } else if (inThresholdRange(gamepad1.left_trigger)) { //Gamepad 1 - Left Trigger
+
+            //Unimplemented
+
+        } else if (inThresholdRange(gamepad1.right_trigger)) { //Gamepad 1 - Right Trigger
+
+            //Unimplemented
+
+        } else if (gamepad2.a) { //Gamepad 2 - A Button
+
+            //Unimplemented
+
+        } else if (gamepad2.b) { //Gamepad 2 - B Button
+
+            //Unimplemented
+
+        } else if (gamepad2.x) { //Gamepad 2 - X Button : Toggles continuous intake
+
             while (gamepad2.x) { }
             robotUtilities.continuousIntake();
-        } else if (gamepad2.y) {
+
+        } else if (gamepad2.y) { //Gamepad 2 - Y Button : Toggles continuous intake
+
             while (gamepad2.y) { }
             robotUtilities.continuousShoot();
-        } else if (gamepad2.left_bumper) {
+
+        } else if (gamepad2.left_bumper) { //Gamepad 2 - Left Bumper : Increases intake speed
+
             while (gamepad2.left_bumper) {}
             RobotConstants.intakeSpeed += 0.05;
-        } else if (gamepad2.right_bumper) {
+            RobotConstants.intakeSpeed = Range.clip(RobotConstants.intakeSpeed,
+                    RobotConstants.MIN_MOTOR_PWR, RobotConstants.MAX_MOTOR_PWR);
+
+        } else if (gamepad2.right_bumper) { //Gamepad 2 - Right Bumper : Decreases intake speed
+
             while (gamepad2.right_bumper) {}
             RobotConstants.intakeSpeed -= 0.05;
-        } else if (inThresholdRange(gamepad2.left_trigger)) {
+            RobotConstants.intakeSpeed = Range.clip(RobotConstants.intakeSpeed,
+                    RobotConstants.MIN_MOTOR_PWR, RobotConstants.MAX_MOTOR_PWR);
+
+        } else if (inThresholdRange(gamepad2.left_trigger)) { //Gamepad 2 - Left Trigger : Increases shoot speed
+
             while (inThresholdRange(gamepad2.left_trigger)) {}
             RobotConstants.shootSpeed += 0.05;
-        } else if (inThresholdRange(gamepad2.right_trigger)) {
+            RobotConstants.shootSpeed = Range.clip(RobotConstants.shootSpeed,
+                    RobotConstants.MIN_MOTOR_PWR, RobotConstants.MAX_MOTOR_PWR);
+
+        } else if (inThresholdRange(gamepad2.right_trigger)) { //Gamepad 2 - Right Trigger : Decreases shoot speed
+
             while (inThresholdRange(gamepad2.right_trigger)) {}
             RobotConstants.shootSpeed -= 0.05;
+            RobotConstants.shootSpeed = Range.clip(RobotConstants.shootSpeed,
+                    RobotConstants.MIN_MOTOR_PWR, RobotConstants.MAX_MOTOR_PWR);
+
         } else {
 //            robot.cap.setPower(0);
         }

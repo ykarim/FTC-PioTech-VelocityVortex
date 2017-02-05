@@ -33,6 +33,9 @@ public class RobotConstants {
     public static double shootSpeed = 1.0;
     public static double capSpeed = 1.0;
 
+    public static double MAX_MOTOR_PWR = 1.0;
+    public static double MIN_MOTOR_PWR = 0.0;
+
     static double SERVO_HOME = 0.3;
     static double SERVO_MIN = 0.2;
     static double SERVO_MAX = 0.9;
