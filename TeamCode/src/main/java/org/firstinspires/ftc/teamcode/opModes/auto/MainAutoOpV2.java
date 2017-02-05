@@ -14,8 +14,8 @@ import org.lasarobotics.vision.opmode.extensions.CameraControlExtension;
 import org.lasarobotics.vision.util.ScreenOrientation;
 import org.opencv.core.Size;
 
-@Autonomous (name = "AutoOp", group = "auto")
-public class MainAutoOp extends LinearVisionOpMode {
+@Autonomous (name = "AutoOp - 2", group = "auto")
+public class MainAutoOpV2 extends LinearVisionOpMode {
 
     private Robot leo = new Robot();
     private RobotMovement robotMovement = new RobotMovement(leo);
@@ -34,11 +34,7 @@ public class MainAutoOp extends LinearVisionOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            robotMovement.move(RobotMovement.Direction.NORTH, 12);
-            robotUtilities.shootDoubleBall(this);
-            addToTelemetry("Shot Two Balls");
-
-            robotMovement.move(RobotMovement.Direction.NORTH, 24);
+            robotMovement.move(RobotMovement.Direction.NORTH, 36);
             robotMovement.move(RobotMovement.Direction.NORTH, 24);
             addToTelemetry("Pushed cap ball");
 
@@ -50,6 +46,11 @@ public class MainAutoOp extends LinearVisionOpMode {
 
             robotUtilities.pushBeaconButton(beacon.getAnalysis(), teamColor);
             addToTelemetry("Pushed beacon 1");
+
+            robotMovement.move(RobotMovement.Direction.SOUTH, 12);
+            robotUtilities.shootDoubleBall(this);
+            addToTelemetry("Shot Two Balls");
+            robotMovement.move(RobotMovement.Direction.NORTH, 12);
 
             robotUtilities.alignWithLine(RobotMovement.Direction.WEST);
             addToTelemetry("Aligned with line for beacon 2");
