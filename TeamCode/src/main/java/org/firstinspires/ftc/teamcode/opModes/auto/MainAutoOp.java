@@ -27,6 +27,7 @@ public class MainAutoOp extends LinearVisionOpMode {
         waitFor(getDelay());
         waitForVisionStart();
         initVision();
+        leo.initAutoOp(this, hardwareMap);
 
         Robot.TeamColor teamColor = getTeamColor();
 
@@ -34,17 +35,19 @@ public class MainAutoOp extends LinearVisionOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            robotMovement.move(RobotMovement.Direction.NORTH, 12);
+            robotMovement.move(RobotMovement.Direction.NORTH, 6);
             robotUtilities.shootDoubleBall(this);
             addToTelemetry("Shot Two Balls");
 
-            robotMovement.move(RobotMovement.Direction.NORTH, 24);
-            robotMovement.move(RobotMovement.Direction.NORTH, 24);
+            robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, 180);
+            robotMovement.invertDirection();
+
+            robotMovement.move(RobotMovement.Direction.NORTH, 36);
             addToTelemetry("Pushed cap ball");
 
-            robotMovement.move(RobotMovement.Direction.SOUTH, 24);
             robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, 90);
-            robotMovement.move(RobotMovement.Direction.NORTH, 48);
+            robotMovement.move(RobotMovement.Direction.NORTH, 40);
+            robotMovement.move(RobotMovement.Direction.WEST, 12);
             robotUtilities.alignWithLine(RobotMovement.Direction.EAST, 5);
             addToTelemetry("Aligned with line for beacon 1");
 
@@ -58,7 +61,7 @@ public class MainAutoOp extends LinearVisionOpMode {
             addToTelemetry("Pushed beacon 2");
 
             robotMovement.move(RobotMovement.Direction.SOUTH, 6);
-            robotMovement.move(RobotMovement.Direction.EAST, 50);
+            robotMovement.move(RobotMovement.Direction.EAST, 96);
             addToTelemetry("Parked on corner vortex");
 
             addToTelemetry("DONE");

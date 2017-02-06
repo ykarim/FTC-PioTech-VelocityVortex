@@ -120,7 +120,7 @@ public class RobotUtilities {
 
     public void intakeBalls(boolean condition) {
         if (condition) {
-            robot.intake.setPower(RobotConstants.intakeSpeed);
+            robot.intake.setPower(-RobotConstants.intakeSpeed);
         } else {
             robot.intake.setPower(0);
         }
@@ -128,7 +128,7 @@ public class RobotUtilities {
 
     public void shootBalls(boolean condition) {
         if (condition) {
-            robot.shoot.setPower(RobotConstants.shootSpeed);
+            robot.shoot.setPower(-RobotConstants.shootSpeed);
         } else {
             robot.shoot.setPower(0);
         }
@@ -137,7 +137,7 @@ public class RobotUtilities {
     public void continuousIntake() {
         if (!continuousIntake) {
             continuousIntake = true;
-            robot.intake.setPower(RobotConstants.intakeSpeed);
+            robot.intake.setPower(-RobotConstants.intakeSpeed);
         } else {
             continuousIntake = false;
             robot.intake.setPower(0);
@@ -147,7 +147,7 @@ public class RobotUtilities {
     public void continuousShoot() {
         if (!continuousShoot) {
             continuousShoot = true;
-            robot.shoot.setPower(RobotConstants.shootSpeed);
+            robot.shoot.setPower(-RobotConstants.shootSpeed);
         } else {
             continuousShoot = false;
             robot.shoot.setPower(0);
@@ -163,11 +163,26 @@ public class RobotUtilities {
         toggleLightLED();
 
         RobotMovement robotMovement = new RobotMovement(robot);
+        RobotConstants.moveSpeed = 0.5;
         robotMovement.move(direction);
 
         while (robot.lightSensor.getLightDetected() < RobotConstants.whiteLineValue
+                && System.currentTimeMillis() != stop) {
+        }
+        robotMovement.move(RobotMovement.Direction.NONE);
+
+        if (robot.lightSensor.getLightDetected() < RobotConstants.perfectWhiteLineValue) {
+            if (direction == RobotMovement.Direction.EAST) {
+                robotMovement.move(RobotMovement.Direction.WEST);
+            } else {
+                robotMovement.move(RobotMovement.Direction.EAST);
+
+            }
+        }
+        while (robot.lightSensor.getLightDetected() < RobotConstants.perfectWhiteLineValue
                 && System.currentTimeMillis() != stop) { }
         robotMovement.move(RobotMovement.Direction.NONE);
+        RobotConstants.moveSpeed = 1.0;
         toggleLightLED();
     }
 
