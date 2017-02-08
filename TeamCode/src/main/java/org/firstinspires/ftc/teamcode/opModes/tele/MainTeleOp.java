@@ -46,12 +46,12 @@ public class MainTeleOp extends OpMode{
         } else if (gamepad1.x) { //Gamepad 1 - X Button : Toggles left beacon pusher
 
             while (gamepad1.x) {}
-//            robotUtilities.toggleBeaconPresser(robot.leftBeacon);
+            robotUtilities.toggleBeaconPresser(robot.leftBeacon);
 
         } else if (gamepad1.y) { //Gamepad 1 - Y Button : Toggles right beacon pusher
 
             while (gamepad1.y) {}
-//            robotUtilities.toggleBeaconPresser(robot.rightBeacon);
+            robotUtilities.toggleBeaconPresser(robot.rightBeacon);
 
         } else if (gamepad1.left_bumper) { // Gamepad 1 - Left Bumper : Inverts Robot Direction
 

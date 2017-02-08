@@ -56,7 +56,7 @@ public class Robot {
         initDrive();
         initBall();
 //        initCap();
-//        initServos();
+        initServos();
         initSensors();
 
         for(DcMotor driveMotor : driveMotors) {
@@ -84,7 +84,7 @@ public class Robot {
         initDrive();
         initBall();
 //        initCap();
-//        initServos();
+        initServos();
         initSensors();
 
         for(DcMotor driveMotor : driveMotors) {
@@ -116,6 +116,7 @@ public class Robot {
         initDrive();
         initBall();
 //        initCap();
+        initServos();
         initSensors();
 
         for(DcMotor driveMotor : driveMotors) {

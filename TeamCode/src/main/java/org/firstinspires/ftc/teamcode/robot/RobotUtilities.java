@@ -30,30 +30,22 @@ public class RobotUtilities {
     public void toggleBeaconPresser(Servo servo) {
         if (servo == robot.leftBeacon) {
             if (!leftBeaconPusherExtended) {
-                while (RobotConstants.leftBeaconPusherPosition != RobotConstants.SERVO_MAX) {
-                    RobotConstants.leftBeaconPusherPosition += RobotConstants.beaconPusherSpeed;
-                    servo.setPosition(RobotConstants.leftBeaconPusherPosition);
-                }
+                RobotConstants.leftBeaconPusherPosition = RobotConstants.SERVO_MAX;
+                servo.setPosition(RobotConstants.leftBeaconPusherPosition);
                 leftBeaconPusherExtended = true;
             } else {
-                while (RobotConstants.leftBeaconPusherPosition != RobotConstants.SERVO_MIN) {
-                    RobotConstants.leftBeaconPusherPosition -= RobotConstants.beaconPusherSpeed;
-                    servo.setPosition(RobotConstants.leftBeaconPusherPosition);
-                }
+                RobotConstants.leftBeaconPusherPosition = RobotConstants.SERVO_MIN;
+                servo.setPosition(RobotConstants.leftBeaconPusherPosition);
                 leftBeaconPusherExtended = false;
             }
         } else if (servo == robot.rightBeacon) {
             if (!rightBeaconPusherExtended) {
-                while (RobotConstants.rightBeaconPusherPosition != RobotConstants.SERVO_MAX + RobotConstants.beaconPusherSpeed) {
-                    RobotConstants.rightBeaconPusherPosition += RobotConstants.beaconPusherSpeed;
-                    servo.setPosition(RobotConstants.rightBeaconPusherPosition);
-                }
+                RobotConstants.rightBeaconPusherPosition = RobotConstants.SERVO_MAX;
+                servo.setPosition(RobotConstants.rightBeaconPusherPosition);
                 rightBeaconPusherExtended = true;
             } else {
-                while (RobotConstants.rightBeaconPusherPosition != RobotConstants.SERVO_MIN) {
-                    RobotConstants.rightBeaconPusherPosition -= RobotConstants.beaconPusherSpeed;
-                    servo.setPosition(RobotConstants.rightBeaconPusherPosition);
-                }
+                RobotConstants.rightBeaconPusherPosition = RobotConstants.SERVO_MIN;
+                servo.setPosition(RobotConstants.rightBeaconPusherPosition);
                 rightBeaconPusherExtended = false;
             }
         }
