@@ -36,12 +36,12 @@ public class RobotConstants {
     public static double MAX_MOTOR_PWR = 1.0;
     public static double MIN_MOTOR_PWR = 0.0;
 
-    static double SERVO_HOME = 0.3;
+    static double SERVO_HOME = 0.2;
     static double SERVO_MIN = 0.2;
     static double SERVO_MAX = 0.9;
     static double leftBeaconPusherPosition = SERVO_HOME;
     static double rightBeaconPusherPosition = SERVO_HOME;
-    static double beaconPusherSpeed = 0.05;
+    public static double beaconPerfectPos = 0.5;
 
     public static int shotWaitPeriod = 3; //seconds to wait before shooting ball
 

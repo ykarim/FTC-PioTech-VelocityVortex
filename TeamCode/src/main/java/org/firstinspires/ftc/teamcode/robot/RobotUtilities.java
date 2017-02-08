@@ -30,7 +30,7 @@ public class RobotUtilities {
     public void toggleBeaconPresser(Servo servo) {
         if (servo == robot.leftBeacon) {
             if (!leftBeaconPusherExtended) {
-                RobotConstants.leftBeaconPusherPosition = RobotConstants.SERVO_MAX;
+                RobotConstants.leftBeaconPusherPosition = RobotConstants.beaconPerfectPos;
                 servo.setPosition(RobotConstants.leftBeaconPusherPosition);
                 leftBeaconPusherExtended = true;
             } else {
@@ -40,7 +40,7 @@ public class RobotUtilities {
             }
         } else if (servo == robot.rightBeacon) {
             if (!rightBeaconPusherExtended) {
-                RobotConstants.rightBeaconPusherPosition = RobotConstants.SERVO_MAX;
+                RobotConstants.rightBeaconPusherPosition = RobotConstants.beaconPerfectPos;
                 servo.setPosition(RobotConstants.rightBeaconPusherPosition);
                 rightBeaconPusherExtended = true;
             } else {
