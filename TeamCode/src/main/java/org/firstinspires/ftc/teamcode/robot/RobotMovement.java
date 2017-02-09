@@ -265,4 +265,14 @@ public class RobotMovement {
         }
         currentOrientation = orientation;
     }
+
+    public void invertDirection() {
+        if (RobotConstants.inverted) {
+            orient(Orientation.FRONT);
+            RobotConstants.inverted = false;
+        } else {
+            orient(Orientation.BACK);
+            RobotConstants.inverted = true;
+        }
+    }
 }
