@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.robot;
 
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -7,6 +10,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.utils.PhoneSensor;
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 
 import java.util.ArrayList;
@@ -33,6 +37,10 @@ public class Robot {
 
     public OpticalDistanceSensor lightSensor = null; //Distance Sensor (Config == "OPTICAL")
 
+    public PhoneSensor gyroSensor = null;
+    public PhoneSensor accelSensor = null;
+    public PhoneSensor magSensor = null;
+
     public enum TeamColor {
         RED("R"), BLUE("B"), NONE("N");
 
@@ -58,6 +66,7 @@ public class Robot {
 //        initCap();
         initServos();
         initSensors();
+        initPhoneSensors();
 
         for(DcMotor driveMotor : driveMotors) {
             driveMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -86,6 +95,7 @@ public class Robot {
 //        initCap();
         initServos();
         initSensors();
+        initPhoneSensors();
 
         for(DcMotor driveMotor : driveMotors) {
             driveMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -118,6 +128,7 @@ public class Robot {
 //        initCap();
         initServos();
         initSensors();
+        initPhoneSensors();
 
         for(DcMotor driveMotor : driveMotors) {
             driveMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -170,6 +181,19 @@ public class Robot {
 
     private void initSensors() {
         lightSensor = hwMap.opticalDistanceSensor.get(RobotConstants.opticalSensor);
+    }
+
+    /**
+     * Note: Because all are different initializations, may not work
+     * May have to make FTCRobotControllerActivity implement SensorEvent Listener
+     */
+    private void initPhoneSensors() {
+        gyroSensor = new PhoneSensor(Sensor.TYPE_GYROSCOPE,
+                SensorManager.SENSOR_DELAY_FASTEST, hwMap);
+        accelSensor = new PhoneSensor(Sensor.TYPE_ACCELEROMETER,
+                SensorManager.SENSOR_DELAY_FASTEST, hwMap);
+        magSensor = new PhoneSensor(Sensor.TYPE_MAGNETIC_FIELD,
+                SensorManager.SENSOR_DELAY_FASTEST, hwMap);
     }
 
     public void setDriveMotorMode(DcMotor.RunMode mode) {
