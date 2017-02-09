@@ -35,14 +35,14 @@ public class ODSTest extends OpMode{
         updateTelemetryData();
 
         robotMovement.move(convertGamepadToMovement());
-        if (gamepad1.a) {
-            while (gamepad1.a) {}
+        if (gamepad1.x) {
+            while (gamepad1.x) {}
             robotUtilities.alignWithLine(RobotMovement.Direction.WEST, 5);
+        } else if (gamepad1.b) {
+            while (gamepad1.b) {}
+            robotUtilities.alignWithLine(RobotMovement.Direction.EAST, 5);
         } else if (gamepad1.y) {
             while (gamepad1.y) {}
-            robotUtilities.alignWithLine(RobotMovement.Direction.EAST, 5);
-        } else if (gamepad1.x) {
-            while (gamepad1.x) {}
             robotUtilities.toggleLightLED();
         }
     }
