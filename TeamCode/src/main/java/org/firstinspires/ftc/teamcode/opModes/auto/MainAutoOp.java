@@ -2,11 +2,12 @@ package org.firstinspires.ftc.teamcode.opModes.auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
+import org.firstinspires.ftc.teamcode.opModes.auto.utils.Path1;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.RobotConstants;
 import org.firstinspires.ftc.teamcode.robot.RobotMovement;
 import org.firstinspires.ftc.teamcode.robot.RobotUtilities;
+import org.firstinspires.ftc.teamcode.utils.OpModeUtils;
 import org.lasarobotics.vision.android.Cameras;
 import org.lasarobotics.vision.ftc.resq.Beacon;
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
@@ -21,50 +22,37 @@ public class MainAutoOp extends LinearVisionOpMode {
     private RobotMovement robotMovement = new RobotMovement(leo);
     private RobotUtilities robotUtilities = new RobotUtilities(leo);
     private final String TAG = RobotConstants.autoOpTag + "Main : ";
+    private Path1 path = new Path1(leo);
 
     @Override
     public void runOpMode() throws InterruptedException{
-        waitFor(getDelay());
+        OpModeUtils.waitFor(this, OpModeUtils.getDelay());
         waitForVisionStart();
         initVision();
         leo.initAutoOp(this, hardwareMap);
 
-        Robot.TeamColor teamColor = getTeamColor();
+        Robot.TeamColor teamColor = OpModeUtils.getTeamColor();
 
-        addToTelemetry("READY on " + teamColor.getTeamColor());
+        OpModeUtils.addToTelemetry(this, TAG, "READY on " + teamColor.getTeamColor());
         waitForStart();
 
         while (opModeIsActive()) {
-            robotMovement.move(RobotMovement.Direction.NORTH, 6);
-            robotUtilities.shootDoubleBall(this);
-            addToTelemetry("Shot Two Balls");
+            path.goToShoot(this);
+            OpModeUtils.addToTelemetry(this, "Shot Two Balls");
 
-            robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, 180);
-            robotMovement.invertDirection();
+            robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, 270);
+            robotMovement.orient(RobotMovement.Orientation.LEFT);
 
-            robotMovement.move(RobotMovement.Direction.NORTH, 36);
-            addToTelemetry("Pushed cap ball");
+            path.goForBeaconOne(this, beacon.getAnalysis(), OpModeUtils.getTeamColor());
+            OpModeUtils.addToTelemetry(this, TAG, "Pushed beacon 1");
 
-            robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, 90);
-            robotMovement.move(RobotMovement.Direction.NORTH, 40);
-            robotMovement.move(RobotMovement.Direction.WEST, 12);
-            robotUtilities.alignWithLine(RobotMovement.Direction.EAST, 5);
-            addToTelemetry("Aligned with line for beacon 1");
+            path.goForBeaconTwo(this, beacon.getAnalysis(), OpModeUtils.getTeamColor());
+            OpModeUtils.addToTelemetry(this, TAG, "Pushed beacon 2");
 
-            robotUtilities.pushBeaconButton(beacon.getAnalysis(), teamColor);
-            addToTelemetry("Pushed beacon 1");
+            path.goForVortex(OpModeUtils.getTeamColor());
+            OpModeUtils.addToTelemetry(this, TAG, "Parked on corner vortex");
 
-            robotUtilities.alignWithLine(RobotMovement.Direction.WEST, 5);
-            addToTelemetry("Aligned with line for beacon 2");
-
-            robotUtilities.pushBeaconButton(beacon.getAnalysis(), teamColor);
-            addToTelemetry("Pushed beacon 2");
-
-            robotMovement.move(RobotMovement.Direction.SOUTH, 6);
-            robotMovement.move(RobotMovement.Direction.EAST, 96);
-            addToTelemetry("Parked on corner vortex");
-
-            addToTelemetry("DONE");
+            OpModeUtils.addToTelemetry(this, TAG, "DONE");
             requestOpModeStop();
         }
     }
@@ -88,53 +76,5 @@ public class MainAutoOp extends LinearVisionOpMode {
 
         cameraControl.setColorTemperature(CameraControlExtension.ColorTemperature.AUTO);
         cameraControl.setAutoExposureCompensation();
-    }
-
-    /**
-     * Reads Team Color from FtcRobotControllerActivity
-     * @return Robot.TeamColor
-     */
-    private Robot.TeamColor getTeamColor() {
-        boolean blueChecked = FtcRobotControllerActivity.blueTeamColor.isChecked();
-        boolean redChecked = FtcRobotControllerActivity.redTeamColor.isChecked();
-
-        if(blueChecked) {
-            return Robot.TeamColor.BLUE;
-        } else if(redChecked) {
-            return Robot.TeamColor.RED;
-        }
-        return Robot.TeamColor.NONE;
-    }
-
-    /**
-     * Returns int of sec to wait before running program
-     * @return
-     */
-    private int getDelay() {
-        try {
-            return Integer.parseInt(FtcRobotControllerActivity.autoDelay.getText().toString());
-        } catch (NumberFormatException nfe) {
-            return 0;
-        }
-    }
-
-    private void addToTelemetry (String... msg) {
-        for (String text : msg) {
-            telemetry.addData(TAG, text);
-        }
-        telemetry.update();
-    }
-    /**
-     * Wait a period of time. This will be non-blocking, so Thread away!
-     * @param sec time to wait in seconds.
-     */
-    private void waitFor(int sec) {
-        long millis = sec * 1000;
-        long stopTime = System.currentTimeMillis() + millis;
-        while(opModeIsActive() && System.currentTimeMillis() < stopTime) {
-            try {
-                waitOneFullHardwareCycle();
-            } catch(Exception ex) {}
-        }
     }
 }
