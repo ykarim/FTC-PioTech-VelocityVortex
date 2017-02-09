@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.robot;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.lasarobotics.vision.ftc.resq.Beacon;
@@ -150,41 +151,48 @@ public class RobotUtilities {
      * Aligns ODS by moving left or right given which side line is located on
      * @param direction
      */
-    public void alignWithLine(RobotMovement.Direction direction, int timeoutSec) {
+    public void alignWithLine(LinearOpMode opMode, RobotMovement.Direction direction, int timeoutSec) {
         long stop = System.currentTimeMillis() + (timeoutSec * 1000);
-        toggleLightLED();
+
+        if (!lightLED) {
+            toggleLightLED();
+        }
 
         RobotMovement robotMovement = new RobotMovement(robot);
         RobotConstants.moveSpeed = 0.5;
         robotMovement.move(direction);
 
-        while (robot.lightSensor.getLightDetected() < RobotConstants.whiteLineValue
-                && System.currentTimeMillis() != stop) {
-        }
+        while (opMode.opModeIsActive() &&
+                robot.lightSensor.getLightDetected() < RobotConstants.whiteLineValue
+                && System.currentTimeMillis() < stop) {}
         robotMovement.move(RobotMovement.Direction.NONE);
 
-        if (robot.lightSensor.getLightDetected() < RobotConstants.perfectWhiteLineValue) {
+        if (robot.lightSensor.getLightDetected() < RobotConstants.perfectWhiteLineValue
+                && System.currentTimeMillis() < stop) {
             if (direction == RobotMovement.Direction.EAST) {
                 robotMovement.move(RobotMovement.Direction.WEST);
             } else {
                 robotMovement.move(RobotMovement.Direction.EAST);
-
             }
+
+            while (opMode.opModeIsActive() &&
+                    robot.lightSensor.getLightDetected() < RobotConstants.perfectWhiteLineValue
+                    && System.currentTimeMillis() < stop) { }
+            robotMovement.move(RobotMovement.Direction.NONE);
         }
-        while (robot.lightSensor.getLightDetected() < RobotConstants.perfectWhiteLineValue
-                && System.currentTimeMillis() != stop) { }
-        robotMovement.move(RobotMovement.Direction.NONE);
         RobotConstants.moveSpeed = 1.0;
         toggleLightLED();
     }
 
-    private void waitFor(LinearVisionOpMode opMode, int sec) {
-        long millis = sec * 1000;
+    private void waitFor(LinearVisionOpMode opMode, double sec) {
+        long millis = Math.round(sec * 1000);
         long stopTime = currentTimeMillis() + millis;
         while(opMode.opModeIsActive() && currentTimeMillis() < stopTime) {
             try {
                 opMode.waitOneFullHardwareCycle();
-            } catch(Exception ex) {}
+            } catch(Exception ex) {
+                opMode.telemetry.addData("ERROR", ex.getMessage());
+            }
         }
     }
 }

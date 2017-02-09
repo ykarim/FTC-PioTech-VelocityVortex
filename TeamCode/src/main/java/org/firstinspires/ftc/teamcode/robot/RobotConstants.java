@@ -43,7 +43,7 @@ public class RobotConstants {
     static double rightBeaconPusherPosition = SERVO_HOME;
     public static double beaconPerfectPos = 0.5;
 
-    public static int shotWaitPeriod = 3; //seconds to wait before shooting ball
+    public static double shotWaitPeriod = 2.5; //seconds to wait before shooting ball
 
     public static double gamepadThreshold = 0.15;
 
