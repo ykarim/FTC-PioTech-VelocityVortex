@@ -77,12 +77,15 @@ public class OpModeUtils {
      * @param sec time to wait in seconds.
      */
     public static void waitFor(LinearVisionOpMode opMode, int sec) {
-        long millis = sec * 1000;
-        long stopTime = System.currentTimeMillis() + millis;
-        while(opMode.opModeIsActive() && System.currentTimeMillis() < stopTime) {
-            try {
-                opMode.waitOneFullHardwareCycle();
-            } catch(Exception ex) {}
+        if (sec != 0) {
+            long millis = sec * 1000;
+            long stopTime = System.currentTimeMillis() + millis;
+            while (opMode.opModeIsActive() && System.currentTimeMillis() < stopTime) {
+                try {
+                    opMode.waitOneFullHardwareCycle();
+                } catch (Exception ex) {
+                }
+            }
         }
     }
 }

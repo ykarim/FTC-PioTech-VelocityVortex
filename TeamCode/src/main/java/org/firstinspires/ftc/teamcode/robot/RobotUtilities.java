@@ -17,7 +17,7 @@ public class RobotUtilities {
     private boolean leftBeaconPusherExtended = false;
     private boolean rightBeaconPusherExtended = false;
 
-    private boolean lightLED = false;
+    private boolean lightLED = true;
 
     public RobotUtilities(Robot robot) {
         this.robot = robot;
@@ -200,25 +200,13 @@ public class RobotUtilities {
         }
 
         RobotMovement robotMovement = new RobotMovement(robot);
-        RobotConstants.moveSpeed = 0.5;
+        RobotConstants.moveSpeed = 0.4;
         robotMovement.move(direction);
 
         while (robot.lightSensor.getLightDetected() < RobotConstants.whiteLineValue
                 && System.currentTimeMillis() < stop) {}
         robotMovement.move(RobotMovement.Direction.NONE);
 
-        if (robot.lightSensor.getLightDetected() < RobotConstants.perfectWhiteLineValue
-                && System.currentTimeMillis() < stop) {
-            if (direction == RobotMovement.Direction.EAST) {
-                robotMovement.move(RobotMovement.Direction.WEST);
-            } else {
-                robotMovement.move(RobotMovement.Direction.EAST);
-            }
-
-            while (robot.lightSensor.getLightDetected() < RobotConstants.perfectWhiteLineValue
-                    && System.currentTimeMillis() < stop) { }
-            robotMovement.move(RobotMovement.Direction.NONE);
-        }
         RobotConstants.moveSpeed = 1.0;
         toggleLightLED();
     }

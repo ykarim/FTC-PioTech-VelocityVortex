@@ -178,70 +178,70 @@ public class RobotMovement {
         DcMotor tempBR = robot.br;
 
         switch (orientation) {
-            case FRONT:
-                if (currentOrientation == Orientation.FRONT) {
-                    //Do nothing
-                } else if (currentOrientation == Orientation.BACK) {
-                    robot.fl = tempBR;
-                    robot.fr = tempBL;
-                    robot.bl = tempFR;
-                    robot.br = tempFL;
-                } else if (currentOrientation == Orientation.RIGHT) {
-                    robot.fl = tempBL;
-                    robot.fr = tempFL;
-                    robot.bl = tempBR;
-                    robot.br = tempFR;
-                } else if (currentOrientation == Orientation.LEFT) {
-                    robot.fl = tempFR;
-                    robot.fr = tempBR;
-                    robot.bl = tempFL;
-                    robot.br = tempBL;
-                }
-
-                break;
             case BACK:
                 if (currentOrientation == Orientation.FRONT) {
+                    //Do nothing
+                } else if (currentOrientation == Orientation.BACK) {
                     robot.fl = tempBR;
                     robot.fr = tempBL;
                     robot.bl = tempFR;
                     robot.br = tempFL;
-                } else if (currentOrientation == Orientation.BACK) {
-                    //Do nothing
                 } else if (currentOrientation == Orientation.RIGHT) {
                     robot.fl = tempBL;
                     robot.fr = tempFL;
                     robot.bl = tempBR;
                     robot.br = tempFR;
                 } else if (currentOrientation == Orientation.LEFT) {
-                    robot.fl = tempBL;
-                    robot.fr = tempFL;
-                    robot.bl = tempBR;
-                    robot.br = tempFR;
-                }
-
-                break;
-            case RIGHT:
-                if (currentOrientation == Orientation.FRONT) {
                     robot.fl = tempFR;
                     robot.fr = tempBR;
                     robot.bl = tempFL;
                     robot.br = tempBL;
-                } else if (currentOrientation == Orientation.BACK) {
-                    robot.fl = tempBL;
-                    robot.fr = tempFL;
-                    robot.bl = tempBR;
-                    robot.br = tempFR;
-                } else if (currentOrientation == Orientation.RIGHT) {
-                    //Do nothing
-                } else if (currentOrientation == Orientation.LEFT) {
+                }
+
+                break;
+            case FRONT:
+                if (currentOrientation == Orientation.FRONT) {
                     robot.fl = tempBR;
                     robot.fr = tempBL;
                     robot.bl = tempFR;
                     robot.br = tempFL;
+                } else if (currentOrientation == Orientation.BACK) {
+                    //Do nothing
+                } else if (currentOrientation == Orientation.RIGHT) {
+                    robot.fl = tempBL;
+                    robot.fr = tempFL;
+                    robot.bl = tempBR;
+                    robot.br = tempFR;
+                } else if (currentOrientation == Orientation.LEFT) {
+                    robot.fl = tempBL;
+                    robot.fr = tempFL;
+                    robot.bl = tempBR;
+                    robot.br = tempFR;
                 }
 
                 break;
             case LEFT:
+                if (currentOrientation == Orientation.FRONT) {
+                    robot.fl = tempFR;
+                    robot.fr = tempBR;
+                    robot.bl = tempFL;
+                    robot.br = tempBL;
+                } else if (currentOrientation == Orientation.BACK) {
+                    robot.fl = tempBL;
+                    robot.fr = tempFL;
+                    robot.bl = tempBR;
+                    robot.br = tempFR;
+                } else if (currentOrientation == Orientation.RIGHT) {
+                    //Do nothing
+                } else if (currentOrientation == Orientation.LEFT) {
+                    robot.fl = tempBR;
+                    robot.fr = tempBL;
+                    robot.bl = tempFR;
+                    robot.br = tempFL;
+                }
+
+                break;
+            case RIGHT:
                 if (currentOrientation == Orientation.FRONT) {
                     robot.fl = tempBL;
                     robot.fr = tempFL;

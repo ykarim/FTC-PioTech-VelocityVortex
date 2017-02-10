@@ -22,7 +22,6 @@ public class MainAutoOp extends LinearVisionOpMode {
     private RobotMovement robotMovement = new RobotMovement(leo);
     private RobotUtilities robotUtilities = new RobotUtilities(leo);
     private final String TAG = RobotConstants.autoOpTag + "Main : ";
-    private Path1 path = new Path1(leo);
 
     @Override
     public void runOpMode() throws InterruptedException{
@@ -37,19 +36,33 @@ public class MainAutoOp extends LinearVisionOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            path.goToShoot(this);
+            //Shoot Double Perfect at 13v
+            robotMovement.move(RobotMovement.Direction.NORTH, 12);
+            robotUtilities.shootDoubleBall(this, 10);
             OpModeUtils.addToTelemetry(this, "Shot Two Balls");
 
-            robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, 270);
-            robotMovement.orient(RobotMovement.Orientation.LEFT);
+            robotMovement.move(RobotMovement.Direction.NORTH, 18);
 
-            path.goForBeaconOne(this, beacon.getAnalysis(), OpModeUtils.getTeamColor());
+            robotMovement.move(RobotMovement.Direction.EAST, 12);
+            robotMovement.move(RobotMovement.Direction.NORTH, 36);
+
+            robotMovement.move(RobotMovement.Direction.EAST, 12);
+
+            robotMovement.orient(RobotMovement.Orientation.RIGHT);
+            robotUtilities.alignWithLine(this, RobotMovement.Direction.WEST, 5);
+            robotUtilities.pushBeaconButton(beacon.getAnalysis(), teamColor);
             OpModeUtils.addToTelemetry(this, TAG, "Pushed beacon 1");
 
-            path.goForBeaconTwo(this, beacon.getAnalysis(), OpModeUtils.getTeamColor());
+//            path.goForBeaconTwo(this, beacon.getAnalysis(), OpModeUtils.getTeamColor());
+            robotUtilities.alignWithLine(this, RobotMovement.Direction.WEST, 7);
+            robotUtilities.pushBeaconButton(beacon.getAnalysis(), teamColor);
             OpModeUtils.addToTelemetry(this, TAG, "Pushed beacon 2");
 
-            path.goForVortex(OpModeUtils.getTeamColor());
+//            path.goForVortex(OpModeUtils.getTeamColor());
+            if (teamColor == Robot.TeamColor.BLUE) {
+                robotMovement.move(RobotMovement.Direction.WEST, 6);
+            }
+            robotMovement.move(RobotMovement.Direction.SOUTH, 96);
             OpModeUtils.addToTelemetry(this, TAG, "Parked on corner vortex");
 
             OpModeUtils.addToTelemetry(this, TAG, "DONE");

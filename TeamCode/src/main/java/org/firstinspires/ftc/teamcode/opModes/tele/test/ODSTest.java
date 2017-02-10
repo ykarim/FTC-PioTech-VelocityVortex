@@ -26,6 +26,7 @@ public class ODSTest extends OpMode{
         robotUtilities.toggleLightLED();
         gamepad1.setJoystickDeadzone(.1f);
         gamepad2.setJoystickDeadzone(.1f);
+        robotMovement.orient(RobotMovement.Orientation.RIGHT);
 
         telemetry.addData(TAG, "Status : READY");
     }

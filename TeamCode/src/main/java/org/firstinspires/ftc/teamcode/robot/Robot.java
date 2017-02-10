@@ -128,7 +128,7 @@ public class Robot {
 //        initCap();
         initServos();
         initSensors();
-        initPhoneSensors();
+//        initPhoneSensors(); Doesn't work for some reason. Takes too long
 
         for(DcMotor driveMotor : driveMotors) {
             driveMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -181,6 +181,7 @@ public class Robot {
 
     private void initSensors() {
         lightSensor = hwMap.opticalDistanceSensor.get(RobotConstants.opticalSensor);
+        lightSensor.enableLed(true);
     }
 
     /**
