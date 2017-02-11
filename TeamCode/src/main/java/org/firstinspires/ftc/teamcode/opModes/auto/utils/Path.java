@@ -1,12 +1,9 @@
 package org.firstinspires.ftc.teamcode.opModes.auto.utils;
 
-import org.firstinspires.ftc.teamcode.robot.Robot;
-import org.lasarobotics.vision.ftc.resq.Beacon;
-import org.lasarobotics.vision.opmode.LinearVisionOpMode;
+public interface Path {
 
-public abstract class Path {
+    void step1();
 
-    public abstract void goForBeaconOne(LinearVisionOpMode opMode, Beacon.BeaconAnalysis analysis,
-                                        Robot.TeamColor teamColor);
+    void setBeaconAnalysis(boolean leftBlue, boolean rightBlue);
 
 }
