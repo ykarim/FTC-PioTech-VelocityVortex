@@ -18,7 +18,6 @@ public class ODSTest extends OpMode{
     private RobotUtilities robotUtilities = new RobotUtilities(robot);
     private String TAG = RobotConstants.teleOpTag + "ODS Test : ";
 
-
     @Override
     public void init() {
         telemetry.addData(TAG, "Status : INITIALIZING");

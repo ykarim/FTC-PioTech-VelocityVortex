@@ -32,45 +32,35 @@ public class MainTeleOp extends OpMode{
         updateTelemetryData();
 
         robotMovement.move(convertGamepadToMovement());
-        convertGamepadToIntake(-gamepad2.left_stick_y);
-        convertGamepadToShoot(-gamepad2.right_stick_y);
+        convertGamepadToIntake(-gamepad1.right_stick_y);
+        convertGamepadToShoot(-gamepad2.left_stick_y);
+//        convertGamepadToCap(-gamepad2.right_stick_y);
 
         if (gamepad1.a) { //Gamepad 1 - X Button
 
             //Unimplemented
 
+        } else if (gamepad1.x) { //Gamepad 1 - X Button
+
+            //Unimplemented
+
         } else if (gamepad1.b) { //Gamepad 1 - B Button
 
-            //Unimplemented
+            //Unimp
 
-        } else if (gamepad1.x) { //Gamepad 1 - X Button : Toggles left beacon pusher
+        } else if (gamepad1.y) { //Gamepad 1 - Y Button
 
-            while (gamepad1.x) {}
-            robotUtilities.toggleBeaconPresser(robot.leftBeacon);
+            //Unimp
 
-        } else if (gamepad1.y) { //Gamepad 1 - Y Button : Toggles right beacon pusher
-
-            while (gamepad1.y) {}
-            robotUtilities.toggleBeaconPresser(robot.rightBeacon);
-
-        } else if (gamepad1.left_bumper) { // Gamepad 1 - Left Bumper : Inverts Robot Direction
+        } else if (gamepad1.left_bumper) { // Gamepad 1 - Left Bumper : Toggles left beacon pusher
 
             while (gamepad1.left_bumper) {}
-            robotMovement.invertDirection();
+            robotUtilities.toggleBeaconPresser(robot.leftBeacon);
 
-        } else if (gamepad1.right_bumper) { //Gamepad 1 - Right Bumper : Movement Kill Switch
+        } else if (gamepad1.right_bumper) { //Gamepad 1 - Right Bumper : Toggles right beacon pusher
 
-            while (gamepad1.right_bumper) {
-            }
-            robotMovement.move(RobotMovement.Direction.NONE);
-
-        } else if (inThresholdRange(gamepad1.left_trigger)) { //Gamepad 1 - Left Trigger
-
-            //Unimplemented
-
-        } else if (inThresholdRange(gamepad1.right_trigger)) { //Gamepad 1 - Right Trigger
-
-            //Unimplemented
+            while (gamepad1.right_bumper) {}
+            robotUtilities.toggleBeaconPresser(robot.rightBeacon);
 
         } else if (gamepad2.a) { //Gamepad 2 - A Button
 
@@ -118,8 +108,6 @@ public class MainTeleOp extends OpMode{
             RobotConstants.shootSpeed = Range.clip(RobotConstants.shootSpeed,
                     RobotConstants.MIN_MOTOR_PWR, RobotConstants.MAX_MOTOR_PWR);
 
-        } else {
-//            robot.cap.setPower(0);
         }
     }
 

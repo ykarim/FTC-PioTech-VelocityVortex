@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.teamcode.utils.PhoneSensor;
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
@@ -36,6 +37,7 @@ public class Robot {
     public ArrayList<DcMotor> ballMotors = new ArrayList<>(); //stores all ball motors (intake, shoot)
 
     public OpticalDistanceSensor lightSensor = null; //Distance Sensor (Config == "OPTICAL")
+    public VoltageSensor voltageSensor = null; //Voltage Sensor (Config == "Motor Controller 1")
 
     public PhoneSensor gyroSensor = null;
     public PhoneSensor accelSensor = null;
@@ -182,6 +184,8 @@ public class Robot {
     private void initSensors() {
         lightSensor = hwMap.opticalDistanceSensor.get(RobotConstants.opticalSensor);
         lightSensor.enableLed(true);
+
+        voltageSensor = hwMap.voltageSensor.get(RobotConstants.voltageSensor);
     }
 
     /**
