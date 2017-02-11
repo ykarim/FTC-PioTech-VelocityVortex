@@ -238,4 +238,12 @@ public class RobotUtilities {
             alignWithLine(oppositeDir, timeoutSec);
         }
     }
+
+    /**
+     * May need to convert level to desired units
+     * @return distance from target
+     */
+    public double getUltrasonicLevel() {
+        return robot.ultrasonicSensor.getUltrasonicLevel();
+    }
 }

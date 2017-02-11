@@ -20,6 +20,7 @@ public class RobotConstants {
 
     static String opticalSensor = "OPTICAL";
     static String voltageSensor = "Motor Controller 1";
+    static String ultrasonicSensor = "ULTRASONIC";
 
     static final int ENCODER_TICKS_PER_REV = 1120;
     static final double WHEEL_DIAMETER = 3.0;

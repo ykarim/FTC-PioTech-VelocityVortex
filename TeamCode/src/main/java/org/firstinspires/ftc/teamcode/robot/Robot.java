@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.teamcode.utils.PhoneSensor;
@@ -38,6 +39,7 @@ public class Robot {
 
     public OpticalDistanceSensor lightSensor = null; //Distance Sensor (Config == "OPTICAL")
     public VoltageSensor voltageSensor = null; //Voltage Sensor (Config == "Motor Controller 1")
+    public UltrasonicSensor ultrasonicSensor = null; //Ultrasonic Sensor (Config == "ULTRASONIC")
 
     public PhoneSensor gyroSensor = null;
     public PhoneSensor accelSensor = null;
@@ -186,6 +188,8 @@ public class Robot {
         lightSensor.enableLed(true);
 
         voltageSensor = hwMap.voltageSensor.get(RobotConstants.voltageSensor);
+
+        ultrasonicSensor = hwMap.ultrasonicSensor.get(RobotConstants.ultrasonicSensor);
     }
 
     /**
