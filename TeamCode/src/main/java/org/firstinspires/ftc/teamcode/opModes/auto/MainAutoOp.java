@@ -37,30 +37,45 @@ public class MainAutoOp extends LinearVisionOpMode {
         while (opModeIsActive()) {
             //Shoot Double Perfect at 13v
             robotMovement.move(RobotMovement.Direction.NORTH, 12);
+            //TODO: Fix rotation here
             robotUtilities.shootDoubleBall(this, 10);
             OpModeUtils.addToTelemetry(this, "Shot Two Balls");
 
-            //Get Beacon 1
+            //Get a bit ahead of the beacon
             robotMovement.move(RobotMovement.Direction.NORTH, 18);
-
-            robotMovement.move(RobotMovement.Direction.EAST, 12);
+            robotMovement.move(RobotMovement.Direction.EAST, 24);
             robotMovement.move(RobotMovement.Direction.NORTH, 36);
-
             robotMovement.move(RobotMovement.Direction.EAST, 12);
 
+            //Change orientation
             robotMovement.orient(RobotMovement.Orientation.RIGHT);
+
+            //Align with line now on right
             robotUtilities.alignWithLine(this, RobotMovement.Direction.EAST, 5);
+
+            //TODO: Fix rotation here and maybe realign
+
+            //Push beacon one
             robotUtilities.pushBeaconButton(robotMovement, beacon.getAnalysis(), teamColor);
             OpModeUtils.addToTelemetry(this, TAG, "Pushed beacon 1");
 
-//            path.goForBeaconTwo(this, beacon.getAnalysis(), OpModeUtils.getTeamColor());
+            //Align with line for beacon two
             robotUtilities.alignWithLine(this, RobotMovement.Direction.WEST, 7);
+
+            //TODO: Fix rotation here and realign if necessary
+
+            //Push beacon two
             robotUtilities.pushBeaconButton(robotMovement, beacon.getAnalysis(), teamColor);
             OpModeUtils.addToTelemetry(this, TAG, "Pushed beacon 2");
 
-//            path.goForVortex(OpModeUtils.getTeamColor());
+            //Reset orientation
+            robotMovement.orient(RobotMovement.Orientation.FRONT);
+
+            // Move away from beacon back
             if (teamColor == Robot.TeamColor.BLUE) {
                 robotMovement.move(RobotMovement.Direction.WEST, 6);
+            } else if (teamColor == Robot.TeamColor.RED) {
+                robotMovement.move(RobotMovement.Direction.EAST, 6);
             }
             robotMovement.move(RobotMovement.Direction.SOUTH, 96);
             OpModeUtils.addToTelemetry(this, TAG, "Parked on corner vortex");
