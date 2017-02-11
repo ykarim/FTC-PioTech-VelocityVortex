@@ -38,7 +38,7 @@ public class RobotConstants {
 
     public static boolean inverted = false;
 
-    static double SERVO_HOME = 0.2;
+    static double SERVO_HOME = 0.3;
     static double SERVO_MIN = 0.2;
     static double SERVO_MAX = 0.9;
     static double leftBeaconPusherPosition = SERVO_HOME;

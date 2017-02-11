@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.opModes.auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.teamcode.opModes.auto.utils.Path1;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.RobotConstants;
 import org.firstinspires.ftc.teamcode.robot.RobotMovement;
@@ -41,6 +40,7 @@ public class MainAutoOp extends LinearVisionOpMode {
             robotUtilities.shootDoubleBall(this, 10);
             OpModeUtils.addToTelemetry(this, "Shot Two Balls");
 
+            //Get Beacon 1
             robotMovement.move(RobotMovement.Direction.NORTH, 18);
 
             robotMovement.move(RobotMovement.Direction.EAST, 12);
@@ -49,13 +49,13 @@ public class MainAutoOp extends LinearVisionOpMode {
             robotMovement.move(RobotMovement.Direction.EAST, 12);
 
             robotMovement.orient(RobotMovement.Orientation.RIGHT);
-            robotUtilities.alignWithLine(this, RobotMovement.Direction.WEST, 5);
-            robotUtilities.pushBeaconButton(beacon.getAnalysis(), teamColor);
+            robotUtilities.alignWithLine(this, RobotMovement.Direction.EAST, 5);
+            robotUtilities.pushBeaconButton(robotMovement, beacon.getAnalysis(), teamColor);
             OpModeUtils.addToTelemetry(this, TAG, "Pushed beacon 1");
 
 //            path.goForBeaconTwo(this, beacon.getAnalysis(), OpModeUtils.getTeamColor());
             robotUtilities.alignWithLine(this, RobotMovement.Direction.WEST, 7);
-            robotUtilities.pushBeaconButton(beacon.getAnalysis(), teamColor);
+            robotUtilities.pushBeaconButton(robotMovement, beacon.getAnalysis(), teamColor);
             OpModeUtils.addToTelemetry(this, TAG, "Pushed beacon 2");
 
 //            path.goForVortex(OpModeUtils.getTeamColor());

@@ -61,7 +61,8 @@ public class RobotUtilities {
         }
     }
 
-    public void pushBeaconButton(Beacon.BeaconAnalysis analysis, Robot.TeamColor teamColor) {
+    public void pushBeaconButton(RobotMovement robotMovement, Beacon.BeaconAnalysis analysis,
+                                 Robot.TeamColor teamColor) {
         boolean leftBlue, leftRed, rightBlue, rightRed;
 
         leftBlue = analysis.isLeftBlue();
@@ -72,17 +73,21 @@ public class RobotUtilities {
         if (teamColor == Robot.TeamColor.BLUE) {
             if (leftBlue) {
                 toggleBeaconPresser(robot.leftBeacon);
+                robotMovement.move(RobotMovement.Direction.NORTH, 4);
                 toggleBeaconPresser(robot.leftBeacon);
             } else if (rightBlue) {
                 toggleBeaconPresser(robot.rightBeacon);
+                robotMovement.move(RobotMovement.Direction.NORTH, 4);
                 toggleBeaconPresser(robot.rightBeacon);
             }
         } else if (teamColor == Robot.TeamColor.RED) {
             if (leftRed) {
                 toggleBeaconPresser(robot.leftBeacon);
+                robotMovement.move(RobotMovement.Direction.NORTH, 4);
                 toggleBeaconPresser(robot.leftBeacon);
             } else if (rightRed) {
                 toggleBeaconPresser(robot.rightBeacon);
+                robotMovement.move(RobotMovement.Direction.NORTH, 4);
                 toggleBeaconPresser(robot.rightBeacon);
             }
         }
@@ -155,6 +160,7 @@ public class RobotUtilities {
      * Aligns ODS by moving left or right given which side line is located on
      * @param direction
      */
+    @Deprecated
     public void alignWithLine(LinearOpMode opMode, RobotMovement.Direction direction, int timeoutSec) {
         long stop = System.currentTimeMillis() + (timeoutSec * 1000);
 
@@ -209,6 +215,21 @@ public class RobotUtilities {
 
         RobotConstants.moveSpeed = 1.0;
         toggleLightLED();
+
+        if (robot.lightSensor.getLightDetected() < RobotConstants.perfectWhiteLineValue
+                && System.currentTimeMillis() < stop) {
+            RobotMovement.Direction oppositeDir = RobotMovement.Direction.NONE;
+            if (direction == RobotMovement.Direction.NORTH) {
+                oppositeDir = RobotMovement.Direction.SOUTH;
+            } else if (direction == RobotMovement.Direction.SOUTH) {
+                oppositeDir = RobotMovement.Direction.NORTH;
+            } else if (direction == RobotMovement.Direction.EAST) {
+                oppositeDir = RobotMovement.Direction.WEST;
+            } else if (direction == RobotMovement.Direction.WEST) {
+                oppositeDir = RobotMovement.Direction.EAST;
+            }
+            alignWithLine(opMode, oppositeDir, timeoutSec);
+        }
     }
 
     private void waitFor(LinearVisionOpMode opMode, double sec) {
