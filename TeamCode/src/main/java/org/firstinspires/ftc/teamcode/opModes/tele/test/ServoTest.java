@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.RobotConstants;
 import org.firstinspires.ftc.teamcode.robot.RobotMovement;
-import org.firstinspires.ftc.teamcode.robot.RobotUtilities;
 
 
 @TeleOp (name = "Beacon Servo Test", group = "teletest")
@@ -30,6 +29,7 @@ public class ServoTest extends OpMode{
     public void loop() {
         updateTelemetryData();
         robot.leftBeacon.setPosition(RobotConstants.beaconPerfectPos);
+        robot.rightBeacon.setPosition(RobotConstants.beaconPerfectPos);
 
         robotMovement.move(convertGamepadToMovement());
         if (gamepad1.a) {

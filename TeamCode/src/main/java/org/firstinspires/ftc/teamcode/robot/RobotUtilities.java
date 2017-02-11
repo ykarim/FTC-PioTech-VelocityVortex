@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.utils.OpModeUtils;
 import org.lasarobotics.vision.ftc.resq.Beacon;
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 
@@ -93,12 +93,16 @@ public class RobotUtilities {
         }
     }
 
-    public void shootBall(LinearVisionOpMode opMode, double timeout) {
-        shootBalls(true);
-        waitFor(opMode, RobotConstants.shotWaitPeriod);
+    public void shootDoubleBall(LinearOpMode opMode, double timeout) {
+        long stop = System.currentTimeMillis() + Math.round(timeout * 1000);
 
-        intakeBalls(true);
-        waitFor(opMode, 3);
+        shootBalls(true);
+        OpModeUtils.waitFor(opMode, RobotConstants.shotWaitPeriod);
+
+        if (System.currentTimeMillis() < stop) {
+            intakeBalls(true);
+            OpModeUtils.waitFor(opMode, RobotConstants.intakeWaitPeriod);
+        }
 
         intakeBalls(false);
         shootBalls(false);
@@ -108,12 +112,11 @@ public class RobotUtilities {
         long stop = System.currentTimeMillis() + Math.round(timeout * 1000);
 
         shootBalls(true);
-        waitFor(opMode, RobotConstants.shotWaitPeriod);
+        OpModeUtils.waitFor(opMode, RobotConstants.shotWaitPeriod);
 
         if (System.currentTimeMillis() < stop) {
             intakeBalls(true);
-            int intakeWaitPeriod = 5;
-            waitFor(opMode, intakeWaitPeriod);
+            OpModeUtils.waitFor(opMode, RobotConstants.intakeWaitPeriod);
         }
 
         intakeBalls(false);
@@ -169,7 +172,7 @@ public class RobotUtilities {
         }
 
         RobotMovement robotMovement = new RobotMovement(robot);
-        RobotConstants.moveSpeed = 0.5;
+        RobotConstants.moveSpeed = 0.4;
         robotMovement.move(direction);
 
         while (opMode.opModeIsActive() &&
@@ -177,28 +180,31 @@ public class RobotUtilities {
                 && System.currentTimeMillis() < stop) {}
         robotMovement.move(RobotMovement.Direction.NONE);
 
-        if (robot.lightSensor.getLightDetected() < RobotConstants.perfectWhiteLineValue
-                && System.currentTimeMillis() < stop) {
-            if (direction == RobotMovement.Direction.EAST) {
-                robotMovement.move(RobotMovement.Direction.WEST);
-            } else {
-                robotMovement.move(RobotMovement.Direction.EAST);
-            }
-
-            while (opMode.opModeIsActive() &&
-                    robot.lightSensor.getLightDetected() < RobotConstants.perfectWhiteLineValue
-                    && System.currentTimeMillis() < stop) { }
-            robotMovement.move(RobotMovement.Direction.NONE);
-        }
         RobotConstants.moveSpeed = 1.0;
         toggleLightLED();
+
+        // Replace with PID loop to slow down once reaching
+        if (robot.lightSensor.getLightDetected() < RobotConstants.perfectWhiteLineValue
+                && System.currentTimeMillis() < stop) {
+            RobotMovement.Direction oppositeDir = RobotMovement.Direction.NONE;
+            if (direction == RobotMovement.Direction.NORTH) {
+                oppositeDir = RobotMovement.Direction.SOUTH;
+            } else if (direction == RobotMovement.Direction.SOUTH) {
+                oppositeDir = RobotMovement.Direction.NORTH;
+            } else if (direction == RobotMovement.Direction.EAST) {
+                oppositeDir = RobotMovement.Direction.WEST;
+            } else if (direction == RobotMovement.Direction.WEST) {
+                oppositeDir = RobotMovement.Direction.EAST;
+            }
+            alignWithLine(opMode, oppositeDir, timeoutSec);
+        }
     }
 
     /**
      * Aligns ODS by moving left or right given which side line is located on
      * @param direction
      */
-    public void alignWithLine(OpMode opMode, RobotMovement.Direction direction, int timeoutSec) {
+    public void alignWithLine(RobotMovement.Direction direction, int timeoutSec) {
         long stop = System.currentTimeMillis() + (timeoutSec * 1000);
 
         if (!lightLED) {
@@ -216,6 +222,7 @@ public class RobotUtilities {
         RobotConstants.moveSpeed = 1.0;
         toggleLightLED();
 
+        // Replace with PID loop to slow down once reaching
         if (robot.lightSensor.getLightDetected() < RobotConstants.perfectWhiteLineValue
                 && System.currentTimeMillis() < stop) {
             RobotMovement.Direction oppositeDir = RobotMovement.Direction.NONE;
@@ -228,19 +235,7 @@ public class RobotUtilities {
             } else if (direction == RobotMovement.Direction.WEST) {
                 oppositeDir = RobotMovement.Direction.EAST;
             }
-            alignWithLine(opMode, oppositeDir, timeoutSec);
-        }
-    }
-
-    private void waitFor(LinearVisionOpMode opMode, double sec) {
-        long millis = Math.round(sec * 1000);
-        long stopTime = System.currentTimeMillis() + millis;
-        while(opMode.opModeIsActive() && System.currentTimeMillis() < stopTime) {
-            try {
-                opMode.waitOneFullHardwareCycle();
-            } catch(Exception ex) {
-                opMode.telemetry.addData("ERROR : ", ex.getMessage());
-            }
+            alignWithLine(oppositeDir, timeoutSec);
         }
     }
 }

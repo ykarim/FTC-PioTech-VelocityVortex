@@ -51,7 +51,7 @@ public class MainAutoOp extends LinearVisionOpMode {
             robotMovement.orient(RobotMovement.Orientation.RIGHT);
 
             //Align with line now on right
-            robotUtilities.alignWithLine(this, RobotMovement.Direction.EAST, 5);
+            robotUtilities.alignWithLine(RobotMovement.Direction.EAST, 5);
 
             //TODO: Fix rotation here and maybe realign
 
@@ -60,7 +60,7 @@ public class MainAutoOp extends LinearVisionOpMode {
             OpModeUtils.addToTelemetry(this, TAG, "Pushed beacon 1");
 
             //Align with line for beacon two
-            robotUtilities.alignWithLine(this, RobotMovement.Direction.WEST, 7);
+            robotUtilities.alignWithLine(RobotMovement.Direction.WEST, 7);
 
             //TODO: Fix rotation here and realign if necessary
 

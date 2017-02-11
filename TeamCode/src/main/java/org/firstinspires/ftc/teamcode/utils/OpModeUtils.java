@@ -62,8 +62,8 @@ public class OpModeUtils {
      * Wait a period of time. This will be non-blocking, so Thread away!
      * @param sec time to wait in seconds.
      */
-    public static void waitFor(LinearOpMode opMode, int sec) {
-        long millis = sec * 1000;
+    public static void waitFor(LinearOpMode opMode, double sec) {
+        long millis = Math.round(sec * 1000);
         long stopTime = System.currentTimeMillis() + millis;
         while(opMode.opModeIsActive() && System.currentTimeMillis() < stopTime) {
             try {
@@ -72,13 +72,9 @@ public class OpModeUtils {
         }
     }
 
-    /**
-     * Wait a period of time. This will be non-blocking, so Thread away!
-     * @param sec time to wait in seconds.
-     */
-    public static void waitFor(LinearVisionOpMode opMode, int sec) {
+    public static void waitFor(LinearVisionOpMode opMode, double sec) {
         if (sec != 0) {
-            long millis = sec * 1000;
+            long millis = Math.round(sec * 1000);
             long stopTime = System.currentTimeMillis() + millis;
             while (opMode.opModeIsActive() && System.currentTimeMillis() < stopTime) {
                 try {

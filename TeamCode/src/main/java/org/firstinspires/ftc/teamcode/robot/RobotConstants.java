@@ -19,6 +19,7 @@ public class RobotConstants {
     static String rightBeaconServo = "RBEACON";
 
     static String opticalSensor = "OPTICAL";
+    static String voltageSensor = "Motor Controller 1";
 
     static final int ENCODER_TICKS_PER_REV = 1120;
     static final double WHEEL_DIAMETER = 3.0;
@@ -46,6 +47,7 @@ public class RobotConstants {
     public static double beaconPerfectPos = 0.5;
 
     public static double shotWaitPeriod = 2; //seconds to wait before shooting ball
+    public static double intakeWaitPeriod = 5;
 
     public static double gamepadThreshold = 0.15;
 
