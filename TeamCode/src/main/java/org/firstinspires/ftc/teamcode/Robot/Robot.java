@@ -38,7 +38,7 @@ public class Robot {
     public VoltageSensor voltageSensor = null; //Voltage Sensor (Config == "Motor Controller 1")
     public UltrasonicSensor ultrasonicSensor = null; //Ultrasonic Sensor (Config == "ULTRASONIC")
 
-    public PhoneGyro gyroSensor = null;
+    public PhoneGyro gyroSensor = new PhoneGyro();
 
     public enum TeamColor {
         RED("R"), BLUE("B"), NONE("N");
@@ -188,8 +188,8 @@ public class Robot {
     }
 
     private void initPhoneSensors() {
-        gyroSensor = new PhoneGyro();
-        gyroSensor.start(hwMap);
+//        gyroSensor = new PhoneGyro();
+//        gyroSensor.start(hwMap);
     }
 
     public void setDriveMotorMode(DcMotor.RunMode mode) {
