@@ -47,14 +47,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
-import android.text.InputType;
-import android.text.method.NumberKeyListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -132,7 +129,6 @@ public class FtcRobotControllerActivity extends Activity {
 
   public static RadioButton redTeamColor;
   public static RadioButton blueTeamColor;
-  public static EditText autoDelay;
 
   protected UpdateUI updateUI;
   protected Dimmer dimmer;
@@ -270,21 +266,6 @@ public class FtcRobotControllerActivity extends Activity {
 
     blueTeamColor = (RadioButton) findViewById(R.id.blueMode);
     redTeamColor = (RadioButton) findViewById(R.id.redMode);
-    autoDelay = (EditText) findViewById(R.id.autoDelay);
-
-    autoDelay.setKeyListener(new NumberKeyListener() {
-      @Override
-      protected char[] getAcceptedChars() {
-        return new char[] {
-          '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
-        };
-      }
-
-      @Override
-      public int getInputType() {
-        return InputType.TYPE_CLASS_NUMBER;
-      }
-    });
   }
 
   protected UpdateUI createUpdateUI() {
@@ -472,6 +453,10 @@ public class FtcRobotControllerActivity extends Activity {
       intent.putExtra(LaunchActivityConstantsList.ABOUT_ACTIVITY_CONNECTION_TYPE, networkType);
       startActivity(intent);
       return true;
+    } else if (id == R.id.action_config_auto) {
+      Intent configureAutoIntent = new Intent(FtcRobotControllerActivity.this,
+              AutonomousSettings.class);
+      startActivity(configureAutoIntent);
     }
     else if (id == R.id.action_exit_app) {
       finish();

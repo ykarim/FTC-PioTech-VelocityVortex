@@ -41,6 +41,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <string name="app_name">FTC Robot Controller</string>
 
   <!-- Menu -->
+  <string name="config_autonomous">Configure Auto</string>
   <string name="inspection_mode_menu_item">Self Inspect</string>
   <string name="programming_mode_menu_item">Programming Mode</string>
   <string name="blocks_menu_item">Blocks</string>
@@ -53,6 +54,39 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <!-- Preferences -->
   <string name="pref_view_logs">View Logs</string>
   <string name="pref_sound_on_off_title">Sound</string>
+
+  <!-- Autonomous Settings -->
+  <string name="label_shoot_number">Number of balls to shoot : </string>
+  <string name="label_beacon_number">Number of beacons to hit : </string>
+  <string name="label_team_color">Team Color : </string>
+
+  <string name="zero">0</string>
+  <string name="one">1</string>
+  <string name="two">2</string>
+
+  <string-array name="team_color_array">
+    <item>NA</item>
+    <item>Blue Alliance</item>
+    <item>Red Alliance</item>
+  </string-array>
+
+  <string name="label_push_cap">Push Cap Ball : </string>
+  <string-array name="push_cap_array">
+    <item>Yes</item>
+    <item>No</item>
+  </string-array>
+
+  <string name="label_park">Park : </string>
+  <string name="label_autodelay">Autonomous Delay : </string>
+  <string name="hint_auto_delay">Delay Seconds</string>
+
+  <string-array name="park_place_array">
+    <item>NA</item>
+    <item>Corner Vortex</item>
+    <item>Center Vortex</item>
+  </string-array>
+
+  <string name="configure_moves">Configure Moves</string>
 
   <!-- Toast messages -->  
   <string name="toastWifiConfigurationComplete">Configuration Complete</string>

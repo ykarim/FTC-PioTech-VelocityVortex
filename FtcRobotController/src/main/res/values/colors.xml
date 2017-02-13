@@ -43,4 +43,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <color name="white">#FFFFFF</color>
   <color name="black">#000000</color>
   <color name="transparent_color">#00000000</color>
+  <color name="background_dark_blue">#222233</color>
+  <color name="text_color_blue">#aaccff</color>
 </resources>

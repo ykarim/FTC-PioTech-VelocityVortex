@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:keepScreenOn="true"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:background="@color/background_dark_blue">
+
+
+        <TextView
+            android:text="Autonomous Settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="21dp"
+            android:id="@+id/title"
+            android:textSize="36sp"
+            android:textStyle="normal|bold"
+            android:textColor="@color/text_color_blue" />
+
+        <TextView
+            android:text="@string/label_team_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/shootNumber"
+            android:layout_alignParentStart="true"
+            android:id="@+id/teamColorLabel"
+            android:textSize="18sp"
+            android:textColor="@color/text_color_blue"
+            android:gravity="center"
+            android:textStyle="normal|bold"
+            android:layout_marginTop="25dp" />
+
+        <Spinner
+            android:id="@+id/teamColorSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:prompt="@string/label_team_color"
+            android:entries="@array/team_color_array"
+            android:layout_below="@+id/title"
+            android:layout_alignEnd="@+id/title"
+            android:layout_toEndOf="@+id/teamColorLabel"
+            android:gravity="center_vertical|center|start">
+        </Spinner>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/teamColorSpinner"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="25dp"
+            android:id="@+id/shootNumber"
+            android:text="@string/label_shoot_number"
+            android:textColor="@color/text_color_blue"
+            android:textSize="18sp"
+            android:textStyle="normal|bold" />
+
+        <RadioGroup
+            android:id="@+id/ballsToShoot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/shootNumber"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="16dp">
+
+            <RadioButton
+                android:id="@+id/zeroBalls"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/zero"
+                android:textColor="@color/text_color_blue"/>
+
+            <RadioButton
+                android:id="@+id/oneBall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/one"
+                android:textColor="@color/text_color_blue"/>
+
+            <RadioButton
+                android:id="@+id/twoBalls"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/two"
+                android:textColor="@color/text_color_blue"/>
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ballsToShoot"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="25dp"
+            android:id="@+id/beaconLabel"
+            android:text="@string/label_beacon_number"
+            android:textSize="18sp"
+            android:textColor="@color/text_color_blue"
+            android:textStyle="normal|bold" />
+
+        <RadioGroup
+            android:id="@+id/beaconsToHit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/beaconLabel"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="16dp">
+
+            <RadioButton
+                android:id="@+id/zeroBeacons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/zero"
+                android:textColor="@color/text_color_blue"/>
+
+            <RadioButton
+                android:id="@+id/oneBeacon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/one"
+                android:textColor="@color/text_color_blue"/>
+
+            <RadioButton
+                android:id="@+id/twoBeacons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/two"
+                android:textColor="@color/text_color_blue"/>
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/pushCapLabel"
+            android:text="Push Cap Ball : "
+            android:layout_below="@+id/beaconsToHit"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="25dp"
+            android:textSize="18sp"
+            android:textColor="@color/text_color_blue"
+            android:gravity="center"
+            android:textStyle="normal|bold"/>
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/push_cap_spinner"
+            android:gravity="center_vertical|center|start"
+            android:prompt="@string/label_push_cap"
+            android:entries="@array/push_cap_array"
+            android:layout_alignBaseline="@+id/pushCapLabel"
+            android:layout_alignBottom="@+id/pushCapLabel"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/pushCapLabel" />
+
+        <TextView
+            android:text="@string/label_park"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pushCapLabel"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="25dp"
+            android:id="@+id/parkLabel"
+            android:textSize="18sp"
+            android:textColor="@color/text_color_blue"
+            android:gravity="center"
+            android:textStyle="normal|bold" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/park_location_spinner"
+            android:gravity="center_vertical|center|start"
+            android:prompt="@string/label_park"
+            android:entries="@array/park_place_array"
+            android:layout_alignBaseline="@+id/parkLabel"
+            android:layout_alignBottom="@+id/parkLabel"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/parkLabel" />
+
+        <TextView
+            android:text="@string/label_autodelay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/park_location_spinner"
+            android:layout_marginTop="25dp"
+            android:id="@+id/auto_delay"
+            android:textColor="@color/text_color_blue"
+            android:textSize="18sp"
+            android:textStyle="normal|bold" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/autonomous_delay"
+            android:layout_alignBaseline="@+id/auto_delay"
+            android:layout_alignBottom="@+id/auto_delay"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/auto_delay"
+            android:maxLines="1"
+            android:imeOptions="actionDone"
+            android:text="0"
+            android:textAlignment="textEnd"
+            android:textColor="@color/text_color_blue"
+            android:selectAllOnFocus="false"
+            android:hint="@string/hint_auto_delay" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/autonomous_delay"
+            android:layout_alignParentStart="true"
+            android:gravity="center">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/doneButton"
+                android:visibility="visible"
+                android:contentDescription="@string/hint_auto_delay"
+                android:text="Done"
+                android:layout_marginRight="100dp" />
+
+            <Button
+                android:text="Cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cancelButton" />
+
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>
