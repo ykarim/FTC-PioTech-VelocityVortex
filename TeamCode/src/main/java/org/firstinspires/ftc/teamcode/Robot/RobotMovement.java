@@ -22,55 +22,57 @@ public class RobotMovement {
     }
 
     public void move(Direction direction) {
-        if (direction == Direction.NORTH) {
+        Direction orientedDirection = getOrientedDirection(direction); //TODO: Is this necessary?
+
+        if (orientedDirection == Direction.NORTH) {
             robot.fl.setPower(-RobotConstants.moveSpeed);
             robot.fr.setPower(RobotConstants.moveSpeed);
             robot.bl.setPower(-RobotConstants.moveSpeed);
             robot.br.setPower(RobotConstants.moveSpeed);
-        } else if (direction == Direction.SOUTH) {
+        } else if (orientedDirection == Direction.SOUTH) {
             robot.fl.setPower(RobotConstants.moveSpeed);
             robot.fr.setPower(-RobotConstants.moveSpeed);
             robot.bl.setPower(RobotConstants.moveSpeed);
             robot.br.setPower(-RobotConstants.moveSpeed);
-        } else if (direction == Direction.EAST) {
+        } else if (orientedDirection == Direction.EAST) {
             robot.fl.setPower(-RobotConstants.moveSpeed);
             robot.fr.setPower(-RobotConstants.moveSpeed);
             robot.bl.setPower(RobotConstants.moveSpeed);
             robot.br.setPower(RobotConstants.moveSpeed);
-        } else if (direction == Direction.WEST) {
+        } else if (orientedDirection == Direction.WEST) {
             robot.fl.setPower(RobotConstants.moveSpeed);
             robot.fr.setPower(RobotConstants.moveSpeed);
             robot.bl.setPower(-RobotConstants.moveSpeed);
             robot.br.setPower(-RobotConstants.moveSpeed);
-        } else if (direction == Direction.NORTHEAST) {
+        } else if (orientedDirection == Direction.NORTHEAST) {
             robot.fl.setPower(-RobotConstants.moveSpeed);
             robot.fr.setPower(0);
             robot.bl.setPower(0);
             robot.br.setPower(RobotConstants.moveSpeed);
-        } else if (direction == Direction.NORTHWEST) {
+        } else if (orientedDirection == Direction.NORTHWEST) {
             robot.fl.setPower(0);
             robot.fr.setPower(RobotConstants.moveSpeed);
             robot.bl.setPower(-RobotConstants.moveSpeed);
             robot.br.setPower(0);
-        } else if (direction == Direction.SOUTHEAST) {
+        } else if (orientedDirection == Direction.SOUTHEAST) {
             robot.fl.setPower(0);
             robot.fr.setPower(-RobotConstants.moveSpeed);
             robot.bl.setPower(RobotConstants.moveSpeed);
             robot.br.setPower(0);
-        } else if (direction == Direction.SOUTHWEST) {
+        } else if (orientedDirection == Direction.SOUTHWEST) {
             robot.fl.setPower(RobotConstants.moveSpeed);
             robot.fr.setPower(0);
             robot.bl.setPower(0);
             robot.br.setPower(-RobotConstants.moveSpeed);
-        } else if (direction == Direction.ROTATE_LEFT) {
+        } else if (orientedDirection == Direction.ROTATE_LEFT) {
             for (DcMotor motor : robot.driveMotors) {
                 motor.setPower(RobotConstants.rotateSpeed);
             }
-        } else if (direction == Direction.ROTATE_RIGHT) {
+        } else if (orientedDirection == Direction.ROTATE_RIGHT) {
             for (DcMotor motor : robot.driveMotors) {
                 motor.setPower(-RobotConstants.rotateSpeed);
             }
-        } else if (direction == Direction.NONE) {
+        } else if (orientedDirection == Direction.NONE) {
             robot.fl.setPower(0);
             robot.fr.setPower(0);
             robot.bl.setPower(0);

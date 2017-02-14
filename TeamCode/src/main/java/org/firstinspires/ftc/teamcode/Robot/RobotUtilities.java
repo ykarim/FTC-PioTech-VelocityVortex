@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Robot;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Utils.OpModeUtils;
 import org.lasarobotics.vision.ftc.resq.Beacon;
@@ -205,42 +206,29 @@ public class RobotUtilities {
      * @param direction
      */
     public void alignWithLine(RobotMovement.Direction direction, int timeoutSec) {
-        long stop = System.currentTimeMillis() + (timeoutSec * 1000);
+        ElapsedTime time = new ElapsedTime();
+        time.reset();
 
         if (!lightLED) {
             toggleLightLED();
         }
 
         RobotMovement robotMovement = new RobotMovement(robot);
-        RobotConstants.moveSpeed = 0.4;
+        RobotConstants.moveSpeed = 0.7;
         robotMovement.move(direction);
 
         while (robot.lightSensor.getLightDetected() < RobotConstants.whiteLineValue
-                && System.currentTimeMillis() < stop) {}
+                && time.seconds() < timeoutSec) {}
         robotMovement.move(RobotMovement.Direction.NONE);
 
         RobotConstants.moveSpeed = 1.0;
         toggleLightLED();
 
-        // Replace with PID loop to slow down once reaching
-        if (robot.lightSensor.getLightDetected() < RobotConstants.perfectWhiteLineValue
-                && System.currentTimeMillis() < stop) {
-            RobotMovement.Direction oppositeDir = RobotMovement.Direction.NONE;
-            if (direction == RobotMovement.Direction.NORTH) {
-                oppositeDir = RobotMovement.Direction.SOUTH;
-            } else if (direction == RobotMovement.Direction.SOUTH) {
-                oppositeDir = RobotMovement.Direction.NORTH;
-            } else if (direction == RobotMovement.Direction.EAST) {
-                oppositeDir = RobotMovement.Direction.WEST;
-            } else if (direction == RobotMovement.Direction.WEST) {
-                oppositeDir = RobotMovement.Direction.EAST;
-            }
-            alignWithLine(oppositeDir, timeoutSec);
-        }
+        // Add PID loop to slow down once reaching
     }
 
     /**
-     * May need to convert level to desired units
+     * Reutrns distance in cm
      * @return distance from target
      */
     public double getUltrasonicLevel() {
