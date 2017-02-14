@@ -34,7 +34,7 @@ public class MainAutoOp extends LinearVisionOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            robotMovement.orient(RobotMovement.Orientation.BACK);
+            robotMovement.orient(RobotMovement.Orientation.FRONT);
             robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, 47);
 
             robotMovement.move(RobotMovement.Direction.NORTH, 62); // ~61.56 inches
@@ -43,8 +43,8 @@ public class MainAutoOp extends LinearVisionOpMode {
 
             robotUtilities.alignWithLine(RobotMovement.Direction.WEST, 5);
 
-            robotMovement.move(RobotMovement.Direction.SOUTH, 12);
-            robotMovement.move(RobotMovement.Direction.NORTH, 12);
+//            robotMovement.move(RobotMovement.Direction.SOUTH, 12);
+//            robotMovement.move(RobotMovement.Direction.NORTH, 12);
 
             robotUtilities.alignWithLine(RobotMovement.Direction.WEST, 10);
 

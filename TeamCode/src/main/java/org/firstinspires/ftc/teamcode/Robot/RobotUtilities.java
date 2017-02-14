@@ -215,10 +215,11 @@ public class RobotUtilities {
 
         RobotMovement robotMovement = new RobotMovement(robot);
         RobotConstants.moveSpeed = 0.7;
+        robotMovement.orient(RobotMovement.Orientation.RIGHT);
         robotMovement.move(direction);
 
         while (robot.lightSensor.getLightDetected() < RobotConstants.whiteLineValue
-                && time.seconds() < timeoutSec) {}
+                /* && time.seconds() < timeoutSec */) {}
         robotMovement.move(RobotMovement.Direction.NONE);
 
         RobotConstants.moveSpeed = 1.0;

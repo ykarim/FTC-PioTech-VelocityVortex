@@ -35,6 +35,7 @@ public class ODSTest extends OpMode{
         updateTelemetryData();
 
         robotMovement.move(convertGamepadToMovement());
+        robotMovement.orient(RobotMovement.Orientation.RIGHT);
         if (gamepad1.x) {
             while (gamepad1.x) {}
             robotUtilities.alignWithLine(RobotMovement.Direction.WEST, 5);

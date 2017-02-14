@@ -24,7 +24,7 @@ public class RobotMovement {
 
     public void move(Direction direction) {
         Direction orientedDirection = direction;
-        if (direction != Direction.ROTATE_LEFT || direction != Direction.ROTATE_RIGHT) {
+        if (direction != Direction.ROTATE_LEFT && direction != Direction.ROTATE_RIGHT) {
             orientedDirection = getOrientedDirection(direction);
         }
 

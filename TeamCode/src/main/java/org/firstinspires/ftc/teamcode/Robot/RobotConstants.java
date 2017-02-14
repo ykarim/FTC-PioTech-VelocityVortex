@@ -41,10 +41,11 @@ public class RobotConstants {
     public static boolean inverted = false;
 
     static double SERVO_HOME = 0.3;
+    static double SERVO_HOME_INVERTED = 1.0 - SERVO_HOME;
     static double SERVO_MIN = 0.2;
     static double SERVO_MAX = 0.9;
     static double leftBeaconPusherPosition = SERVO_HOME;
-    static double rightBeaconPusherPosition = SERVO_HOME;
+    static double rightBeaconPusherPosition = SERVO_HOME_INVERTED;
     public static double beaconPerfectPos = 0.5;
 
     public static double shotWaitPeriod = 2; //seconds to wait before shooting ball
