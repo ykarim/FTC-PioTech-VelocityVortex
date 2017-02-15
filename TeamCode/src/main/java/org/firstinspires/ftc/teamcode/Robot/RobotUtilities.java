@@ -221,7 +221,7 @@ public class RobotUtilities {
         while (robot.lightSensor.getLightDetected() < RobotConstants.perfectWhiteLineValue
                 /* && time.seconds() < timeoutSec */) {
             if (robot.lightSensor.getLightDetected() > RobotConstants.whiteLineValue) {
-                RobotConstants.moveSpeed = 0.3;
+                RobotConstants.moveSpeed = 0.3; //Try replacing with a break
             } else if (robot.lightSensor.getLightDetected() > 0.3) {
                 RobotConstants.moveSpeed = 0.4;
             } else if (robot.lightSensor.getLightDetected() > 0.2) {

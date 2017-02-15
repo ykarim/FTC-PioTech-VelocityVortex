@@ -209,24 +209,24 @@ public class RobotMovement {
                 break;
             case RIGHT:
                 if (origDirection == Direction.NORTH) {
-                    return Direction.WEST;
-                } else if (origDirection == Direction.SOUTH) {
                     return Direction.EAST;
+                } else if (origDirection == Direction.SOUTH) {
+                    return Direction.WEST;
                 } else if (origDirection == Direction.EAST) {
-                    return Direction.NORTH;
-                } else if (origDirection == Direction.WEST) {
                     return Direction.SOUTH;
+                } else if (origDirection == Direction.WEST) {
+                    return Direction.NORTH;
                 }
                 break;
             case LEFT:
                 if (origDirection == Direction.NORTH) {
-                    return Direction.EAST;
-                } else if (origDirection == Direction.SOUTH) {
                     return Direction.WEST;
+                } else if (origDirection == Direction.SOUTH) {
+                    return Direction.EAST;
                 } else if (origDirection == Direction.EAST) {
-                    return Direction.SOUTH;
-                } else if (origDirection == Direction.WEST) {
                     return Direction.NORTH;
+                } else if (origDirection == Direction.WEST) {
+                    return Direction.SOUTH;
                 }
                 break;
         }

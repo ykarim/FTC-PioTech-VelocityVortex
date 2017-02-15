@@ -174,8 +174,8 @@ public class Robot {
         leftBeacon = hwMap.servo.get(RobotConstants.leftBeaconServo);
         rightBeacon = hwMap.servo.get(RobotConstants.rightBeaconServo);
 
-        leftBeacon.setPosition(RobotConstants.leftBeaconPusherPosition);
-        rightBeacon.setPosition(RobotConstants.rightBeaconPusherPosition);
+        leftBeacon.setPosition(0.5);
+        rightBeacon.setPosition(0.5);
     }
 
     private void initSensors() {
