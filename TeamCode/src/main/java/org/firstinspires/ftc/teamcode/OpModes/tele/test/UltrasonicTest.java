@@ -42,10 +42,10 @@ public class UltrasonicTest extends OpMode {
     private RobotMovement.Direction convertGamepadToMovement() {
         if (gamepad1.left_stick_y > RobotConstants.gamepadThreshold &&
                 !inThresholdRange(gamepad1.left_stick_x)) {
-            return RobotMovement.Direction.NORTH;
+            return RobotMovement.Direction.SOUTH;
         } else if (gamepad1.left_stick_y < -RobotConstants.gamepadThreshold &&
                 !inThresholdRange(gamepad1.left_stick_x)) {
-            return RobotMovement.Direction.SOUTH;
+            return RobotMovement.Direction.NORTH;
         } else if (gamepad1.left_stick_x > RobotConstants.gamepadThreshold &&
                 !inThresholdRange(gamepad1.left_stick_y)) {
             return RobotMovement.Direction.EAST;
