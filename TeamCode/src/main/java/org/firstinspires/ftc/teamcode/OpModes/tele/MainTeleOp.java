@@ -32,8 +32,8 @@ public class MainTeleOp extends OpMode{
         updateTelemetryData();
 
         robotMovement.move(convertGamepadToMovement());
-        convertGamepadToIntake(-gamepad1.right_stick_y);
-        convertGamepadToShoot(-gamepad2.left_stick_y);
+        convertGamepadToIntake(-gamepad2.left_stick_y);
+        convertGamepadToShoot(-gamepad2.right_stick_y);
 //        convertGamepadToCap(-gamepad2.right_stick_y);
 
         if (gamepad1.a) { //Gamepad 1 - X Button

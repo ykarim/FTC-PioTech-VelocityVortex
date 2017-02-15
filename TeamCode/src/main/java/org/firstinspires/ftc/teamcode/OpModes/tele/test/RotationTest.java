@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.OpModes.tele.test;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Robot.Robot;
 import org.firstinspires.ftc.teamcode.Robot.RobotConstants;
@@ -11,6 +13,7 @@ import static org.firstinspires.ftc.teamcode.Robot.RobotMovement.Direction.EAST;
 import static org.firstinspires.ftc.teamcode.Robot.RobotMovement.Direction.ROTATE_LEFT;
 import static org.firstinspires.ftc.teamcode.Robot.RobotMovement.Direction.ROTATE_RIGHT;
 
+@TeleOp(name = "Rotation Test", group = "teletest")
 public class RotationTest extends OpMode {
 
     private Robot robot = new Robot();
