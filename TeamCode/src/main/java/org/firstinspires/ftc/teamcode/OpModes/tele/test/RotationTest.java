@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.OpModes.tele.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Robot.Robot;
 import org.firstinspires.ftc.teamcode.Robot.RobotConstants;
@@ -9,14 +8,17 @@ import org.firstinspires.ftc.teamcode.Robot.RobotMovement;
 import org.firstinspires.ftc.teamcode.Robot.RobotUtilities;
 
 import static org.firstinspires.ftc.teamcode.Robot.RobotMovement.Direction.EAST;
+import static org.firstinspires.ftc.teamcode.Robot.RobotMovement.Direction.ROTATE_LEFT;
+import static org.firstinspires.ftc.teamcode.Robot.RobotMovement.Direction.ROTATE_RIGHT;
 
-@TeleOp (name = "Optical Distance Sensor Test", group = "teletest")
-public class ODSTest extends OpMode{
+public class RotationTest extends OpMode {
 
     private Robot robot = new Robot();
     private RobotMovement robotMovement = new RobotMovement(robot);
     private RobotUtilities robotUtilities = new RobotUtilities(robot);
     private String TAG = RobotConstants.teleOpTag + "ODS Test : ";
+
+    private int rotationAngle = 45;
 
     @Override
     public void init() {
@@ -25,7 +27,7 @@ public class ODSTest extends OpMode{
         robotUtilities.toggleLightLED();
         gamepad1.setJoystickDeadzone(.1f);
         gamepad2.setJoystickDeadzone(.1f);
-        robotMovement.orient(RobotMovement.Orientation.RIGHT);
+        robotMovement.orient(RobotMovement.Orientation.FRONT);
 
         telemetry.addData(TAG, "Status : READY");
     }
@@ -37,13 +39,16 @@ public class ODSTest extends OpMode{
         robotMovement.move(convertGamepadToMovement());
         if (gamepad1.x) {
             while (gamepad1.x) {}
-            robotUtilities.alignWithLine(RobotMovement.Direction.WEST, 5);
+            robotMovement.rotate(ROTATE_RIGHT, rotationAngle);
         } else if (gamepad1.b) {
             while (gamepad1.b) {}
-            robotUtilities.alignWithLine(RobotMovement.Direction.EAST, 5);
+            rotationAngle--;
         } else if (gamepad1.y) {
             while (gamepad1.y) {}
-            robotUtilities.toggleLightLED();
+            rotationAngle++;
+        } else if (gamepad1.a) {
+            while (gamepad1.a) {}
+            robotMovement.rotate(ROTATE_LEFT, rotationAngle);
         }
     }
 
@@ -85,7 +90,14 @@ public class ODSTest extends OpMode{
     private void updateTelemetryData() {
         telemetry.addData(TAG, "Status : RUNNING");
 
-        telemetry.addData(TAG, "Light Detected : " + robot.lightSensor.getLightDetected());
+        printControls();
+        telemetry.addData("", "");
+        telemetry.addData(TAG, "Rotation Angle : " + rotationAngle);
         telemetry.update();
+    }
+
+    private void printControls () {
+        telemetry.addData(TAG, "G1 - X : Rotate Right");
+        telemetry.addData(TAG, "G1 - A : Rotate Left");
     }
 }
