@@ -6,6 +6,7 @@ import org.firstinspires.ftc.teamcode.Robot.Robot;
 import org.firstinspires.ftc.teamcode.Robot.RobotConstants;
 import org.firstinspires.ftc.teamcode.Robot.RobotMovement;
 import org.firstinspires.ftc.teamcode.Robot.RobotUtilities;
+import org.firstinspires.ftc.teamcode.Sensors.beacon.BeaconStatus;
 import org.firstinspires.ftc.teamcode.Utils.OpModeUtils;
 import org.lasarobotics.vision.android.Cameras;
 import org.lasarobotics.vision.ftc.resq.Beacon;
@@ -21,6 +22,7 @@ public class MainAutoOp extends LinearVisionOpMode {
     private RobotMovement robotMovement = new RobotMovement(leo);
     private RobotUtilities robotUtilities = new RobotUtilities(leo);
     private final String TAG = RobotConstants.autoOpTag + "Main : ";
+    public volatile boolean beaconThreadStop = false;
 
     @Override
     public void runOpMode() throws InterruptedException{
@@ -33,7 +35,28 @@ public class MainAutoOp extends LinearVisionOpMode {
         OpModeUtils.addToTelemetry(this, TAG, "READY on " + teamColor.getTeamColor());
         waitForStart();
 
+        Thread beaconUpdate = new Thread() {
+
+            @Override
+            public void run() {
+                while (!beaconThreadStop) {
+                    if (beacon.getAnalysis().isLeftBlue()) {
+                        BeaconStatus.setLeftColor(BeaconStatus.Color.BLUE);
+                    } else if (beacon.getAnalysis().isLeftRed()) {
+                        BeaconStatus.setRightColor(BeaconStatus.Color.RED);
+                    }
+
+                    if (beacon.getAnalysis().isRightBlue()) {
+                        BeaconStatus.setRightColor(BeaconStatus.Color.BLUE);
+                    } else if (beacon.getAnalysis().isRightRed()) {
+                        BeaconStatus.setRightColor(BeaconStatus.Color.RED);
+                    }
+                }
+            }
+        };
+
         while (opModeIsActive()) {
+            beaconUpdate.start();
             robotMovement.orient(RobotMovement.Orientation.FRONT);
             robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, 47);
 

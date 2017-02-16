@@ -1,11 +1,10 @@
 package org.firstinspires.ftc.teamcode.Robot;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.Sensors.beacon.BeaconStatus;
 import org.firstinspires.ftc.teamcode.Utils.OpModeUtils;
-import org.lasarobotics.vision.ftc.resq.Beacon;
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 
 public class RobotUtilities {
@@ -15,8 +14,7 @@ public class RobotUtilities {
     public boolean continuousIntake = false;
     public boolean continuousShoot = false;
 
-    private boolean leftBeaconPusherExtended = false;
-    private boolean rightBeaconPusherExtended = false;
+    public boolean pressingBeacon = false;
 
     private boolean lightLED = true;
 
@@ -28,27 +26,22 @@ public class RobotUtilities {
         //TODO
     }
 
-    public void toggleBeaconPresser(Servo servo) {
-        if (servo == robot.leftBeacon) {
-            if (!leftBeaconPusherExtended) {
-                RobotConstants.leftBeaconPusherPosition = RobotConstants.beaconPerfectPos;
-                servo.setPosition(RobotConstants.leftBeaconPusherPosition);
-                leftBeaconPusherExtended = true;
-            } else {
-                RobotConstants.leftBeaconPusherPosition = RobotConstants.SERVO_MIN;
-                servo.setPosition(RobotConstants.leftBeaconPusherPosition);
-                leftBeaconPusherExtended = false;
-            }
-        } else if (servo == robot.rightBeacon) {
-            if (!rightBeaconPusherExtended) {
-                RobotConstants.rightBeaconPusherPosition = RobotConstants.beaconPerfectPos;
-                servo.setPosition(RobotConstants.rightBeaconPusherPosition);
-                rightBeaconPusherExtended = true;
-            } else {
-                RobotConstants.rightBeaconPusherPosition = RobotConstants.SERVO_MIN;
-                servo.setPosition(RobotConstants.rightBeaconPusherPosition);
-                rightBeaconPusherExtended = false;
-            }
+    /**
+     * Pushes beacon button once aligned with wall
+     * @param robot
+     */
+    public void pushBeacon(Robot robot, BeaconStatus.Color desiredColor) {
+        RobotMovement robotMovement = new RobotMovement(robot);
+        robotMovement.orient(RobotMovement.Orientation.RIGHT);
+
+        while (BeaconStatus.getLeftColor() != desiredColor &&
+                BeaconStatus.getRightColor() != desiredColor) {
+            robotMovement.move(RobotMovement.Direction.NORTH, 4);
+            pressingBeacon = true;
+            robotMovement.move(RobotMovement.Direction.SOUTH, 2);
+            pressingBeacon = false;
+
+            //Fix alignment here if off
         }
     }
 
@@ -59,38 +52,6 @@ public class RobotUtilities {
         } else {
             lightLED = true;
             robot.lightSensor.enableLed(lightLED);
-        }
-    }
-
-    public void pushBeaconButton(RobotMovement robotMovement, Beacon.BeaconAnalysis analysis,
-                                 Robot.TeamColor teamColor) {
-        boolean leftBlue, leftRed, rightBlue, rightRed;
-
-        leftBlue = analysis.isLeftBlue();
-        leftRed = analysis.isLeftRed();
-        rightBlue = analysis.isRightBlue();
-        rightRed = analysis.isRightRed();
-
-        if (teamColor == Robot.TeamColor.BLUE) {
-            if (leftBlue) {
-                toggleBeaconPresser(robot.leftBeacon);
-                robotMovement.move(RobotMovement.Direction.NORTH, 4);
-                toggleBeaconPresser(robot.leftBeacon);
-            } else if (rightBlue) {
-                toggleBeaconPresser(robot.rightBeacon);
-                robotMovement.move(RobotMovement.Direction.NORTH, 4);
-                toggleBeaconPresser(robot.rightBeacon);
-            }
-        } else if (teamColor == Robot.TeamColor.RED) {
-            if (leftRed) {
-                toggleBeaconPresser(robot.leftBeacon);
-                robotMovement.move(RobotMovement.Direction.NORTH, 4);
-                toggleBeaconPresser(robot.leftBeacon);
-            } else if (rightRed) {
-                toggleBeaconPresser(robot.rightBeacon);
-                robotMovement.move(RobotMovement.Direction.NORTH, 4);
-                toggleBeaconPresser(robot.rightBeacon);
-            }
         }
     }
 

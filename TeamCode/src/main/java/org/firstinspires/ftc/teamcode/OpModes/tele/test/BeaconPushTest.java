@@ -1,18 +1,23 @@
 package org.firstinspires.ftc.teamcode.OpModes.tele.test;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Robot.Robot;
 import org.firstinspires.ftc.teamcode.Robot.RobotConstants;
 import org.firstinspires.ftc.teamcode.Robot.RobotMovement;
+import org.firstinspires.ftc.teamcode.Robot.RobotUtilities;
+import org.firstinspires.ftc.teamcode.Sensors.beacon.BeaconStatus;
+import org.firstinspires.ftc.teamcode.Utils.OpModeUtils;
 
-
-@TeleOp (name = "Beacon Servo Test", group = "teletest")
-public class ServoTest extends OpMode{
+@Disabled //change into linVis op so that values can be extracted and thread can be tested
+@Autonomous(name = "Beacon Push Test", group = "teletest")
+public class BeaconPushTest extends OpMode{
 
     private Robot robot = new Robot();
     private RobotMovement robotMovement = new RobotMovement(robot);
+    private RobotUtilities robotUtilities = new RobotUtilities(robot);
     private String TAG = RobotConstants.teleOpTag + "Beacon Test : ";
 
     @Override
@@ -28,16 +33,23 @@ public class ServoTest extends OpMode{
     @Override
     public void loop() {
         updateTelemetryData();
-        robot.leftBeacon.setPosition(RobotConstants.beaconPerfectPos);
-        robot.rightBeacon.setPosition(RobotConstants.beaconPerfectPos);
 
         robotMovement.move(convertGamepadToMovement());
         if (gamepad1.a) {
             while (gamepad1.a) {}
-            RobotConstants.beaconPerfectPos -= 0.05;
-        } else if (gamepad1.y) {
-            while (gamepad1.y) {}
-            RobotConstants.beaconPerfectPos += 0.05;
+            robotUtilities.pushBeacon(robot, getBeaconColor());
+        } else if (gamepad1.dpad_left) {
+            while (gamepad1.dpad_left) {}
+            BeaconStatus.setLeftColor(BeaconStatus.Color.BLUE);
+        } else if (gamepad1.dpad_right) {
+            while (gamepad1.dpad_right) {}
+            BeaconStatus.setLeftColor(BeaconStatus.Color.RED);
+        } else if (gamepad1.dpad_up) {
+            while (gamepad1.dpad_up) {}
+            BeaconStatus.setRightColor(BeaconStatus.Color.BLUE);
+        } else if (gamepad1.dpad_down) {
+            while (gamepad1.dpad_down) {}
+            BeaconStatus.setRightColor(BeaconStatus.Color.RED);
         }
     }
 
@@ -79,8 +91,18 @@ public class ServoTest extends OpMode{
     private void updateTelemetryData() {
         telemetry.addData(TAG, "Status : RUNNING");
 
-        telemetry.addData(TAG, "Beacon Pos" + RobotConstants.beaconPerfectPos);
+        telemetry.addData(TAG, "Pressing beacon : " + robotUtilities.pressingBeacon);
         telemetry.update();
+    }
+
+    private BeaconStatus.Color getBeaconColor() {
+        if (OpModeUtils.getTeamColor() == Robot.TeamColor.BLUE) {
+            return BeaconStatus.Color.BLUE;
+        } else if (OpModeUtils.getTeamColor() == Robot.TeamColor.RED) {
+            return BeaconStatus.Color.RED;
+        } else {
+            return BeaconStatus.Color.NA;
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.OpModes.auto.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
 import org.firstinspires.ftc.teamcode.Robot.Robot;
@@ -15,6 +16,7 @@ import org.lasarobotics.vision.opmode.extensions.CameraControlExtension;
 import org.lasarobotics.vision.util.ScreenOrientation;
 import org.opencv.core.Size;
 
+@Disabled //until path is changed
 @Autonomous(name = "Double Beacon Test", group = "autotest")
 public class AutoBeaconTest extends LinearVisionOpMode{
 

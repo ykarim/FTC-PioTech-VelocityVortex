@@ -52,15 +52,11 @@ public class MainTeleOp extends OpMode{
 
             //Unimp
 
-        } else if (gamepad1.left_bumper) { // Gamepad 1 - Left Bumper : Toggles left beacon pusher
+        } else if (gamepad1.left_bumper) { // Gamepad 1 - Left Bumper
 
-            while (gamepad1.left_bumper) {}
-            robotUtilities.toggleBeaconPresser(robot.leftBeacon);
 
-        } else if (gamepad1.right_bumper) { //Gamepad 1 - Right Bumper : Toggles right beacon pusher
+        } else if (gamepad1.right_bumper) { //Gamepad 1 - Right Bumper
 
-            while (gamepad1.right_bumper) {}
-            robotUtilities.toggleBeaconPresser(robot.rightBeacon);
 
         } else if (gamepad2.a) { //Gamepad 2 - A Button
 
@@ -80,19 +76,13 @@ public class MainTeleOp extends OpMode{
             while (gamepad2.y) { }
             robotUtilities.continuousShoot();
 
-        } else if (gamepad2.left_bumper) { //Gamepad 2 - Left Bumper : Increases intake speed
+        } else if (gamepad2.left_bumper) { //Gamepad 2 - Left Bumper
 
-            while (gamepad2.left_bumper) {}
-            RobotConstants.intakeSpeed += 0.05;
-            RobotConstants.intakeSpeed = Range.clip(RobotConstants.intakeSpeed,
-                    RobotConstants.MIN_MOTOR_PWR, RobotConstants.MAX_MOTOR_PWR);
 
-        } else if (gamepad2.right_bumper) { //Gamepad 2 - Right Bumper : Decreases intake speed
 
-            while (gamepad2.right_bumper) {}
-            RobotConstants.intakeSpeed -= 0.05;
-            RobotConstants.intakeSpeed = Range.clip(RobotConstants.intakeSpeed,
-                    RobotConstants.MIN_MOTOR_PWR, RobotConstants.MAX_MOTOR_PWR);
+        } else if (gamepad2.right_bumper) { //Gamepad 2 - Right Bumper
+
+
 
         } else if (inThresholdRange(gamepad2.left_trigger)) { //Gamepad 2 - Left Trigger : Increases shoot speed
 

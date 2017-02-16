@@ -15,9 +15,6 @@ public class RobotConstants {
     static String shootMotor = "SHOOT";
     static String capMotor = "CAP";
 
-    static String leftBeaconServo = "LBEACON";
-    static String rightBeaconServo = "RBEACON";
-
     static String opticalSensor = "OPTICAL";
     static String voltageSensor = "Motor Controller 1";
     static String ultrasonicSensor = "ULTRASONIC";
@@ -39,14 +36,6 @@ public class RobotConstants {
     public static double MIN_MOTOR_PWR = 0.0;
 
     public static boolean inverted = false;
-
-    static double SERVO_HOME = 0.3;
-    static double SERVO_HOME_INVERTED = 1.0 - SERVO_HOME;
-    static double SERVO_MIN = 0.2;
-    static double SERVO_MAX = 0.9;
-    static double leftBeaconPusherPosition = SERVO_HOME;
-    static double rightBeaconPusherPosition = SERVO_HOME_INVERTED;
-    public static double beaconPerfectPos = 0.5;
 
     public static double shotWaitPeriod = 2; //seconds to wait before shooting ball
     public static double intakeWaitPeriod = 5;
