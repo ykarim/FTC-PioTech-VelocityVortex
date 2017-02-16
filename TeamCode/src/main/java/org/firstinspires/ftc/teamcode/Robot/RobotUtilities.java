@@ -214,20 +214,20 @@ public class RobotUtilities {
         }
 
         RobotMovement robotMovement = new RobotMovement(robot);
-        RobotConstants.moveSpeed = 0.7;
-        robotMovement.orient(RobotMovement.Orientation.RIGHT);
+        RobotConstants.moveSpeed = 0.5;
+        robotMovement.orient(RobotMovement.Orientation.RIGHT); //Sensors are currently on the right
         robotMovement.move(direction);
 
         while (robot.lightSensor.getLightDetected() < RobotConstants.perfectWhiteLineValue
-                /* && time.seconds() < timeoutSec */) {
+                && time.seconds() < timeoutSec) {
             if (robot.lightSensor.getLightDetected() > RobotConstants.whiteLineValue) {
-                RobotConstants.moveSpeed = 0.3; //Try replacing with a break
+                break;
             } else if (robot.lightSensor.getLightDetected() > 0.3) {
                 RobotConstants.moveSpeed = 0.4;
             } else if (robot.lightSensor.getLightDetected() > 0.2) {
-                RobotConstants.moveSpeed = 0.5;
+                RobotConstants.moveSpeed = 0.45;
             } else {
-                RobotConstants.moveSpeed = 0.7;
+                RobotConstants.moveSpeed = 0.5;
             }
         }
         robotMovement.move(RobotMovement.Direction.NONE);
@@ -239,10 +239,16 @@ public class RobotUtilities {
     }
 
     /**
-     * Reutrns distance in cm
+     * Returns distance in cm
+     * TODO: Normalize data using equation of experimental vs actual
      * @return distance from target
      */
     public double getUltrasonicLevel() {
-        return robot.ultrasonicSensor.getUltrasonicLevel();
+        double distance = robot.ultrasonicSensor.getUltrasonicLevel();
+        if (distance == 0 || distance > 200) {
+            return getUltrasonicLevel();
+        } else {
+            return distance;
+        }
     }
 }
