@@ -17,7 +17,8 @@ public class RobotConstants {
 
     static String opticalSensor = "OPTICAL";
     static String voltageSensor = "Motor Controller 1";
-    static String ultrasonicSensor = "ULTRASONIC";
+    static String ultrasonicSensorLeft = "ULTRALEFT";
+    static String ultrasonicSensorRight = "ULTRARIGHT";
 
     static final int ENCODER_TICKS_PER_REV = 1120;
     static final double WHEEL_DIAMETER = 3.0;
@@ -44,4 +45,6 @@ public class RobotConstants {
 
     public static final double whiteLineValue = 0.6;
     public static final double perfectWhiteLineValue = 0.8;
+
+    static final double sensorWallOffset = 3;
 }

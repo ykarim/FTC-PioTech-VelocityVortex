@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Robot;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Sensors.beacon.BeaconStatus;
@@ -199,15 +200,42 @@ public class RobotUtilities {
         // Add PID loop to slow down once reaching
     }
 
+    public void alignWithWall() {
+        double distanceLeft = getUltrasonicLevel(robot.ultrasonicSensorLeft);
+        double distanceRight = getUltrasonicLevel(robot.ultrasonicSensorRight);
+
+        RobotMovement robotMovement = new RobotMovement(robot);
+
+        //Try using rotate right instead of continuously moving.
+        //Probably better to use PID in this case as robot will receive continuous values.
+        while (distanceLeft - distanceRight > RobotConstants.sensorWallOffset) {
+            robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, 5);
+            distanceLeft = getUltrasonicLevel(robot.ultrasonicSensorLeft);
+            distanceRight = getUltrasonicLevel(robot.ultrasonicSensorRight);
+        }
+
+        while (distanceRight - distanceLeft > RobotConstants.sensorWallOffset) {
+            robotMovement.rotate(RobotMovement.Direction.ROTATE_LEFT, 5);
+            distanceLeft = getUltrasonicLevel(robot.ultrasonicSensorLeft);
+            distanceRight = getUltrasonicLevel(robot.ultrasonicSensorRight);
+        }
+    }
+
     /**
      * Returns distance in cm
-     * TODO: Normalize data using equation of experimental vs actual
+     * TODO: Normalize data using equation of experimental vs actual. Also chg dist based on relative location
      * @return distance from target
      */
-    public double getUltrasonicLevel() {
-        double distance = robot.ultrasonicSensor.getUltrasonicLevel();
+    public double getUltrasonicLevel(UltrasonicSensor sensor) {
+        double distance = 0;
+        if (sensor == robot.ultrasonicSensorLeft) {
+            distance = robot.ultrasonicSensorLeft.getUltrasonicLevel();
+        } else if (sensor == robot.ultrasonicSensorRight) {
+            distance = robot.ultrasonicSensorRight.getUltrasonicLevel();
+        }
+
         if (distance == 0 || distance > 200) {
-            return getUltrasonicLevel();
+            return getUltrasonicLevel(sensor);
         } else {
             return distance;
         }

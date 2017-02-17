@@ -13,6 +13,9 @@ import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 
 import java.util.ArrayList;
 
+/**
+ * TODO: Use getters for hardware and ensure that if not present, app won't crash
+ */
 public class Robot {
 
     private HardwareMap hwMap = null;
@@ -32,7 +35,8 @@ public class Robot {
 
     public OpticalDistanceSensor lightSensor = null; //Distance Sensor (Config == "OPTICAL")
     public VoltageSensor voltageSensor = null; //Voltage Sensor (Config == "Motor Controller 1")
-    public UltrasonicSensor ultrasonicSensor = null; //Ultrasonic Sensor (Config == "ULTRASONIC")
+    public UltrasonicSensor ultrasonicSensorLeft = null; //Ultrasonic Sensor (Config == "ULTRALEFT")
+    public UltrasonicSensor ultrasonicSensorRight = null; //Ultrasoonic Sensor (Config =="ULTRARIGHT")
 
     public PhoneGyro gyroSensor = new PhoneGyro();
 
@@ -169,7 +173,8 @@ public class Robot {
 
         voltageSensor = hwMap.voltageSensor.get(RobotConstants.voltageSensor);
 
-        ultrasonicSensor = hwMap.ultrasonicSensor.get(RobotConstants.ultrasonicSensor);
+        ultrasonicSensorLeft = hwMap.ultrasonicSensor.get(RobotConstants.ultrasonicSensorLeft);
+        ultrasonicSensorRight = hwMap.ultrasonicSensor.get(RobotConstants.ultrasonicSensorRight);
     }
 
     private void initPhoneSensors() {

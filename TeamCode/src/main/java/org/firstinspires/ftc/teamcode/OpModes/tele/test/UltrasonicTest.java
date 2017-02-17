@@ -14,7 +14,7 @@ public class UltrasonicTest extends OpMode {
     private Robot robot = new Robot();
     private RobotMovement robotMovement = new RobotMovement(robot);
     private RobotUtilities robotUtilities = new RobotUtilities(robot);
-    private String TAG = RobotConstants.teleOpTag + "ODS Test : ";
+    private String TAG = RobotConstants.teleOpTag + "Ultra Test : ";
 
     @Override
     public void init() {
@@ -33,6 +33,10 @@ public class UltrasonicTest extends OpMode {
         updateTelemetryData();
 
         robotMovement.move(convertGamepadToMovement());
+        if (gamepad1.x) {
+            while (gamepad1.x) {}
+            robotUtilities.alignWithWall();
+        }
     }
 
     /**
@@ -73,7 +77,11 @@ public class UltrasonicTest extends OpMode {
     private void updateTelemetryData() {
         telemetry.addData(TAG, "Status : RUNNING");
 
-        telemetry.addData(TAG, "Ultrasonic Detected : " + robotUtilities.getUltrasonicLevel());
+        telemetry.addData(TAG, "Left Ultrasonic Detected : " +
+                robotUtilities.getUltrasonicLevel(robot.ultrasonicSensorLeft));
+        telemetry.addData(TAG, "Right Ultrasonic Detected : " +
+                robotUtilities.getUltrasonicLevel(robot.ultrasonicSensorRight));
+
         telemetry.update();
     }
 }
