@@ -19,6 +19,8 @@ public class RobotUtilities {
 
     private boolean lightLED = true;
 
+    private boolean secondUltraTest = false;
+
     public RobotUtilities(Robot robot) {
         this.robot = robot;
     }
@@ -200,7 +202,11 @@ public class RobotUtilities {
         // Add PID loop to slow down once reaching
     }
 
-    public void alignWithWall() {
+    /**
+     *
+     * @return if worked or not
+     */
+    public boolean alignWithWall() {
         double distanceLeft = getUltrasonicLevel(robot.ultrasonicSensorLeft);
         double distanceRight = getUltrasonicLevel(robot.ultrasonicSensorRight);
 
@@ -208,22 +214,27 @@ public class RobotUtilities {
 
         //Try using rotate right instead of continuously moving.
         //Probably better to use PID in this case as robot will receive continuous values.
-        while (distanceLeft - distanceRight > RobotConstants.sensorWallOffset) {
-            robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, 5);
-            distanceLeft = getUltrasonicLevel(robot.ultrasonicSensorLeft);
-            distanceRight = getUltrasonicLevel(robot.ultrasonicSensorRight);
-        }
+        if (distanceLeft != 0 && distanceRight != 0) {
+            while (distanceLeft - distanceRight > RobotConstants.sensorWallOffset) {
+                robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, 5);
+                distanceLeft = getUltrasonicLevel(robot.ultrasonicSensorLeft);
+                distanceRight = getUltrasonicLevel(robot.ultrasonicSensorRight);
+            }
 
-        while (distanceRight - distanceLeft > RobotConstants.sensorWallOffset) {
-            robotMovement.rotate(RobotMovement.Direction.ROTATE_LEFT, 5);
-            distanceLeft = getUltrasonicLevel(robot.ultrasonicSensorLeft);
-            distanceRight = getUltrasonicLevel(robot.ultrasonicSensorRight);
+            while (distanceRight - distanceLeft > RobotConstants.sensorWallOffset) {
+                robotMovement.rotate(RobotMovement.Direction.ROTATE_LEFT, 5);
+                distanceLeft = getUltrasonicLevel(robot.ultrasonicSensorLeft);
+                distanceRight = getUltrasonicLevel(robot.ultrasonicSensorRight);
+            }
+            return true;
+        } else {
+            return false;
         }
     }
 
     /**
      * Returns distance in cm
-     * TODO: Normalize data using equation of experimental vs actual. Also chg dist based on relative location
+     * TODO: Balance values according to test where on sensor its measured from
      * @return distance from target
      */
     public double getUltrasonicLevel(UltrasonicSensor sensor) {
@@ -235,7 +246,13 @@ public class RobotUtilities {
         }
 
         if (distance == 0 || distance > 200) {
-            return getUltrasonicLevel(sensor);
+            if (!secondUltraTest) {
+                secondUltraTest = true;
+                return getUltrasonicLevel(sensor);
+            } else {
+                secondUltraTest = false;
+                return 0;
+            }
         } else {
             return distance;
         }
