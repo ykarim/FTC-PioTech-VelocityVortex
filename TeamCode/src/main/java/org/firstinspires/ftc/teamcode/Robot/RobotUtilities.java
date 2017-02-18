@@ -129,47 +129,6 @@ public class RobotUtilities {
      * Aligns ODS by moving left or right given which side line is located on
      * @param direction
      */
-    @Deprecated
-    public void alignWithLine(LinearOpMode opMode, RobotMovement.Direction direction, int timeoutSec) {
-        long stop = System.currentTimeMillis() + (timeoutSec * 1000);
-
-        if (!lightLED) {
-            toggleLightLED();
-        }
-
-        RobotMovement robotMovement = new RobotMovement(robot);
-        RobotConstants.moveSpeed = 0.4;
-        robotMovement.move(direction);
-
-        while (opMode.opModeIsActive() &&
-                robot.lightSensor.getLightDetected() < RobotConstants.whiteLineValue
-                && System.currentTimeMillis() < stop) {}
-        robotMovement.move(RobotMovement.Direction.NONE);
-
-        RobotConstants.moveSpeed = 1.0;
-        toggleLightLED();
-
-        // Replace with PID loop to slow down once reaching
-        if (robot.lightSensor.getLightDetected() < RobotConstants.perfectWhiteLineValue
-                && System.currentTimeMillis() < stop) {
-            RobotMovement.Direction oppositeDir = RobotMovement.Direction.NONE;
-            if (direction == RobotMovement.Direction.NORTH) {
-                oppositeDir = RobotMovement.Direction.SOUTH;
-            } else if (direction == RobotMovement.Direction.SOUTH) {
-                oppositeDir = RobotMovement.Direction.NORTH;
-            } else if (direction == RobotMovement.Direction.EAST) {
-                oppositeDir = RobotMovement.Direction.WEST;
-            } else if (direction == RobotMovement.Direction.WEST) {
-                oppositeDir = RobotMovement.Direction.EAST;
-            }
-            alignWithLine(opMode, oppositeDir, timeoutSec);
-        }
-    }
-
-    /**
-     * Aligns ODS by moving left or right given which side line is located on
-     * @param direction
-     */
     public void alignWithLine(RobotMovement.Direction direction, int timeoutSec) {
         ElapsedTime time = new ElapsedTime();
         time.reset();
@@ -186,6 +145,7 @@ public class RobotUtilities {
         while (robot.lightSensor.getLightDetected() < RobotConstants.perfectWhiteLineValue
                 && time.seconds() < timeoutSec) {
             if (robot.lightSensor.getLightDetected() > RobotConstants.whiteLineValue) {
+                RobotConstants.moveSpeed = 0.0;
                 break;
             } else if (robot.lightSensor.getLightDetected() > 0.3) {
                 RobotConstants.moveSpeed = 0.4;
@@ -194,6 +154,7 @@ public class RobotUtilities {
             } else {
                 RobotConstants.moveSpeed = 0.5;
             }
+            robotMovement.move(direction);
         }
         robotMovement.move(RobotMovement.Direction.NONE);
 
@@ -240,9 +201,9 @@ public class RobotUtilities {
         double distanceRight = getUltrasonicLevel(robot.ultrasonicSensorRight);
 
         RobotMovement robotMovement = new RobotMovement(robot);
-        RobotConstants.rotateSpeed = 0.5;
 
         if (distanceLeft != 0 && distanceRight != 0 && distanceLeft != 255 && distanceRight != 255) {
+            RobotConstants.rotateSpeed = 0.5;
             while (distanceLeft - distanceRight > RobotConstants.sensorWallOffset) {
                 //Note: will go too fast make rotate return bool when done and then while (rotate = false) wait
                 double angle = Math.toDegrees(Math.atan2(distanceLeft - distanceRight, 18));
@@ -259,6 +220,7 @@ public class RobotUtilities {
                 distanceLeft = getUltrasonicLevel(robot.ultrasonicSensorLeft);
                 distanceRight = getUltrasonicLevel(robot.ultrasonicSensorRight);
             }
+            RobotConstants.rotateSpeed = 1.0;
             return true;
         } else {
             return false; //Rerun func.
@@ -274,17 +236,20 @@ public class RobotUtilities {
 
         PID wallCtrl = new PID(0.01667, 0, 0);
         wallCtrl.setOpMode(opMode);
-        wallCtrl.setTarget(45);
+        wallCtrl.setTarget(0);
 
         if (distanceLeft != 0 && distanceRight != 0 && distanceLeft != 255 && distanceRight != 255) {
             if (distanceLeft - distanceRight > RobotConstants.sensorWallOffset) {
                 double angle = (Math.atan2(distanceLeft - distanceRight, 18) / Math.PI) * 360;
                 robotMovement.move(RobotMovement.Direction.ROTATE_RIGHT);
 
+                //should probably be 0 to let PID do its job and not end early
+                //TODO: calculate sensor offsets and test
                 while (distanceLeft - distanceRight > RobotConstants.sensorWallOffset) {
                     double pid = wallCtrl.update(angle);
 
                     RobotConstants.rotateSpeed = 0.5 + pid;
+                    robotMovement.move(RobotMovement.Direction.ROTATE_RIGHT); //mb fixes it
 
                     distanceLeft = getUltrasonicLevel(robot.ultrasonicSensorLeft);
                     distanceRight = getUltrasonicLevel(robot.ultrasonicSensorRight);
@@ -301,6 +266,7 @@ public class RobotUtilities {
                     double pid = wallCtrl.update(angle);
 
                     RobotConstants.rotateSpeed = 0.5 + pid;
+                    robotMovement.move(RobotMovement.Direction.ROTATE_LEFT);
 
                     distanceLeft = getUltrasonicLevel(robot.ultrasonicSensorLeft);
                     distanceRight = getUltrasonicLevel(robot.ultrasonicSensorRight);
@@ -308,7 +274,7 @@ public class RobotUtilities {
                     wallCtrl.setKP(RobotConstants.rotateSpeed / angle);
                 }
             }
-
+            RobotConstants.rotateSpeed = 1.0;
             return true;
         } else {
             return false;
