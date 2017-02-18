@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.Robot.RobotUtilities;
 import org.firstinspires.ftc.teamcode.Sensors.beacon.BeaconStatus;
 import org.firstinspires.ftc.teamcode.Utils.OpModeUtils;
 
-@Disabled //change into linVis op so that values can be extracted and thread can be tested
+@Disabled //TODO: change into linVis op so that values can be extracted and thread can be tested
 @Autonomous(name = "Beacon Push Test", group = "teletest")
 public class BeaconPushTest extends OpMode{
 

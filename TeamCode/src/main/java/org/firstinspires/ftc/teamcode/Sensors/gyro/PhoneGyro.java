@@ -17,6 +17,7 @@ import static android.content.Context.SENSOR_SERVICE;
  * Gyroscope}. This sensor does not deliver an absolute orientation (with respect to magnetic north and gravity) but
  * only a relative measurement starting from the point where it started.
  */
+@Deprecated
 public class PhoneGyro extends org.firstinspires.ftc.teamcode.Sensors.Sensor implements SensorEventListener {
 
     /**
@@ -36,7 +37,7 @@ public class PhoneGyro extends org.firstinspires.ftc.teamcode.Sensors.Sensor imp
     private SensorManager sensorManager;
     private long finishedCalibrating;
     private float errorX, errorY, errorZ, errorCount;
-    private Double[] values = new Double[3];
+    private Float[] values = new Float[4];
 
     /**
      * This is a filter-threshold for discarding Gyroscope measurements that are below a certain level and
@@ -50,6 +51,10 @@ public class PhoneGyro extends org.firstinspires.ftc.teamcode.Sensors.Sensor imp
 
     public PhoneGyro() {
         super();
+        values[0] = 0f;
+        values[1] = 0f;
+        values[2] = 0f;
+        values[3] = 0f;
     }
 
     @Override
@@ -73,7 +78,7 @@ public class PhoneGyro extends org.firstinspires.ftc.teamcode.Sensors.Sensor imp
     }
 
     public boolean isCalibrated() {
-        return finishedCalibrating > System.currentTimeMillis() && finishedCalibrating != -1;
+        return /* finishedCalibrating > System.currentTimeMillis() && */ finishedCalibrating != -1;
     }
 
     public void stop() {
@@ -149,11 +154,11 @@ public class PhoneGyro extends org.firstinspires.ftc.teamcode.Sensors.Sensor imp
             float[] orientation = new float[3];
             SensorManager.getOrientation(matrix, orientation);
 
-            values[0] = Math.toDegrees(orientation[0]);
-            values[1] = Math.toDegrees(orientation[1]);
-            values[2] = Math.toDegrees(orientation[2]);
+            values[0] = (orientation[0]);
+            values[1] = (orientation[1]);
+            values[2] = (orientation[2]);
         }
-        values[3] = (double) event.timestamp;
+        values[3] = (float) event.timestamp;
     }
 
     @Override
