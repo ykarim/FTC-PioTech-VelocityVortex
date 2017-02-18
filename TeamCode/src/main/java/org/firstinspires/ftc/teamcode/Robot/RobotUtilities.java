@@ -228,7 +228,7 @@ public class RobotUtilities {
             }
             return true;
         } else {
-            return false;
+            return false; //Rerun func.
         }
     }
 

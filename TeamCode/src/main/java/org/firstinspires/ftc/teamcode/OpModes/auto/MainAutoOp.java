@@ -58,11 +58,11 @@ public class MainAutoOp extends LinearVisionOpMode {
         while (opModeIsActive()) {
             beaconUpdate.start();
             robotMovement.orient(RobotMovement.Orientation.FRONT);
-            robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, 47);
+            robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, 45); //45 PERFECT
 
-            robotMovement.move(RobotMovement.Direction.NORTH, 62); // ~61.56 inches
+            robotMovement.move(RobotMovement.Direction.NORTH, 62); // ~61.56 inches NOT TESTED
 
-            robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, 43); //90 - 47 bc transversal
+            robotMovement.rotate(RobotMovement.Direction.ROTATE_LEFT, 45); //90 - 45 bc transversal
 
             robotUtilities.alignWithLine(RobotMovement.Direction.WEST, 5);
 
