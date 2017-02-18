@@ -203,6 +203,10 @@ public class RobotUtilities {
     }
 
     /**
+     * Aligns robot with wall using ultrasonic (distance) sensors
+     * REQUIREMENTS:
+     *    Not touching wall
+     *    Not touching wall
      *
      * @return if worked or not
      */
@@ -215,14 +219,14 @@ public class RobotUtilities {
         //Try using rotate right instead of continuously moving.
         //Probably better to use PID in this case as robot will receive continuous values.
         if (distanceLeft != 0 && distanceRight != 0 && distanceLeft != 255 && distanceRight != 255) {
-            while (distanceLeft - distanceRight > RobotConstants.sensorWallOffset) {
-                robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, 5);
+            while (distanceLeft - distanceRight > RobotConstants.sensorWallOffset) { //mb try with lower offset and correct sensor values in todo below
+                robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, 3); //3 PERFECT
                 distanceLeft = getUltrasonicLevel(robot.ultrasonicSensorLeft);
                 distanceRight = getUltrasonicLevel(robot.ultrasonicSensorRight);
             }
 
             while (distanceRight - distanceLeft > RobotConstants.sensorWallOffset) {
-                robotMovement.rotate(RobotMovement.Direction.ROTATE_LEFT, 5);
+                robotMovement.rotate(RobotMovement.Direction.ROTATE_LEFT, 3); //3 PERFECT
                 distanceLeft = getUltrasonicLevel(robot.ultrasonicSensorLeft);
                 distanceRight = getUltrasonicLevel(robot.ultrasonicSensorRight);
             }

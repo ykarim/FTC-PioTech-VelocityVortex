@@ -64,6 +64,8 @@ public class MainAutoOp extends LinearVisionOpMode {
 
             robotMovement.rotate(RobotMovement.Direction.ROTATE_LEFT, 45); //90 - 45 bc transversal
 
+            //Move back a bit more and align with wall via gyro and ultra
+
             robotUtilities.alignWithLine(RobotMovement.Direction.WEST, 5);
 
 //            robotMovement.move(RobotMovement.Direction.SOUTH, 12);
