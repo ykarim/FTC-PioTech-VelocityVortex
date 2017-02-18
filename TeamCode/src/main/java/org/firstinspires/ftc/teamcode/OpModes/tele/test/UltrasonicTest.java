@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.OpModes.tele.test;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Robot.Robot;
@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.Robot.RobotMovement;
 import org.firstinspires.ftc.teamcode.Robot.RobotUtilities;
 
 @TeleOp (name = "Ultrasonic Sensor Test", group = "teletest")
-public class UltrasonicTest extends OpMode {
+public class UltrasonicTest extends LinearOpMode {
 
     private Robot robot = new Robot();
     private RobotMovement robotMovement = new RobotMovement(robot);
@@ -17,7 +17,7 @@ public class UltrasonicTest extends OpMode {
     private String TAG = RobotConstants.teleOpTag + "Ultra Test : ";
 
     @Override
-    public void init() {
+    public void runOpMode() {
         telemetry.addData(TAG, "Status : INITIALIZING");
         robot.initTeleOp(hardwareMap);
         robotUtilities.toggleLightLED();
@@ -26,16 +26,22 @@ public class UltrasonicTest extends OpMode {
         robotMovement.orient(RobotMovement.Orientation.RIGHT);
 
         telemetry.addData(TAG, "Status : READY");
-    }
+        waitForStart();
 
-    @Override
-    public void loop() {
-        updateTelemetryData();
+        while (opModeIsActive()) {
+            updateTelemetryData();
 
-        robotMovement.move(convertGamepadToMovement());
-        if (gamepad1.x) {
-            while (gamepad1.x) {}
-            robotUtilities.alignWithWall();
+            robotMovement.move(convertGamepadToMovement());
+            if (gamepad1.x) {
+                while (gamepad1.x) {}
+                robotUtilities.alignWithWall();
+            } else if (gamepad1.y) {
+                while (gamepad1.y) {}
+                robotUtilities.alignWithWallUsingPID(this);
+            } else if (gamepad1.b) {
+                while (gamepad1.b) {}
+                robotUtilities.alignWithWallUsingRotation();
+            }
         }
     }
 

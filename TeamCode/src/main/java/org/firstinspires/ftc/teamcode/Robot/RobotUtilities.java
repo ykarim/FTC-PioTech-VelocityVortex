@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Sensors.beacon.BeaconStatus;
+import org.firstinspires.ftc.teamcode.Sensors.utils.PID;
 import org.firstinspires.ftc.teamcode.Utils.OpModeUtils;
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 
@@ -203,10 +204,10 @@ public class RobotUtilities {
     }
 
     /**
-     * Aligns robot with wall using ultrasonic (distance) sensors
+     * Aligns robot with wall using ultrasonic (distance) sensors and constantly rotating 3 degrees
      * REQUIREMENTS:
      *    Not touching wall
-     *    Not touching wall
+     *    Farther than 5cm from wall
      *
      * @return if worked or not
      */
@@ -214,10 +215,8 @@ public class RobotUtilities {
         double distanceLeft = getUltrasonicLevel(robot.ultrasonicSensorLeft);
         double distanceRight = getUltrasonicLevel(robot.ultrasonicSensorRight);
 
-        RobotMovement robotMovement = new RobotMovement(robot);
+        RobotMovement robotMovement = new RobotMovement(robot); //maybe lower speed to help
 
-        //Try using rotate right instead of continuously moving.
-        //Probably better to use PID in this case as robot will receive continuous values.
         if (distanceLeft != 0 && distanceRight != 0 && distanceLeft != 255 && distanceRight != 255) {
             while (distanceLeft - distanceRight > RobotConstants.sensorWallOffset) { //mb try with lower offset and correct sensor values in todo below
                 robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, 3); //3 PERFECT
@@ -233,6 +232,86 @@ public class RobotUtilities {
             return true;
         } else {
             return false; //Rerun func.
+        }
+    }
+
+    public boolean alignWithWallUsingRotation() {
+        double distanceLeft = getUltrasonicLevel(robot.ultrasonicSensorLeft);
+        double distanceRight = getUltrasonicLevel(robot.ultrasonicSensorRight);
+
+        RobotMovement robotMovement = new RobotMovement(robot);
+        RobotConstants.rotateSpeed = 0.5;
+
+        if (distanceLeft != 0 && distanceRight != 0 && distanceLeft != 255 && distanceRight != 255) {
+            while (distanceLeft - distanceRight > RobotConstants.sensorWallOffset) {
+                //Note: will go too fast make rotate return bool when done and then while (rotate = false) wait
+                double angle = Math.toDegrees(Math.atan2(distanceLeft - distanceRight, 18));
+                robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, angle);
+
+                distanceLeft = getUltrasonicLevel(robot.ultrasonicSensorLeft);
+                distanceRight = getUltrasonicLevel(robot.ultrasonicSensorRight);
+            }
+
+            while (distanceRight - distanceLeft > RobotConstants.sensorWallOffset) {
+                double angle = Math.toDegrees(Math.atan2(distanceRight - distanceLeft, 18));
+                robotMovement.rotate(RobotMovement.Direction.ROTATE_LEFT, angle);
+
+                distanceLeft = getUltrasonicLevel(robot.ultrasonicSensorLeft);
+                distanceRight = getUltrasonicLevel(robot.ultrasonicSensorRight);
+            }
+            return true;
+        } else {
+            return false; //Rerun func.
+        }
+    }
+
+    public boolean alignWithWallUsingPID(LinearOpMode opMode) {
+        double distanceLeft = getUltrasonicLevel(robot.ultrasonicSensorLeft);
+        double distanceRight = getUltrasonicLevel(robot.ultrasonicSensorRight);
+
+        RobotMovement robotMovement = new RobotMovement(robot);
+        RobotConstants.rotateSpeed = 0.5;
+
+        PID wallCtrl = new PID(0.01667, 0, 0);
+        wallCtrl.setOpMode(opMode);
+        wallCtrl.setTarget(45);
+
+        if (distanceLeft != 0 && distanceRight != 0 && distanceLeft != 255 && distanceRight != 255) {
+            if (distanceLeft - distanceRight > RobotConstants.sensorWallOffset) {
+                double angle = (Math.atan2(distanceLeft - distanceRight, 18) / Math.PI) * 360;
+                robotMovement.move(RobotMovement.Direction.ROTATE_RIGHT);
+
+                while (distanceLeft - distanceRight > RobotConstants.sensorWallOffset) {
+                    double pid = wallCtrl.update(angle);
+
+                    RobotConstants.rotateSpeed = 0.5 + pid;
+
+                    distanceLeft = getUltrasonicLevel(robot.ultrasonicSensorLeft);
+                    distanceRight = getUltrasonicLevel(robot.ultrasonicSensorRight);
+                    angle = (Math.atan2(distanceLeft - distanceRight, 18) / Math.PI) * 360;
+                    wallCtrl.setKP(RobotConstants.rotateSpeed / angle);
+                }
+            }
+
+            if (distanceRight - distanceLeft > RobotConstants.sensorWallOffset) {
+                double angle = (Math.atan2(distanceRight - distanceLeft, 18) / Math.PI) * 360;
+                robotMovement.move(RobotMovement.Direction.ROTATE_LEFT);
+
+                while (distanceRight - distanceLeft > RobotConstants.sensorWallOffset) {
+                    double pid = wallCtrl.update(angle);
+
+                    RobotConstants.rotateSpeed = 0.5 + pid;
+
+                    distanceLeft = getUltrasonicLevel(robot.ultrasonicSensorLeft);
+                    distanceRight = getUltrasonicLevel(robot.ultrasonicSensorRight);
+                    angle = (Math.atan2(distanceRight - distanceLeft, 18) / Math.PI) * 360;
+                    wallCtrl.setKP(RobotConstants.rotateSpeed / angle);
+                }
+            }
+
+            return true;
+        } else {
+            return false;
         }
     }
 
