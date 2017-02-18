@@ -8,8 +8,6 @@ import org.firstinspires.ftc.teamcode.robot.RobotConstants;
 import org.firstinspires.ftc.teamcode.robot.RobotMovement;
 import org.firstinspires.ftc.teamcode.robot.RobotUtilities;
 
-import static org.firstinspires.ftc.teamcode.robot.RobotMovement.Direction.EAST;
-
 @TeleOp (name = "Optical Distance Sensor Test", group = "teletest")
 public class ODSTest extends OpMode{
 
@@ -61,7 +59,7 @@ public class ODSTest extends OpMode{
             return RobotMovement.Direction.NORTH;
         } else if (gamepad1.left_stick_x > RobotConstants.gamepadThreshold &&
                 !inThresholdRange(gamepad1.left_stick_y)) {
-            return EAST;
+            return RobotMovement.Direction.EAST;
         } else if (gamepad1.left_stick_x < -RobotConstants.gamepadThreshold &&
                 !inThresholdRange(gamepad1.left_stick_y)) {
             return RobotMovement.Direction.WEST;
@@ -75,12 +73,8 @@ public class ODSTest extends OpMode{
     }
 
     private boolean inThresholdRange(double val) {
-        if (val > RobotConstants.gamepadThreshold ||
-                val < -RobotConstants.gamepadThreshold) {
-            return true;
-        } else {
-            return false;
-        }
+        return (val > RobotConstants.gamepadThreshold ||
+                val < -RobotConstants.gamepadThreshold);
     }
 
     private void updateTelemetryData() {

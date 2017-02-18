@@ -72,12 +72,8 @@ public class UltrasonicTest extends LinearOpMode {
     }
 
     private boolean inThresholdRange(double val) {
-        if (val > RobotConstants.gamepadThreshold ||
-                val < -RobotConstants.gamepadThreshold) {
-            return true;
-        } else {
-            return false;
-        }
+        return (val > RobotConstants.gamepadThreshold ||
+                val < -RobotConstants.gamepadThreshold);
     }
 
     private void updateTelemetryData() {

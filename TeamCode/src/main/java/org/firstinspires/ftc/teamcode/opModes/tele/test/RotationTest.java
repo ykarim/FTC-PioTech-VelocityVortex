@@ -8,10 +8,6 @@ import org.firstinspires.ftc.teamcode.robot.RobotConstants;
 import org.firstinspires.ftc.teamcode.robot.RobotMovement;
 import org.firstinspires.ftc.teamcode.robot.RobotUtilities;
 
-import static org.firstinspires.ftc.teamcode.robot.RobotMovement.Direction.EAST;
-import static org.firstinspires.ftc.teamcode.robot.RobotMovement.Direction.ROTATE_LEFT;
-import static org.firstinspires.ftc.teamcode.robot.RobotMovement.Direction.ROTATE_RIGHT;
-
 @TeleOp(name = "Rotation Test", group = "teletest")
 public class RotationTest extends OpMode {
 
@@ -41,7 +37,7 @@ public class RotationTest extends OpMode {
         robotMovement.move(convertGamepadToMovement());
         if (gamepad1.x) {
             while (gamepad1.x) {}
-            robotMovement.rotate(ROTATE_RIGHT, rotationAngle);
+            robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, rotationAngle);
         } else if (gamepad1.b) {
             while (gamepad1.b) {}
             rotationAngle--;
@@ -50,7 +46,7 @@ public class RotationTest extends OpMode {
             rotationAngle++;
         } else if (gamepad1.a) {
             while (gamepad1.a) {}
-            robotMovement.rotate(ROTATE_LEFT, rotationAngle);
+            robotMovement.rotate(RobotMovement.Direction.ROTATE_LEFT, rotationAngle);
         }
     }
 
@@ -67,7 +63,7 @@ public class RotationTest extends OpMode {
             return RobotMovement.Direction.NORTH;
         } else if (gamepad1.left_stick_x > RobotConstants.gamepadThreshold &&
                 !inThresholdRange(gamepad1.left_stick_y)) {
-            return EAST;
+            return RobotMovement.Direction.EAST;
         } else if (gamepad1.left_stick_x < -RobotConstants.gamepadThreshold &&
                 !inThresholdRange(gamepad1.left_stick_y)) {
             return RobotMovement.Direction.WEST;
@@ -81,12 +77,8 @@ public class RotationTest extends OpMode {
     }
 
     private boolean inThresholdRange(double val) {
-        if (val > RobotConstants.gamepadThreshold ||
-                val < -RobotConstants.gamepadThreshold) {
-            return true;
-        } else {
-            return false;
-        }
+        return (val > RobotConstants.gamepadThreshold ||
+                val < -RobotConstants.gamepadThreshold);
     }
 
     private void updateTelemetryData() {
