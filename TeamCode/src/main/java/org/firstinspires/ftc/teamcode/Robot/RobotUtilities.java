@@ -214,7 +214,7 @@ public class RobotUtilities {
 
         //Try using rotate right instead of continuously moving.
         //Probably better to use PID in this case as robot will receive continuous values.
-        if (distanceLeft != 0 && distanceRight != 0) {
+        if (distanceLeft != 0 && distanceRight != 0 && distanceLeft != 255 && distanceRight != 255) {
             while (distanceLeft - distanceRight > RobotConstants.sensorWallOffset) {
                 robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, 5);
                 distanceLeft = getUltrasonicLevel(robot.ultrasonicSensorLeft);
