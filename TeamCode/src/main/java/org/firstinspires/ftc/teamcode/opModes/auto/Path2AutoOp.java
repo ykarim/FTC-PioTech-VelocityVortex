@@ -33,11 +33,12 @@ public class Path2AutoOp extends LinearVisionOpMode {
 
         Robot.TeamColor teamColor = OpModeUtils.getTeamColor();
         OpModeUtils.addToTelemetry(this, TAG, "READY on " + teamColor.getTeamColor());
-        waitForStart();
 
         BeaconAnalyzer beaconAnalyzer = new BeaconAnalyzer();
         Thread beaconUpdate = new Thread(beaconAnalyzer, "Beacon Analyzer");
+        waitForStart();
 
+        beaconUpdate.start();
         while (opModeIsActive()) {
             //TODO: Fix rotation where appropriate through testing
             beaconUpdate.start();
