@@ -31,15 +31,14 @@ public class MainAutoOp extends LinearVisionOpMode {
         leo.initAutoOp(this, hardwareMap);
 
         Robot.TeamColor teamColor = OpModeUtils.getTeamColor();
+        BeaconAnalyzer beaconAnalyzer = new BeaconAnalyzer();
+        Thread beaconUpdate = new Thread(beaconAnalyzer, "Beacon Analyzer");
         OpModeUtils.addToTelemetry(this, TAG, "READY on " + teamColor.getTeamColor());
         waitForStart();
 
-        BeaconAnalyzer beaconAnalyzer = new BeaconAnalyzer();
-        Thread beaconUpdate = new Thread(beaconAnalyzer, "Beacon Analyzer");
-
+        beaconUpdate.start();
         while (opModeIsActive()) {
             //TODO: Fix rotation where appropriate through testing
-            beaconUpdate.start();
             robotMovement.orient(RobotMovement.Orientation.FRONT);
             robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, 45); //45 PERFECT
             robotMovement.move(RobotMovement.Direction.NORTH, 62); // ~61.56 inches NOT TESTED
