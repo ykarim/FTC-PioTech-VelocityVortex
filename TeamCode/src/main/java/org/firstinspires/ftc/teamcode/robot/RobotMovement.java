@@ -135,6 +135,51 @@ public class RobotMovement {
         robot.setDriveMotorMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
+    public void strafe(Direction direction, double distance) {
+        int flTarget = 0;
+        int frTarget = 0;
+        int blTarget = 0;
+        int brTarget = 0;
+
+        Direction orientedDirection =  /* getOrientedDirection(direction) */ direction;
+
+        if (orientedDirection == Direction.NORTHEAST) {
+            flTarget = robot.fl.getCurrentPosition() - (int) (distance * RobotConstants.INCHES_PER_TICK);
+            frTarget = 0;
+            blTarget = 0;
+            brTarget = robot.br.getTargetPosition() + (int) (distance * RobotConstants.INCHES_PER_TICK);
+        } else if (orientedDirection == Direction.NORTHWEST) {
+            flTarget = 0;
+            frTarget = robot.fr.getCurrentPosition() + (int) (distance * RobotConstants.INCHES_PER_TICK);
+            blTarget = robot.bl.getCurrentPosition() - (int) (distance * RobotConstants.INCHES_PER_TICK);
+            brTarget = 0;
+        } else if (orientedDirection == Direction.SOUTHEAST) {
+            flTarget = 0;
+            frTarget = robot.fr.getCurrentPosition() - (int) (distance * RobotConstants.INCHES_PER_TICK);
+            blTarget = robot.bl.getCurrentPosition() + (int) (distance * RobotConstants.INCHES_PER_TICK);
+            brTarget = 0;
+        } else if (orientedDirection == Direction.SOUTHWEST) {
+            flTarget = robot.fl.getCurrentPosition() + (int) (distance * RobotConstants.INCHES_PER_TICK);
+            frTarget = 0;
+            blTarget = 0;
+            brTarget = robot.br.getTargetPosition() - (int) (distance * RobotConstants.INCHES_PER_TICK);
+        }
+        robot.fl.setTargetPosition(flTarget);
+        robot.fr.setTargetPosition(frTarget);
+        robot.bl.setTargetPosition(blTarget);
+        robot.br.setTargetPosition(brTarget);
+
+        robot.setDriveMotorMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.setDriveMotorPower(RobotConstants.moveSpeed);
+
+        while (robot.fl.isBusy() & robot.fr.isBusy()
+                && robot.bl.isBusy() && robot.br.isBusy()) {
+        }
+
+        robot.setDriveMotorPower(0);
+        robot.setDriveMotorMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
     /**
      * Prereqs:
      *     Encoders are attached

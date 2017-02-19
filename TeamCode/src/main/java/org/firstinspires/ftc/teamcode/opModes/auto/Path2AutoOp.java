@@ -11,17 +11,18 @@ import org.firstinspires.ftc.teamcode.utils.OpModeUtils;
 import org.lasarobotics.vision.android.Cameras;
 import org.lasarobotics.vision.ftc.resq.Beacon;
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
+import org.lasarobotics.vision.opmode.VisionOpMode;
 import org.lasarobotics.vision.opmode.extensions.CameraControlExtension;
 import org.lasarobotics.vision.util.ScreenOrientation;
 import org.opencv.core.Size;
 
-@Autonomous (name = "Path 1", group = "auto")
-public class MainAutoOp extends LinearVisionOpMode {
+@Autonomous (name = "Path 2", group = "auto")
+public class Path2AutoOp extends LinearVisionOpMode {
 
     private Robot leo = new Robot();
     private RobotMovement robotMovement = new RobotMovement(leo);
     private RobotUtilities robotUtilities = new RobotUtilities(leo);
-    private final String TAG = RobotConstants.autoOpTag + "Path 1 : ";
+    private final String TAG = RobotConstants.autoOpTag + "Path 2 : ";
 
     @Override
     public void runOpMode() throws InterruptedException{
@@ -40,22 +41,21 @@ public class MainAutoOp extends LinearVisionOpMode {
         while (opModeIsActive()) {
             //TODO: Fix rotation where appropriate through testing
             beaconUpdate.start();
-            robotMovement.orient(RobotMovement.Orientation.FRONT);
-            robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, 45); //45 PERFECT
-            robotMovement.move(RobotMovement.Direction.NORTH, 62); // ~61.56 inches NOT TESTED
-            robotMovement.rotate(RobotMovement.Direction.ROTATE_LEFT, 45); //90 - 45 bc transversal
-            robotMovement.orient(RobotMovement.Orientation.RIGHT);
-
-            //Move back a bit more and align with wall via gyro and ultra
-            robotMovement.move(RobotMovement.Direction.SOUTH, 6);
-            beaconAnalyzer.stop();
+            robotMovement.strafe(RobotMovement.Direction.NORTHEAST, 70);
             robotUtilities.alignWithWallUsingRotation();
 
-            robotUtilities.alignWithLine(RobotMovement.Direction.WEST, 5);
+            robotMovement.orient(RobotMovement.Orientation.RIGHT);
+            robotMovement.move(RobotMovement.Direction.SOUTH, 6);
+            robotUtilities.alignWithWallUsingRotation();
+            robotUtilities.alignWithLine(RobotMovement.Direction.WEST, 3);
+            robotUtilities.alignWithWallUsingRotation();
+            beaconAnalyzer.stop();
+
             robotUtilities.pushBeacon(leo, getDesiredColor());
             robotMovement.move(RobotMovement.Direction.SOUTH, 12);
             beaconAnalyzer.resume();
             //wait a bit for analysis to finish
+            OpModeUtils.waitFor(this, 500 / 1000);
 
             if (BeaconStatus.getLeftColor() != getDesiredColor() &&
                     BeaconStatus.getRightColor() != getDesiredColor()) {
@@ -63,12 +63,13 @@ public class MainAutoOp extends LinearVisionOpMode {
                 robotUtilities.pushBeacon(leo, getDesiredColor());
             }
 
-            robotMovement.move(RobotMovement.Direction.SOUTH, 4);
+            robotMovement.move(RobotMovement.Direction.SOUTH, 6);
             robotUtilities.alignWithLine(RobotMovement.Direction.WEST, 5);
             beaconAnalyzer.stop();
             robotUtilities.pushBeacon(leo, getDesiredColor());
             robotMovement.move(RobotMovement.Direction.SOUTH, 12);
             beaconAnalyzer.resume();
+            OpModeUtils.waitFor(this, 500 / 1000);
 
             if (BeaconStatus.getLeftColor() != getDesiredColor() &&
                     BeaconStatus.getRightColor() != getDesiredColor()) {
@@ -76,8 +77,8 @@ public class MainAutoOp extends LinearVisionOpMode {
                 robotUtilities.pushBeacon(leo, getDesiredColor());
             }
 
-            robotMovement.move(RobotMovement.Direction.SOUTH, 4);
-            robotMovement.move(RobotMovement.Direction.EAST, 96);
+            robotMovement.strafe(RobotMovement.Direction.SOUTHWEST, 85);
+            robotMovement.strafe(RobotMovement.Direction.SOUTHEAST, 40); //change
 
             OpModeUtils.addToTelemetry(this, TAG, "DONE");
             requestOpModeStop();
@@ -88,9 +89,9 @@ public class MainAutoOp extends LinearVisionOpMode {
         this.setCamera(Cameras.SECONDARY);
         this.setFrameSize(new Size(900, 900));
 
-        enableExtension(Extensions.BEACON);         //Beacon detection
-        enableExtension(Extensions.ROTATION);       //Automatic screen rotation correction
-        enableExtension(Extensions.CAMERA_CONTROL); //Manual camera control
+        enableExtension(VisionOpMode.Extensions.BEACON);         //Beacon detection
+        enableExtension(VisionOpMode.Extensions.ROTATION);       //Automatic screen rotation correction
+        enableExtension(VisionOpMode.Extensions.CAMERA_CONTROL); //Manual camera control
 
         beacon.setAnalysisMethod(Beacon.AnalysisMethod.COMPLEX);
 

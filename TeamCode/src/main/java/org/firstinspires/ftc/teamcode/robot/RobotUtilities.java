@@ -38,7 +38,7 @@ public class RobotUtilities {
         RobotMovement robotMovement = new RobotMovement(robot);
         robotMovement.orient(RobotMovement.Orientation.RIGHT);
 
-        while (BeaconStatus.getLeftColor() != desiredColor &&
+        if (BeaconStatus.getLeftColor() != desiredColor &&
                 BeaconStatus.getRightColor() != desiredColor) {
             robotMovement.move(RobotMovement.Direction.NORTH, 4);
             pressingBeacon = true;
