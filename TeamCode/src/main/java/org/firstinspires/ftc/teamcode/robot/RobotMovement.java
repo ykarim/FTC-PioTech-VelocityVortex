@@ -87,8 +87,8 @@ public class RobotMovement {
      * Prereqs:
      *    Encoders are attached
      *    Robot is init in auto mode.
-     * @param direction
-     * @param distance
+     * @param direction Direction to move
+     * @param distance Inches to move in direction
      */
     public void move(Direction direction, double distance) {
         int flTarget = 0;
@@ -128,8 +128,7 @@ public class RobotMovement {
         robot.setDriveMotorPower(RobotConstants.moveSpeed);
 
         while (robot.fl.isBusy() & robot.fr.isBusy()
-            && robot.bl.isBusy() && robot.br.isBusy()) {
-        }
+            && robot.bl.isBusy() && robot.br.isBusy()) {}
 
         robot.setDriveMotorPower(0);
         robot.setDriveMotorMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -141,7 +140,7 @@ public class RobotMovement {
         int blTarget = 0;
         int brTarget = 0;
 
-        Direction orientedDirection =  /* getOrientedDirection(direction) */ direction;
+        Direction orientedDirection = getOrientedDirection(direction);
 
         if (orientedDirection == Direction.NORTHEAST) {
             flTarget = robot.fl.getCurrentPosition() - (int) (distance * RobotConstants.INCHES_PER_TICK);
@@ -173,8 +172,7 @@ public class RobotMovement {
         robot.setDriveMotorPower(RobotConstants.moveSpeed);
 
         while (robot.fl.isBusy() & robot.fr.isBusy()
-                && robot.bl.isBusy() && robot.br.isBusy()) {
-        }
+                && robot.bl.isBusy() && robot.br.isBusy()) {}
 
         robot.setDriveMotorPower(0);
         robot.setDriveMotorMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -217,7 +215,7 @@ public class RobotMovement {
         robot.setDriveMotorPower(RobotConstants.moveSpeed);
 
         while (robot.fl.isBusy() && robot.fr.isBusy()
-                && robot.bl.isBusy() && robot.br.isBusy()) { }
+                && robot.bl.isBusy() && robot.br.isBusy()) {}
 
         robot.setDriveMotorPower(0);
         robot.setDriveMotorMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -230,16 +228,7 @@ public class RobotMovement {
     private Direction getOrientedDirection(Direction origDirection) {
         switch (currentOrientation) {
             case FRONT:
-                if (origDirection == Direction.NORTH) {
-                    return Direction.NORTH;
-                } else if (origDirection == Direction.SOUTH) {
-                    return Direction.SOUTH;
-                } else if (origDirection == Direction.EAST) {
-                    return Direction.EAST;
-                } else if (origDirection == Direction.WEST) {
-                    return Direction.WEST;
-                }
-                break;
+                return origDirection;
             case BACK:
                 if (origDirection == Direction.NORTH) {
                     return Direction.SOUTH;
@@ -249,6 +238,14 @@ public class RobotMovement {
                     return Direction.WEST;
                 } else if (origDirection == Direction.WEST) {
                     return Direction.EAST;
+                } else if (origDirection == Direction.NORTHEAST) {
+                    return Direction.SOUTHWEST;
+                } else if (origDirection == Direction.NORTHWEST) {
+                    return Direction.SOUTHEAST;
+                } else if (origDirection == Direction.SOUTHEAST) {
+                    return Direction.NORTHWEST;
+                } else if (origDirection == Direction.SOUTHWEST) {
+                    return Direction.NORTHEAST;
                 }
                 break;
             case RIGHT:
@@ -260,6 +257,14 @@ public class RobotMovement {
                     return Direction.SOUTH;
                 } else if (origDirection == Direction.WEST) {
                     return Direction.NORTH;
+                } else if (origDirection == Direction.NORTHEAST) {
+                    return Direction.SOUTHEAST;
+                } else if (origDirection == Direction.NORTHWEST) {
+                    return Direction.NORTHEAST;
+                } else if (origDirection == Direction.SOUTHEAST) {
+                    return Direction.SOUTHWEST;
+                } else if (origDirection == Direction.SOUTHWEST) {
+                    return Direction.NORTHWEST;
                 }
                 break;
             case LEFT:
@@ -271,6 +276,14 @@ public class RobotMovement {
                     return Direction.NORTH;
                 } else if (origDirection == Direction.WEST) {
                     return Direction.SOUTH;
+                } else if (origDirection == Direction.NORTHEAST) {
+                    return Direction.NORTHWEST;
+                } else if (origDirection == Direction.NORTHWEST) {
+                    return Direction.SOUTHWEST;
+                } else if (origDirection == Direction.SOUTHEAST) {
+                    return Direction.NORTHEAST;
+                } else if (origDirection == Direction.SOUTHWEST) {
+                    return Direction.SOUTHEAST;
                 }
                 break;
         }

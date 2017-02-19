@@ -119,6 +119,18 @@ public class MainTeleOp extends OpMode{
         } else if (gamepad1.left_stick_x < -RobotConstants.gamepadThreshold &&
                 !inThresholdRange(gamepad1.left_stick_y)) {
             return RobotMovement.Direction.WEST;
+        } else if (gamepad1.left_stick_x > RobotConstants.gamepadDiagonalThreshold &&
+                -gamepad1.left_stick_y > RobotConstants.gamepadDiagonalThreshold) {
+            return RobotMovement.Direction.NORTHEAST;
+        } else if (gamepad1.left_stick_x < -RobotConstants.gamepadDiagonalThreshold &&
+                -gamepad1.left_stick_y > RobotConstants.gamepadDiagonalThreshold) {
+            return RobotMovement.Direction.NORTHWEST;
+        } else if (gamepad1.left_stick_x > RobotConstants.gamepadDiagonalThreshold &&
+                -gamepad1.left_stick_y < -RobotConstants.gamepadDiagonalThreshold) {
+            return RobotMovement.Direction.SOUTHEAST;
+        } else if (gamepad1.left_stick_x < -RobotConstants.gamepadDiagonalThreshold &&
+                -gamepad1.left_stick_y < -RobotConstants.gamepadDiagonalThreshold) {
+            return RobotMovement.Direction.SOUTHWEST;
         } else if (inThresholdRange(gamepad1.left_trigger)) {
             return RobotMovement.Direction.ROTATE_LEFT;
         } else if (inThresholdRange(gamepad1.right_trigger)) {
