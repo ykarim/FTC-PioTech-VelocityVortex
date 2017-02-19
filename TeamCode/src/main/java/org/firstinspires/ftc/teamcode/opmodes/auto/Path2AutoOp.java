@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.robot.RobotConstants;
 import org.firstinspires.ftc.teamcode.robot.RobotMovement;
 import org.firstinspires.ftc.teamcode.robot.RobotUtilities;
 import org.firstinspires.ftc.teamcode.sensors.beacon.BeaconStatus;
+import org.firstinspires.ftc.teamcode.utils.Color;
 import org.firstinspires.ftc.teamcode.utils.OpModeUtils;
 import org.lasarobotics.vision.android.Cameras;
 import org.lasarobotics.vision.ftc.resq.Beacon;
@@ -31,8 +32,8 @@ public class Path2AutoOp extends LinearVisionOpMode {
         initVision();
         leo.initAutoOp(this, hardwareMap);
 
-        Robot.TeamColor teamColor = OpModeUtils.getTeamColor();
-        OpModeUtils.addToTelemetry(this, TAG, "READY on " + teamColor.getTeamColor());
+        Color teamColor = OpModeUtils.getTeamColor();
+        OpModeUtils.addToTelemetry(this, TAG, "READY on " + teamColor.getColor());
 
         BeaconAnalyzer beaconAnalyzer = new BeaconAnalyzer();
         Thread beaconUpdate = new Thread(beaconAnalyzer, "Beacon Analyzer");
@@ -107,13 +108,8 @@ public class Path2AutoOp extends LinearVisionOpMode {
         cameraControl.setAutoExposureCompensation();
     }
 
-    private BeaconStatus.Color getDesiredColor() {
-        if (OpModeUtils.getTeamColor() == Robot.TeamColor.BLUE) {
-            return BeaconStatus.Color.BLUE;
-        } else if (OpModeUtils.getTeamColor() == Robot.TeamColor.RED) {
-            return BeaconStatus.Color.RED;
-        }
-        return BeaconStatus.Color.NA;
+    private Color getDesiredColor() {
+        return OpModeUtils.getTeamColor();
     }
 
     private class BeaconAnalyzer implements Runnable {
@@ -123,15 +119,15 @@ public class Path2AutoOp extends LinearVisionOpMode {
             while (!exit) {
                 if (beacon.getAnalysis().isBeaconFound()) {
                     if (beacon.getAnalysis().isLeftBlue()) {
-                        BeaconStatus.setLeftColor(BeaconStatus.Color.BLUE);
+                        BeaconStatus.setLeftColor(Color.BLUE);
                     } else if (beacon.getAnalysis().isLeftRed()) {
-                        BeaconStatus.setRightColor(BeaconStatus.Color.RED);
+                        BeaconStatus.setRightColor(Color.RED);
                     }
 
                     if (beacon.getAnalysis().isRightBlue()) {
-                        BeaconStatus.setRightColor(BeaconStatus.Color.BLUE);
+                        BeaconStatus.setRightColor(Color.BLUE);
                     } else if (beacon.getAnalysis().isRightRed()) {
-                        BeaconStatus.setRightColor(BeaconStatus.Color.RED);
+                        BeaconStatus.setRightColor(Color.RED);
                     }
                 }
             }

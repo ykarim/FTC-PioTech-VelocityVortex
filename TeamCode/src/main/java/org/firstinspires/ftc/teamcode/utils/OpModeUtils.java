@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
-import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 
 public class OpModeUtils {
@@ -13,16 +12,16 @@ public class OpModeUtils {
      * Reads Team Color from FtcRobotControllerActivity
      * @return Robot.TeamColor
      */
-    public static Robot.TeamColor getTeamColor() {
+    public static Color getTeamColor() {
         boolean blueChecked = FtcRobotControllerActivity.blueTeamColor.isChecked();
         boolean redChecked = FtcRobotControllerActivity.redTeamColor.isChecked();
 
         if(blueChecked) {
-            return Robot.TeamColor.BLUE;
+            return Color.BLUE;
         } else if(redChecked) {
-            return Robot.TeamColor.RED;
+            return Color.RED;
         }
-        return Robot.TeamColor.NONE;
+        return Color.NA;
     }
 
     /**

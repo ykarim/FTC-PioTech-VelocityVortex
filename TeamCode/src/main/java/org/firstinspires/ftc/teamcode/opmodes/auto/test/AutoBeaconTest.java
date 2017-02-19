@@ -3,11 +3,11 @@ package org.firstinspires.ftc.teamcode.opmodes.auto.test;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.RobotConstants;
 import org.firstinspires.ftc.teamcode.robot.RobotMovement;
 import org.firstinspires.ftc.teamcode.robot.RobotUtilities;
+import org.firstinspires.ftc.teamcode.utils.Color;
 import org.firstinspires.ftc.teamcode.utils.OpModeUtils;
 import org.lasarobotics.vision.android.Cameras;
 import org.lasarobotics.vision.ftc.resq.Beacon;
@@ -32,7 +32,7 @@ public class AutoBeaconTest extends LinearVisionOpMode{
 
         robot.initAutoOp(this, hardwareMap);
 
-        Robot.TeamColor teamColor = getTeamColor();
+        Color teamColor = OpModeUtils.getTeamColor();
         boolean blueLeft, blueRight, redLeft, redRight;
 
         waitForStart();
@@ -48,13 +48,13 @@ public class AutoBeaconTest extends LinearVisionOpMode{
             redLeft = beacon.getAnalysis().isLeftRed();
             redRight = beacon.getAnalysis().isRightRed();
 
-            if (teamColor == Robot.TeamColor.BLUE) {
+            if (teamColor == Color.BLUE) {
                 if (blueLeft) {
                     telemetry.addData(RobotConstants.autoOpTag, "Hit Blue Beacon One on Left");
                 } else if (blueRight) {
                     telemetry.addData(RobotConstants.autoOpTag, "Hit Blue Beacon One on Right");
                 }
-            } else if (teamColor == Robot.TeamColor.RED) {
+            } else if (teamColor == Color.RED) {
                 if (redLeft) {
                     telemetry.addData(RobotConstants.autoOpTag, "Hit Red Beacon One on Left");
                 } else if (redRight) {
@@ -67,13 +67,13 @@ public class AutoBeaconTest extends LinearVisionOpMode{
             blueLeft = beacon.getAnalysis().isLeftBlue();
             redLeft = beacon.getAnalysis().isLeftRed();
 
-            if (teamColor == Robot.TeamColor.BLUE) {
+            if (teamColor == Color.BLUE) {
                 if (blueLeft) {
                     telemetry.addData(RobotConstants.autoOpTag, "Hit Blue Beacon Two on Left");
                 } else if (blueRight) {
                     telemetry.addData(RobotConstants.autoOpTag, "Hit Blue Beacon Two on Right");
                 }
-            } else if (teamColor == Robot.TeamColor.RED) {
+            } else if (teamColor == Color.RED) {
                 if (redLeft) {
                     telemetry.addData(RobotConstants.autoOpTag, "Hit Red Beacon Two on Left");
                 } else if (redRight) {
@@ -105,22 +105,6 @@ public class AutoBeaconTest extends LinearVisionOpMode{
 
         cameraControl.setColorTemperature(CameraControlExtension.ColorTemperature.AUTO);
         cameraControl.setAutoExposureCompensation();
-    }
-
-    /**
-     * Reads Team Color from FtcRobotControllerActivity
-     * @return int representing team color (RED_ALLIANCE or BLUE_ALLIANCE)
-     */
-    private Robot.TeamColor getTeamColor() {
-        boolean blueChecked = FtcRobotControllerActivity.blueTeamColor.isChecked();
-        boolean redChecked = FtcRobotControllerActivity.redTeamColor.isChecked();
-
-        if(blueChecked) {
-            return Robot.TeamColor.BLUE;
-        } else if(redChecked) {
-            return Robot.TeamColor.RED;
-        }
-        return Robot.TeamColor.NONE;
     }
 
     /**

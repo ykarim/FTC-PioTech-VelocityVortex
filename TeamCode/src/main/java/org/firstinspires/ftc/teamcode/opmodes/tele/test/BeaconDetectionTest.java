@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.robot.RobotConstants;
 import org.firstinspires.ftc.teamcode.sensors.beacon.BeaconStatus;
+import org.firstinspires.ftc.teamcode.utils.Color;
 import org.firstinspires.ftc.teamcode.utils.OpModeUtils;
 import org.lasarobotics.vision.android.Cameras;
 import org.lasarobotics.vision.ftc.resq.Beacon;
@@ -67,19 +68,19 @@ public class BeaconDetectionTest extends LinearVisionOpMode {
     private void updateTelemetry() {
         telemetry.clearAll();
         telemetry.addData("STATUS", "RUNNING");
-        if (BeaconStatus.getLeftColor() == BeaconStatus.Color.BLUE) {
+        if (BeaconStatus.getLeftColor() == Color.BLUE) {
             telemetry.addData("Left", "BLUE");
-        } else if (BeaconStatus.getLeftColor() == BeaconStatus.Color.RED) {
+        } else if (BeaconStatus.getLeftColor() == Color.RED) {
             telemetry.addData("Left", "RED");
-        } else if (BeaconStatus.getLeftColor() == BeaconStatus.Color.NA) {
+        } else if (BeaconStatus.getLeftColor() == Color.NA) {
             telemetry.addData("Left", "NA");
         }
 
-        if (BeaconStatus.getRightColor() == BeaconStatus.Color.BLUE) {
+        if (BeaconStatus.getRightColor() == Color.BLUE) {
             telemetry.addData("Right", "BLUE");
-        } else if (BeaconStatus.getRightColor() == BeaconStatus.Color.RED) {
+        } else if (BeaconStatus.getRightColor() == Color.RED) {
             telemetry.addData("Right", "RED");
-        } else if (BeaconStatus.getRightColor() == BeaconStatus.Color.NA) {
+        } else if (BeaconStatus.getRightColor() == Color.NA) {
             telemetry.addData("Right", "NA");
         }
         telemetry.addData("Confidence", beacon.getAnalysis().getConfidence());
@@ -95,15 +96,15 @@ public class BeaconDetectionTest extends LinearVisionOpMode {
             while (!exit) {
                 if (beacon.getAnalysis().isBeaconFound()) {
                     if (beacon.getAnalysis().isLeftBlue()) {
-                        BeaconStatus.setLeftColor(BeaconStatus.Color.BLUE);
+                        BeaconStatus.setLeftColor(Color.BLUE);
                     } else if (beacon.getAnalysis().isLeftRed()) {
-                        BeaconStatus.setRightColor(BeaconStatus.Color.RED);
+                        BeaconStatus.setRightColor(Color.RED);
                     }
 
                     if (beacon.getAnalysis().isRightBlue()) {
-                        BeaconStatus.setRightColor(BeaconStatus.Color.BLUE);
+                        BeaconStatus.setRightColor(Color.BLUE);
                     } else if (beacon.getAnalysis().isRightRed()) {
-                        BeaconStatus.setRightColor(BeaconStatus.Color.RED);
+                        BeaconStatus.setRightColor(Color.RED);
                     }
                 }
             }

@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.sensors.beacon.BeaconStatus;
 import org.firstinspires.ftc.teamcode.sensors.utils.PID;
+import org.firstinspires.ftc.teamcode.utils.Color;
 import org.firstinspires.ftc.teamcode.utils.OpModeUtils;
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 
@@ -34,7 +35,7 @@ public class RobotUtilities {
      * Pushes beacon button once aligned with wall
      * @param robot
      */
-    public void pushBeacon(Robot robot, BeaconStatus.Color desiredColor) {
+    public void pushBeacon(Robot robot, Color desiredColor) {
         RobotMovement robotMovement = new RobotMovement(robot);
         robotMovement.orient(RobotMovement.Orientation.RIGHT);
 

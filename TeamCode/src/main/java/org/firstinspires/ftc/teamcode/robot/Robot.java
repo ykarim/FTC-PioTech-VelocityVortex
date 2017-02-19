@@ -37,20 +37,6 @@ public class Robot {
     public UltrasonicSensor ultrasonicSensorLeft = null; //Ultrasonic Sensor (Config == "ULTRALEFT")
     public UltrasonicSensor ultrasonicSensorRight = null; //Ultrasoonic Sensor (Config =="ULTRARIGHT")
 
-    public enum TeamColor {
-        RED("R"), BLUE("B"), NONE("N");
-
-        private final String teamColor;
-
-        TeamColor(String teamColor) {
-            this.teamColor = teamColor;
-        }
-
-        public String getTeamColor() {
-            return teamColor;
-        }
-    }
-
     /**
      * Initializes all drive and ball motors in NO ENCODERS mode
      * @param hwMap

@@ -1,10 +1,8 @@
 package org.firstinspires.ftc.teamcode.sensors.beacon;
 
-public class BeaconStatus {
+import org.firstinspires.ftc.teamcode.utils.Color;
 
-    public enum Color {
-        RED, BLUE, NA
-    }
+public class BeaconStatus {
 
     private static Color leftColor = Color.NA;
     private static Color rightColor = Color.NA;

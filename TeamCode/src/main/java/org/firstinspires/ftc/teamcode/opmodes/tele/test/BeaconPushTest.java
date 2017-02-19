@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.robot.RobotConstants;
 import org.firstinspires.ftc.teamcode.robot.RobotMovement;
 import org.firstinspires.ftc.teamcode.robot.RobotUtilities;
 import org.firstinspires.ftc.teamcode.sensors.beacon.BeaconStatus;
+import org.firstinspires.ftc.teamcode.utils.Color;
 import org.firstinspires.ftc.teamcode.utils.OpModeUtils;
 
 @Disabled //TODO: change into linVis op so that values can be extracted and thread can be tested
@@ -40,16 +41,16 @@ public class BeaconPushTest extends OpMode{
             robotUtilities.pushBeacon(robot, getBeaconColor());
         } else if (gamepad1.dpad_left) {
             while (gamepad1.dpad_left) {}
-            BeaconStatus.setLeftColor(BeaconStatus.Color.BLUE);
+            BeaconStatus.setLeftColor(Color.BLUE);
         } else if (gamepad1.dpad_right) {
             while (gamepad1.dpad_right) {}
-            BeaconStatus.setLeftColor(BeaconStatus.Color.RED);
+            BeaconStatus.setLeftColor(Color.RED);
         } else if (gamepad1.dpad_up) {
             while (gamepad1.dpad_up) {}
-            BeaconStatus.setRightColor(BeaconStatus.Color.BLUE);
+            BeaconStatus.setRightColor(Color.BLUE);
         } else if (gamepad1.dpad_down) {
             while (gamepad1.dpad_down) {}
-            BeaconStatus.setRightColor(BeaconStatus.Color.RED);
+            BeaconStatus.setRightColor(Color.RED);
         }
     }
 
@@ -91,14 +92,8 @@ public class BeaconPushTest extends OpMode{
         telemetry.update();
     }
 
-    private BeaconStatus.Color getBeaconColor() {
-        if (OpModeUtils.getTeamColor() == Robot.TeamColor.BLUE) {
-            return BeaconStatus.Color.BLUE;
-        } else if (OpModeUtils.getTeamColor() == Robot.TeamColor.RED) {
-            return BeaconStatus.Color.RED;
-        } else {
-            return BeaconStatus.Color.NA;
-        }
+    private Color getBeaconColor() {
+        return OpModeUtils.getTeamColor();
     }
 
 }
