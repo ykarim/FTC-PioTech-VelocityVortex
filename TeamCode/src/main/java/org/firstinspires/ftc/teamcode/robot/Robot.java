@@ -8,7 +8,6 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
-import org.firstinspires.ftc.teamcode.sensors.gyro.PhoneGyro;
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 
 import java.util.ArrayList;
@@ -38,8 +37,6 @@ public class Robot {
     public UltrasonicSensor ultrasonicSensorLeft = null; //Ultrasonic Sensor (Config == "ULTRALEFT")
     public UltrasonicSensor ultrasonicSensorRight = null; //Ultrasoonic Sensor (Config =="ULTRARIGHT")
 
-    public PhoneGyro gyroSensor = new PhoneGyro();
-
     public enum TeamColor {
         RED("R"), BLUE("B"), NONE("N");
 
@@ -64,7 +61,6 @@ public class Robot {
         initBall();
 //        initCap();
         initSensors();
-        initPhoneSensors();
 
         for(DcMotor driveMotor : driveMotors) {
             driveMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -92,7 +88,6 @@ public class Robot {
         initBall();
 //        initCap();
         initSensors();
-        initPhoneSensors();
 
         for(DcMotor driveMotor : driveMotors) {
             driveMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -124,7 +119,6 @@ public class Robot {
         initBall();
 //        initCap();
         initSensors();
-        initPhoneSensors();
 
         for(DcMotor driveMotor : driveMotors) {
             driveMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -175,11 +169,6 @@ public class Robot {
 
         ultrasonicSensorLeft = hwMap.ultrasonicSensor.get(RobotConstants.ultrasonicSensorLeft);
         ultrasonicSensorRight = hwMap.ultrasonicSensor.get(RobotConstants.ultrasonicSensorRight);
-    }
-
-    private void initPhoneSensors() {
-//        gyroSensor = new PhoneGyro();
-//        gyroSensor.start(hwMap);
     }
 
     public void setDriveMotorMode(DcMotor.RunMode mode) {
