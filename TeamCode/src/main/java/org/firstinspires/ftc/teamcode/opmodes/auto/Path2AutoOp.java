@@ -42,7 +42,6 @@ public class Path2AutoOp extends LinearVisionOpMode {
         beaconUpdate.start();
         while (opModeIsActive()) {
             //TODO: Fix rotation where appropriate through testing
-            beaconUpdate.start();
             robotMovement.strafe(RobotMovement.Direction.NORTHEAST, 70);
             robotUtilities.alignWithWallUsingRotation();
 
