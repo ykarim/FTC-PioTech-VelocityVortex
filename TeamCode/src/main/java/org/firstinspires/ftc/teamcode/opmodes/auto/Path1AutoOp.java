@@ -15,8 +15,8 @@ import org.lasarobotics.vision.opmode.extensions.CameraControlExtension;
 import org.lasarobotics.vision.util.ScreenOrientation;
 import org.opencv.core.Size;
 
-@Autonomous (name = "Path 1", group = "auto")
-public class MainAutoOp extends LinearVisionOpMode {
+@Autonomous (name = "Path1", group = "auto")
+public class Path1AutoOp extends LinearVisionOpMode {
 
     private Robot leo = new Robot();
     private RobotMovement robotMovement = new RobotMovement(leo);
@@ -118,16 +118,18 @@ public class MainAutoOp extends LinearVisionOpMode {
 
         public void run() {
             while (!exit) {
-                if (beacon.getAnalysis().isLeftBlue()) {
-                    BeaconStatus.setLeftColor(BeaconStatus.Color.BLUE);
-                } else if (beacon.getAnalysis().isLeftRed()) {
-                    BeaconStatus.setRightColor(BeaconStatus.Color.RED);
-                }
+                if (beacon.getAnalysis().isBeaconFound()) {
+                    if (beacon.getAnalysis().isLeftBlue()) {
+                        BeaconStatus.setLeftColor(BeaconStatus.Color.BLUE);
+                    } else if (beacon.getAnalysis().isLeftRed()) {
+                        BeaconStatus.setRightColor(BeaconStatus.Color.RED);
+                    }
 
-                if (beacon.getAnalysis().isRightBlue()) {
-                    BeaconStatus.setRightColor(BeaconStatus.Color.BLUE);
-                } else if (beacon.getAnalysis().isRightRed()) {
-                    BeaconStatus.setRightColor(BeaconStatus.Color.RED);
+                    if (beacon.getAnalysis().isRightBlue()) {
+                        BeaconStatus.setRightColor(BeaconStatus.Color.BLUE);
+                    } else if (beacon.getAnalysis().isRightRed()) {
+                        BeaconStatus.setRightColor(BeaconStatus.Color.RED);
+                    }
                 }
             }
         }

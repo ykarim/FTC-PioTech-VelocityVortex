@@ -121,16 +121,18 @@ public class Path2AutoOp extends LinearVisionOpMode {
 
         public void run() {
             while (!exit) {
-                if (beacon.getAnalysis().isLeftBlue()) {
-                    BeaconStatus.setLeftColor(BeaconStatus.Color.BLUE);
-                } else if (beacon.getAnalysis().isLeftRed()) {
-                    BeaconStatus.setRightColor(BeaconStatus.Color.RED);
-                }
+                if (beacon.getAnalysis().isBeaconFound()) {
+                    if (beacon.getAnalysis().isLeftBlue()) {
+                        BeaconStatus.setLeftColor(BeaconStatus.Color.BLUE);
+                    } else if (beacon.getAnalysis().isLeftRed()) {
+                        BeaconStatus.setRightColor(BeaconStatus.Color.RED);
+                    }
 
-                if (beacon.getAnalysis().isRightBlue()) {
-                    BeaconStatus.setRightColor(BeaconStatus.Color.BLUE);
-                } else if (beacon.getAnalysis().isRightRed()) {
-                    BeaconStatus.setRightColor(BeaconStatus.Color.RED);
+                    if (beacon.getAnalysis().isRightBlue()) {
+                        BeaconStatus.setRightColor(BeaconStatus.Color.BLUE);
+                    } else if (beacon.getAnalysis().isRightRed()) {
+                        BeaconStatus.setRightColor(BeaconStatus.Color.RED);
+                    }
                 }
             }
         }
