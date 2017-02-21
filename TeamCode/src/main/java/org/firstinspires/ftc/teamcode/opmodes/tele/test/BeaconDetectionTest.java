@@ -14,7 +14,7 @@ import org.lasarobotics.vision.opmode.extensions.CameraControlExtension;
 import org.lasarobotics.vision.util.ScreenOrientation;
 import org.opencv.core.Size;
 
-@TeleOp (name = "Beacon Detection", group = "teletest")
+@TeleOp (name = "Beacon Detection Test", group = "teletest")
 public class BeaconDetectionTest extends LinearVisionOpMode {
 
     private final String TAG = RobotConstants.autoOpTag + "Beacon Detection Test : ";
@@ -59,7 +59,7 @@ public class BeaconDetectionTest extends LinearVisionOpMode {
 
         rotation.setIsUsingSecondaryCamera(false);
         rotation.disableAutoRotate();
-        rotation.setActivityOrientationFixed(ScreenOrientation.PORTRAIT);
+        rotation.setActivityOrientationFixed(ScreenOrientation.LANDSCAPE); //Landscape = best analysis
 
         cameraControl.setColorTemperature(CameraControlExtension.ColorTemperature.AUTO);
         cameraControl.setAutoExposureCompensation();
@@ -94,18 +94,16 @@ public class BeaconDetectionTest extends LinearVisionOpMode {
 
         public void run() {
             while (!exit) {
-                if (beacon.getAnalysis().isBeaconFound()) {
-                    if (beacon.getAnalysis().isLeftBlue()) {
-                        BeaconStatus.setLeftColor(Color.BLUE);
-                    } else if (beacon.getAnalysis().isLeftRed()) {
-                        BeaconStatus.setRightColor(Color.RED);
-                    }
+                if (beacon.getAnalysis().isLeftBlue()) {
+                    BeaconStatus.setLeftColor(Color.BLUE);
+                } else if (beacon.getAnalysis().isLeftRed()) {
+                    BeaconStatus.setRightColor(Color.RED);
+                }
 
-                    if (beacon.getAnalysis().isRightBlue()) {
-                        BeaconStatus.setRightColor(Color.BLUE);
-                    } else if (beacon.getAnalysis().isRightRed()) {
-                        BeaconStatus.setRightColor(Color.RED);
-                    }
+                if (beacon.getAnalysis().isRightBlue()) {
+                    BeaconStatus.setRightColor(Color.BLUE);
+                } else if (beacon.getAnalysis().isRightRed()) {
+                    BeaconStatus.setRightColor(Color.RED);
                 }
             }
         }
