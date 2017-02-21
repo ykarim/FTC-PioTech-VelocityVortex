@@ -42,44 +42,49 @@ public class Path2AutoOp extends LinearVisionOpMode {
         beaconUpdate.start();
         while (opModeIsActive()) {
             //TODO: Fix rotation where appropriate through testing
-            robotMovement.strafe(RobotMovement.Direction.NORTHEAST, 70);
-            robotUtilities.alignWithWallUsingRotation();
+            if (teamColor == Color.RED) {
+                robotMovement.orient(RobotMovement.Orientation.BACK);
+                robotMovement.strafe(RobotMovement.Direction.NORTHWEST, 70);
+                robotUtilities.alignWithWallUsingRotation();
 
-            robotMovement.orient(RobotMovement.Orientation.RIGHT);
-            robotMovement.move(RobotMovement.Direction.SOUTH, 6);
-            robotUtilities.alignWithWallUsingRotation();
-            robotUtilities.alignWithLine(RobotMovement.Direction.WEST, 3);
-            robotUtilities.alignWithWallUsingRotation();
-            beaconAnalyzer.stop();
+                robotMovement.orient(RobotMovement.Orientation.RIGHT);
+                robotMovement.move(RobotMovement.Direction.SOUTH, 6);
+                robotUtilities.alignWithWallUsingRotation();
+                robotUtilities.alignWithLine(RobotMovement.Direction.EAST, 3);
+                robotUtilities.alignWithWallUsingRotation();
+                beaconAnalyzer.stop();
 
-            robotUtilities.pushBeacon(leo, getDesiredColor());
-            robotMovement.move(RobotMovement.Direction.SOUTH, 12);
-            beaconAnalyzer.resume();
-            //wait a bit for analysis to finish
-            OpModeUtils.waitFor(this, 500 / 1000);
-
-            if (BeaconStatus.getLeftColor() != getDesiredColor() &&
-                    BeaconStatus.getRightColor() != getDesiredColor()) {
-                robotMovement.move(RobotMovement.Direction.NORTH, 12);
                 robotUtilities.pushBeacon(leo, getDesiredColor());
-            }
+                robotMovement.move(RobotMovement.Direction.SOUTH, 12);
+                beaconAnalyzer.resume();
+                //wait a bit for analysis to finish
+                OpModeUtils.waitFor(this, 500 / 1000);
 
-            robotMovement.move(RobotMovement.Direction.SOUTH, 6);
-            robotUtilities.alignWithLine(RobotMovement.Direction.WEST, 5);
-            beaconAnalyzer.stop();
-            robotUtilities.pushBeacon(leo, getDesiredColor());
-            robotMovement.move(RobotMovement.Direction.SOUTH, 12);
-            beaconAnalyzer.resume();
-            OpModeUtils.waitFor(this, 500 / 1000);
+                if (BeaconStatus.getLeftColor() != getDesiredColor() &&
+                        BeaconStatus.getRightColor() != getDesiredColor()) {
+                    robotMovement.move(RobotMovement.Direction.NORTH, 12);
+                    robotUtilities.pushBeacon(leo, getDesiredColor());
+                }
 
-            if (BeaconStatus.getLeftColor() != getDesiredColor() &&
-                    BeaconStatus.getRightColor() != getDesiredColor()) {
-                robotMovement.move(RobotMovement.Direction.NORTH, 12);
+                robotMovement.move(RobotMovement.Direction.SOUTH, 6);
+                robotUtilities.alignWithLine(RobotMovement.Direction.EAST, 5);
+                beaconAnalyzer.stop();
                 robotUtilities.pushBeacon(leo, getDesiredColor());
-            }
+                robotMovement.move(RobotMovement.Direction.SOUTH, 12);
+                beaconAnalyzer.resume();
+                OpModeUtils.waitFor(this, 500 / 1000);
 
-            robotMovement.strafe(RobotMovement.Direction.SOUTHWEST, 85);
-            robotMovement.strafe(RobotMovement.Direction.SOUTHEAST, 40); //change
+                if (BeaconStatus.getLeftColor() != getDesiredColor() &&
+                        BeaconStatus.getRightColor() != getDesiredColor()) {
+                    robotMovement.move(RobotMovement.Direction.NORTH, 12);
+                    robotUtilities.pushBeacon(leo, getDesiredColor());
+                }
+
+                robotMovement.strafe(RobotMovement.Direction.SOUTHWEST, 85);
+                robotMovement.strafe(RobotMovement.Direction.SOUTHEAST, 40); //change
+            } else if (teamColor == Color.BLUE) {
+
+            }
 
             OpModeUtils.addToTelemetry(this, TAG, "DONE");
             requestOpModeStop();
