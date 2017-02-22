@@ -182,8 +182,15 @@ public class RobotMovement {
         robot.setDriveMotorMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.setDriveMotorPower(RobotConstants.moveSpeed);
 
-        while (robot.fl.isBusy() && robot.fr.isBusy()
-                && robot.bl.isBusy() && robot.br.isBusy()) {}
+        if (orientedDirection == Direction.NORTHEAST) {
+            while (robot.fl.isBusy() && robot.br.isBusy()) {}
+        } else if (orientedDirection == Direction.NORTHWEST) {
+            while (robot.fr.isBusy() && robot.bl.isBusy()) {}
+        } else if (orientedDirection == Direction.SOUTHEAST) {
+            while (robot.fr.isBusy() && robot.bl.isBusy()) {}
+        } else if (orientedDirection == Direction.SOUTHWEST) {
+            while (robot.fl.isBusy() && robot.br.isBusy()) {}
+        }
 
         robot.setDriveMotorPower(0);
         robot.setDriveMotorMode(DcMotor.RunMode.RUN_USING_ENCODER);
