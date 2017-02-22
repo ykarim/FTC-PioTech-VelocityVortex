@@ -304,6 +304,8 @@ public class RobotMovement {
                     return Direction.SOUTHEAST;
                 }
                 break;
+            default:
+                break;
         }
         return Direction.NONE;
     }
