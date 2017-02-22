@@ -39,7 +39,6 @@ public class Path2AutoOp extends LinearVisionOpMode {
         Thread beaconUpdate = new Thread(beaconAnalyzer, "Beacon Analyzer");
         waitForStart();
 
-        beaconUpdate.start();
         while (opModeIsActive()) {
             //TODO: Fix rotation where appropriate through testing
             if (teamColor == Color.RED) {
@@ -52,13 +51,12 @@ public class Path2AutoOp extends LinearVisionOpMode {
                 robotUtilities.alignWithWallUsingRotation();
                 robotUtilities.alignWithLine(RobotMovement.Direction.EAST, 3);
                 robotUtilities.alignWithWallUsingRotation();
-                beaconAnalyzer.stop();
 
                 robotUtilities.pushBeacon(leo, getDesiredColor());
+                beaconUpdate.start();
                 robotMovement.move(RobotMovement.Direction.SOUTH, 12);
-                beaconAnalyzer.resume();
-                //wait a bit for analysis to finish
                 OpModeUtils.waitFor(this, 500 / 1000);
+                beaconAnalyzer.stop();
 
                 if (BeaconStatus.getLeftColor() != getDesiredColor() &&
                         BeaconStatus.getRightColor() != getDesiredColor()) {
@@ -68,11 +66,11 @@ public class Path2AutoOp extends LinearVisionOpMode {
 
                 robotMovement.move(RobotMovement.Direction.SOUTH, 6);
                 robotUtilities.alignWithLine(RobotMovement.Direction.EAST, 5);
-                beaconAnalyzer.stop();
                 robotUtilities.pushBeacon(leo, getDesiredColor());
                 robotMovement.move(RobotMovement.Direction.SOUTH, 12);
                 beaconAnalyzer.resume();
-                OpModeUtils.waitFor(this, 500 / 1000);
+                OpModeUtils.waitFor(this, 1000);
+                beaconAnalyzer.stop();
 
                 if (BeaconStatus.getLeftColor() != getDesiredColor() &&
                         BeaconStatus.getRightColor() != getDesiredColor()) {
