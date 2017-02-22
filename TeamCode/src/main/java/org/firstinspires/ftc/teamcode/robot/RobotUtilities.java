@@ -10,6 +10,8 @@ import org.firstinspires.ftc.teamcode.utils.Color;
 import org.firstinspires.ftc.teamcode.utils.OpModeUtils;
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 
+import static java.lang.Thread.sleep;
+
 public class RobotUtilities {
 
     private Robot robot = null;
@@ -22,6 +24,9 @@ public class RobotUtilities {
     private boolean lightLED = true;
 
     private boolean secondUltraTest = false;
+
+    private double prevPos= 0;
+    private double previousTime = 0;
 
     public RobotUtilities(Robot robot) {
         this.robot = robot;
@@ -306,5 +311,19 @@ public class RobotUtilities {
         } else {
             return distance;
         }
+    }
+
+    public double getShooterRate() {
+        double posC = robot.shoot.getCurrentPosition() - prevPos;
+        try {
+            sleep(100);
+        } catch (InterruptedException ie) {
+
+        }
+        double tChange = System.nanoTime() - previousTime;
+        previousTime = System.nanoTime();
+        tChange = tChange / 1e9;
+        prevPos = robot.shoot.getCurrentPosition();
+        return posC / tChange;
     }
 }

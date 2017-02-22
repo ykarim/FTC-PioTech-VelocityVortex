@@ -44,13 +44,12 @@ public class Path2AutoOp extends LinearVisionOpMode {
             if (teamColor == Color.RED) {
                 robotMovement.orient(RobotMovement.Orientation.BACK);
                 robotMovement.strafe(RobotMovement.Direction.NORTHWEST, 70);
-                robotUtilities.alignWithWallUsingRotation();
 
                 robotMovement.orient(RobotMovement.Orientation.RIGHT);
                 robotMovement.move(RobotMovement.Direction.SOUTH, 6);
-                robotUtilities.alignWithWallUsingRotation();
+                robotUtilities.alignWithWall();
                 robotUtilities.alignWithLine(RobotMovement.Direction.EAST, 3);
-                robotUtilities.alignWithWallUsingRotation();
+                robotUtilities.alignWithWall();
 
                 robotUtilities.pushBeacon(leo, getDesiredColor());
                 beaconUpdate.start();

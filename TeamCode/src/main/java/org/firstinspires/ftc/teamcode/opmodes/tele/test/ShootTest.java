@@ -1,13 +1,17 @@
 package org.firstinspires.ftc.teamcode.opmodes.tele.test;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.RobotConstants;
 import org.firstinspires.ftc.teamcode.robot.RobotMovement;
 import org.firstinspires.ftc.teamcode.robot.RobotUtilities;
 
-public class ShootTest extends OpMode{
+@TeleOp (name = "Shoot Test", group = "teletest")
+public class ShootTest extends LinearOpMode{
 
     private Robot robot = new Robot();
     private RobotMovement robotMovement = new RobotMovement(robot);
@@ -15,45 +19,53 @@ public class ShootTest extends OpMode{
     private String TAG = RobotConstants.teleOpTag + "ODS Test : ";
 
     @Override
-    public void init() {
+    public void runOpMode() {
         telemetry.addData(TAG, "Status : INITIALIZING");
-        robot.initTeleOp(hardwareMap);
+        robot.initAutoOp(this, hardwareMap);
         robotUtilities.toggleLightLED();
         gamepad1.setJoystickDeadzone(.1f);
         gamepad2.setJoystickDeadzone(.1f);
         robotMovement.orient(RobotMovement.Orientation.RIGHT);
 
         telemetry.addData(TAG, "Status : READY");
-    }
+        waitForStart();
 
-    @Override
-    public void loop() {
-        updateTelemetryData();
+        while (opModeIsActive()) {
 
-        robotMovement.move(convertGamepadToMovement());
-        convertGamepadToShoot(-gamepad1.right_stick_y);
-        convertGamepadToIntake(-gamepad2.left_stick_y);
-        if (gamepad1.x) {
-            while (gamepad1.y) {}
-            RobotConstants.shootSpeed += 0.05;
-        } else if (gamepad1.a) {
-            while (gamepad1.b) {}
-            RobotConstants.shootSpeed -= 0.05;
-        } else if (gamepad1.b) {
-            while (gamepad1.b) {}
-            RobotConstants.shotWaitPeriod += 0.1;
-        } else if (gamepad1.x) {
-            while (gamepad1.x) {}
-            RobotConstants.shotWaitPeriod -= 0.1;
-        } else if (gamepad1.right_bumper) {
-            while (gamepad1.right_bumper) {}
-            shootDoubleBall();
-        } else if (gamepad1.dpad_up) {
-            while (gamepad1.dpad_up) {}
-            RobotConstants.intakeWaitPeriod += 0.1;
-        } else if (gamepad1.dpad_down) {
-            while (gamepad1.dpad_down) {}
-            RobotConstants.intakeWaitPeriod -= 0.1;
+            updateTelemetryData();
+
+            robotMovement.move(convertGamepadToMovement());
+            convertGamepadToShoot(-gamepad1.right_stick_y);
+            convertGamepadToIntake(-gamepad2.left_stick_y);
+            if (gamepad1.x) {
+                while (gamepad1.y) {
+                }
+                RobotConstants.shootSpeed += 0.05;
+            } else if (gamepad1.a) {
+                while (gamepad1.b) {
+                }
+                RobotConstants.shootSpeed -= 0.05;
+            } else if (gamepad1.b) {
+                while (gamepad1.b) {
+                }
+                RobotConstants.shotWaitPeriod += 0.1;
+            } else if (gamepad1.x) {
+                while (gamepad1.x) {
+                }
+                RobotConstants.shotWaitPeriod -= 0.1;
+            } else if (gamepad1.right_bumper) {
+                while (gamepad1.right_bumper) {
+                }
+                shootDoubleBall();
+            } else if (gamepad1.dpad_up) {
+                while (gamepad1.dpad_up) {
+                }
+                RobotConstants.intakeWaitPeriod += 0.1;
+            } else if (gamepad1.dpad_down) {
+                while (gamepad1.dpad_down) {
+                }
+                RobotConstants.intakeWaitPeriod -= 0.1;
+            }
         }
     }
 
@@ -145,6 +157,8 @@ public class ShootTest extends OpMode{
         telemetry.addData(TAG, "Intake Wait : " + RobotConstants.intakeWaitPeriod);
 
         telemetry.addData(" ", " ");
+
+        telemetry.addData("Shoot Rate : ", robotUtilities.getShooterRate());
 
         telemetry.addData(TAG, "Voltage : " + robot.voltageSensor.getVoltage());
         telemetry.update();
