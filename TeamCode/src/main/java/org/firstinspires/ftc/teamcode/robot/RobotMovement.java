@@ -127,7 +127,7 @@ public class RobotMovement {
         robot.setDriveMotorMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.setDriveMotorPower(RobotConstants.moveSpeed);
 
-        while (robot.fl.isBusy() & robot.fr.isBusy()
+        while (robot.fl.isBusy() && robot.fr.isBusy()
             && robot.bl.isBusy() && robot.br.isBusy()) {}
 
         robot.setDriveMotorPower(0);
@@ -171,7 +171,7 @@ public class RobotMovement {
         robot.setDriveMotorMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.setDriveMotorPower(RobotConstants.moveSpeed);
 
-        while (robot.fl.isBusy() & robot.fr.isBusy()
+        while (robot.fl.isBusy() && robot.fr.isBusy()
                 && robot.bl.isBusy() && robot.br.isBusy()) {}
 
         robot.setDriveMotorPower(0);
