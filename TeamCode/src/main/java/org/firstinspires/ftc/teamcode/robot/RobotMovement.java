@@ -8,8 +8,19 @@ public class RobotMovement {
     private Orientation currentOrientation = Orientation.FRONT;
 
     public enum Direction {
-        NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST,
-        ROTATE_LEFT, ROTATE_RIGHT, NONE
+        NORTH("NORTH"), SOUTH("SOUTH"), EAST("EAST"), WEST("WEST"),
+        NORTHEAST("NORTHEAST"), NORTHWEST("NORTHWEST"), SOUTHEAST("SOUTHEAST"), SOUTHWEST("SOUTHWEST"),
+        ROTATE_LEFT("ROTATE LEFT"), ROTATE_RIGHT("ROTATE RIGHT"), NONE("NONE");
+
+        private final String direction;
+
+        Direction(String direction) {
+            this.direction = direction;
+        }
+
+        public String getDirection() {
+            return direction;
+        }
     }
 
     public enum Orientation {

@@ -52,8 +52,9 @@ public class MainTeleOp extends OpMode{
 
             //Unimp
 
-        } else if (gamepad1.left_bumper) { // Gamepad 1 - Left Bumper
+        } else if (gamepad1.left_bumper) { // Gamepad 1 - Left Bumper : Inverts robot direction
 
+            robotMovement.invertDirection();
 
         } else if (gamepad1.right_bumper) { //Gamepad 1 - Right Bumper
 
@@ -176,6 +177,8 @@ public class MainTeleOp extends OpMode{
         telemetry.addData(TAG, "Gamepad 1 Right Position : (" + gamepad1.right_stick_x + " , " + gamepad1.right_stick_y + ")");
         telemetry.addData(TAG, "Gamepad 2 Left Position : (" + gamepad2.left_stick_x + " , " + gamepad2.left_stick_y + ")");
         telemetry.addData(TAG, "Gamepad 2 Right Position : (" + gamepad2.right_stick_x + " , " + gamepad2.right_stick_y + ")");
+
+        telemetry.addData(TAG, "Robot Direction" + convertGamepadToMovement().getDirection());
 
         telemetry.addData(TAG, "Cont. Intake : " + robotUtilities.continuousIntake);
         telemetry.addData(TAG, "Cont. Shoot : " + robotUtilities.continuousShoot);
