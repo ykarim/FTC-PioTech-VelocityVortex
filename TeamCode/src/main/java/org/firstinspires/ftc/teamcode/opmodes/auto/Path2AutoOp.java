@@ -47,10 +47,11 @@ public class Path2AutoOp extends LinearVisionOpMode {
 
                 robotMovement.orient(RobotMovement.Orientation.RIGHT);
                 robotMovement.move(RobotMovement.Direction.SOUTH, 6);
-                robotUtilities.alignWithWall();
+//                robotUtilities.alignWithWallUsingRotation(); //TODO: Need more efficient and better way to receive values maybe avg over 100s
                 robotUtilities.alignWithLine(RobotMovement.Direction.EAST, 3);
-                robotUtilities.alignWithWall();
 
+
+                requestOpModeStop();
                 robotUtilities.pushBeacon(leo, getDesiredColor());
                 beaconUpdate.start();
                 robotMovement.move(RobotMovement.Direction.SOUTH, 12);

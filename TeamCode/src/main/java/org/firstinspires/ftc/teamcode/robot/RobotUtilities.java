@@ -144,7 +144,7 @@ public class RobotUtilities {
         }
 
         RobotMovement robotMovement = new RobotMovement(robot);
-        RobotConstants.moveSpeed = 0.5;
+        RobotConstants.moveSpeed = 0.4;
         robotMovement.orient(RobotMovement.Orientation.RIGHT); //Sensors are currently on the right
         robotMovement.move(direction);
 
@@ -154,11 +154,11 @@ public class RobotUtilities {
                 RobotConstants.moveSpeed = 0.0;
                 break;
             } else if (robot.lightSensor.getLightDetected() > 0.3) {
-                RobotConstants.moveSpeed = 0.4;
+                RobotConstants.moveSpeed = 0.2;
             } else if (robot.lightSensor.getLightDetected() > 0.2) {
-                RobotConstants.moveSpeed = 0.45;
+                RobotConstants.moveSpeed = 0.3;
             } else {
-                RobotConstants.moveSpeed = 0.5;
+                RobotConstants.moveSpeed = 0.4;
             }
             robotMovement.move(direction);
         }
@@ -213,7 +213,7 @@ public class RobotUtilities {
             while (distanceLeft - distanceRight > RobotConstants.sensorWallOffset) {
                 //Note: will go too fast make rotate return bool when done and then while (rotate = false) wait
                 double angle = Math.toDegrees(Math.atan2(distanceLeft - distanceRight, 18));
-                robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, angle);
+                robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, angle - 10);
 
                 distanceLeft = getUltrasonicLevel(robot.ultrasonicSensorLeft);
                 distanceRight = getUltrasonicLevel(robot.ultrasonicSensorRight);
@@ -221,7 +221,7 @@ public class RobotUtilities {
 
             while (distanceRight - distanceLeft > RobotConstants.sensorWallOffset) {
                 double angle = Math.toDegrees(Math.atan2(distanceRight - distanceLeft, 18));
-                robotMovement.rotate(RobotMovement.Direction.ROTATE_LEFT, angle);
+                robotMovement.rotate(RobotMovement.Direction.ROTATE_LEFT, angle - 10);
 
                 distanceLeft = getUltrasonicLevel(robot.ultrasonicSensorLeft);
                 distanceRight = getUltrasonicLevel(robot.ultrasonicSensorRight);
