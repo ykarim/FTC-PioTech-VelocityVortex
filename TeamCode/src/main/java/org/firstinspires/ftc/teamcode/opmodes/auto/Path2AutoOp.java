@@ -44,6 +44,7 @@ public class Path2AutoOp extends LinearVisionOpMode {
             if (teamColor == Color.RED) {
                 robotMovement.orient(RobotMovement.Orientation.BACK);
                 robotMovement.strafe(RobotMovement.Direction.NORTHWEST, 70);
+                robotMovement.move(RobotMovement.Direction.WEST, 5);
                 robotUtilities.alignWithLine(RobotMovement.Direction.EAST, 3);
                 robotUtilities.alignWithWallUsingGyro();
 
@@ -51,12 +52,13 @@ public class Path2AutoOp extends LinearVisionOpMode {
                 telemetry.update();
 
                 robotMovement.orient(RobotMovement.Orientation.RIGHT);
-//                robotUtilities.alignWithWallUsingRotation(); //TODO: Need more efficient and better way to receive values maybe avg over 100s
 
                 robotUtilities.pushBeacon(leo, getDesiredColor());
-//                beaconUpdate.start();
-//                robotMovement.move(RobotMovement.Direction.SOUTH, 12);
-//                beaconAnalyzer.stop();
+                beaconUpdate.start();
+                robotMovement.move(RobotMovement.Direction.SOUTH, 12);
+                OpModeUtils.waitFor(this, 1);
+                beaconAnalyzer.stop();
+                robotMovement.move(RobotMovement.Direction.NORTH, 12);
 
 //                if (BeaconStatus.getLeftColor() != getDesiredColor() &&
 //                        BeaconStatus.getRightColor() != getDesiredColor()) {
@@ -65,11 +67,13 @@ public class Path2AutoOp extends LinearVisionOpMode {
 //                }
                 robotMovement.move(RobotMovement.Direction.EAST, 5);
                 robotUtilities.alignWithLine(RobotMovement.Direction.EAST, 5);
+                robotUtilities.alignWithWallUsingGyro();
                 robotUtilities.pushBeacon(leo, getDesiredColor());
-//                robotMovement.move(RobotMovement.Direction.SOUTH, 12);
-//                beaconAnalyzer.resume();
-//                OpModeUtils.waitFor(this, 1000);
-//                beaconAnalyzer.stop();
+
+                beaconAnalyzer.resume();
+                robotMovement.move(RobotMovement.Direction.SOUTH, 12);
+                OpModeUtils.waitFor(this, 1);
+                beaconAnalyzer.stop();
 //
 //                if (BeaconStatus.getLeftColor() != getDesiredColor() &&
 //                        BeaconStatus.getRightColor() != getDesiredColor()) {
@@ -78,7 +82,7 @@ public class Path2AutoOp extends LinearVisionOpMode {
 //                }
 
                 robotMovement.strafe(RobotMovement.Direction.SOUTHWEST, 85);
-                robotMovement.strafe(RobotMovement.Direction.SOUTHEAST, 40); //change
+                robotMovement.strafe(RobotMovement.Direction.NORTHWEST, 40); //change
             } else if (teamColor == Color.BLUE) {
 
             }

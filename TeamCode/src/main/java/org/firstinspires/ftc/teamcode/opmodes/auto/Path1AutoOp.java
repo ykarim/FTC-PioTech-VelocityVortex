@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes.auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.RobotConstants;
@@ -17,6 +18,7 @@ import org.lasarobotics.vision.util.ScreenOrientation;
 import org.opencv.core.Size;
 
 @Autonomous (name = "Path1", group = "auto")
+@Disabled
 public class Path1AutoOp extends LinearVisionOpMode {
 
     private Robot leo = new Robot();
