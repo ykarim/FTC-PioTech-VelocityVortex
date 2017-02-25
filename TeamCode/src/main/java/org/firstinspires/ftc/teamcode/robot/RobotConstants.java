@@ -48,6 +48,7 @@ public class RobotConstants {
 
     static final double sensorWallOffset = 3;
 
+    static double homeHeadingAngle = 0;
     static final double perfectGyroAngleMin = -5.0;
     static final double perfectGyroAngleMax = 5.0; // -5 to 5
 }

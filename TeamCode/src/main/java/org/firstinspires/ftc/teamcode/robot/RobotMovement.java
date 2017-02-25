@@ -319,4 +319,25 @@ public class RobotMovement {
             RobotConstants.inverted = true;
         }
     }
+
+    /**
+     * Can rotate to a certain angle
+     * If current = 45 and input 90 rotate 45. If 30 and input 90, rotate 60.
+     */
+    public void alignToAngle(double desiredAngle) {
+
+    }
+
+    /**
+     * Uses gyro to rotate instead of encoders
+     * @param angle
+     */
+    public void rotate(double angle) {
+        double startingAngle = robot.imu.getHeading();
+        if (angle > 0) {
+
+        } else if (angle < 0) {
+
+        }
+    }
 }

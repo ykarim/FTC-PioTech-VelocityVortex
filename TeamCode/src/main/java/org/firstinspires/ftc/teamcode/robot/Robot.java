@@ -161,6 +161,7 @@ public class Robot {
         ultrasonicSensorRight = hwMap.ultrasonicSensor.get(RobotConstants.ultrasonicSensorRight);
 
         imu = new AdafruitIMU("IMU", hwMap);
+        RobotConstants.homeHeadingAngle = imu.getHeading();
     }
 
     public void setDriveMotorMode(DcMotor.RunMode mode) {
