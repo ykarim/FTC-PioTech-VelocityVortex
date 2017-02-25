@@ -88,7 +88,6 @@ public class BeaconPushTest extends OpMode{
     private void updateTelemetryData() {
         telemetry.addData(TAG, "Status : RUNNING");
 
-        telemetry.addData(TAG, "Pressing beacon : " + robotUtilities.pressingBeacon);
         telemetry.update();
     }
 

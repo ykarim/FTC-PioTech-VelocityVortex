@@ -19,8 +19,6 @@ public class RobotUtilities {
     public boolean continuousIntake = false;
     public boolean continuousShoot = false;
 
-    public boolean pressingBeacon = false;
-
     private boolean lightLED = true;
 
     private boolean secondUltraTest = false;
@@ -47,11 +45,7 @@ public class RobotUtilities {
         if (BeaconStatus.getLeftColor() != desiredColor &&
                 BeaconStatus.getRightColor() != desiredColor) {
             robotMovement.move(RobotMovement.Direction.NORTH, 4);
-            pressingBeacon = true;
             robotMovement.move(RobotMovement.Direction.SOUTH, 2);
-            pressingBeacon = false;
-
-            //Fix alignment here if off
         }
     }
 
