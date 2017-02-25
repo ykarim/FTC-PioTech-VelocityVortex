@@ -9,19 +9,19 @@ public class AdaTest extends LinearVisionOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        AdafruitIMU imu = new AdafruitIMU("IMU", this);
+        AdafruitIMU imu = new AdafruitIMU("IMU", hardwareMap);
         waitForStart();
         while(opModeIsActive()) {
-            if (gamepad1.x) {
-                while (gamepad1.x) {}
-                telemetry.addData("Heading", imu.getHeading());
+            telemetry.addData("WORKING", "");
 
-                telemetry.addData("Pitch", imu.getPitch());
+            telemetry.addData("Heading", imu.getHeading());
 
-                telemetry.addData("Roll", imu.getRoll());
-                telemetry.update();
-            }
+            telemetry.addData("Pitch", imu.getPitch());
 
+            telemetry.addData("Roll", imu.getRoll());
+            telemetry.update();
+
+            sleep(1000); //goes offline if queried too fast
         }
     }
 }

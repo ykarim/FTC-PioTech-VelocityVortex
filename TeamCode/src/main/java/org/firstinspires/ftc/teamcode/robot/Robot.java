@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
+import org.firstinspires.ftc.teamcode.sensors.gyro.AdafruitIMU;
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 
 import java.util.ArrayList;
@@ -36,6 +37,9 @@ public class Robot {
     public VoltageSensor voltageSensor = null; //Voltage Sensor (Config == "Motor Controller 1")
     public UltrasonicSensor ultrasonicSensorLeft = null; //Ultrasonic Sensor (Config == "ULTRALEFT")
     public UltrasonicSensor ultrasonicSensorRight = null; //Ultrasoonic Sensor (Config =="ULTRARIGHT")
+
+    public AdafruitIMU imu = null;
+
 
     /**
      * Initializes all drive and ball motors in NO ENCODERS mode
@@ -155,6 +159,8 @@ public class Robot {
 
         ultrasonicSensorLeft = hwMap.ultrasonicSensor.get(RobotConstants.ultrasonicSensorLeft);
         ultrasonicSensorRight = hwMap.ultrasonicSensor.get(RobotConstants.ultrasonicSensorRight);
+
+        imu = new AdafruitIMU("IMU", hwMap);
     }
 
     public void setDriveMotorMode(DcMotor.RunMode mode) {

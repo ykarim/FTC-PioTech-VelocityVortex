@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.sensors.gyro;
 
 import com.qualcomm.hardware.adafruit.BNO055IMU;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Quaternion;
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
@@ -8,9 +9,9 @@ import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 public class AdafruitIMU {
     private final BNO055IMU imu;
     private final String name;
-    public AdafruitIMU(String name, LinearVisionOpMode opMode) {
+    public AdafruitIMU(String name, HardwareMap hardwareMap) {
         this.name = name;
-        imu = opMode.hardwareMap.get(BNO055IMU.class, name);
+        imu = hardwareMap.get(BNO055IMU.class, name);
         setParameters();
     }
     private void setParameters() {
