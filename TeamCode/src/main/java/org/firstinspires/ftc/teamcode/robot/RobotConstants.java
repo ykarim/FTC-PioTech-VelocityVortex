@@ -47,4 +47,7 @@ public class RobotConstants {
     public static final double perfectWhiteLineValue = 0.8;
 
     static final double sensorWallOffset = 3;
+
+    static final double perfectGyroAngleMin = -5.0;
+    static final double perfectGyroAngleMax = 5.0; // -5 to 5
 }

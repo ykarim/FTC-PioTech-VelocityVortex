@@ -315,7 +315,7 @@ public class RobotMovement {
             orient(Orientation.FRONT);
             RobotConstants.inverted = false;
         } else {
-            orient(Orientation.BACK);
+            orient(Orientation.RIGHT);
             RobotConstants.inverted = true;
         }
     }

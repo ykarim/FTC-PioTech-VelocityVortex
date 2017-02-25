@@ -45,8 +45,9 @@ public class Path2AutoOp extends LinearVisionOpMode {
                 robotMovement.orient(RobotMovement.Orientation.BACK);
                 robotMovement.strafe(RobotMovement.Direction.NORTHWEST, 70);
                 robotUtilities.alignWithLine(RobotMovement.Direction.EAST, 3);
+                robotUtilities.alignWithWallUsingGyro();
 
-                telemetry.addData(TAG, "Aligned with line");
+                telemetry.addData(TAG, "Aligned with line and wall");
                 telemetry.update();
 
                 robotMovement.orient(RobotMovement.Orientation.RIGHT);

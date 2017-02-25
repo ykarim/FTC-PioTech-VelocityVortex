@@ -281,6 +281,23 @@ public class RobotUtilities {
         }
     }
 
+    //TODO: Change for Blue or Red
+    public boolean alignWithWallUsingGyro() {
+        RobotMovement robotMovement = new RobotMovement(robot);
+        if (robot.imu.getHeading() < RobotConstants.perfectGyroAngleMin) {
+            while (robot.imu.getHeading() < RobotConstants.perfectGyroAngleMin) {
+                robotMovement.rotate(RobotMovement.Direction.ROTATE_LEFT,
+                        Math.abs(robot.imu.getHeading() - RobotConstants.perfectGyroAngleMin));
+            }
+        } else if (robot.imu.getHeading() > RobotConstants.perfectGyroAngleMax) {
+            while (robot.imu.getHeading() > RobotConstants.perfectGyroAngleMax) {
+                robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT,
+                        Math.abs(robot.imu.getHeading() - RobotConstants.perfectGyroAngleMax));
+            }
+        }
+        return false;
+    }
+
     /**
      * Returns distance in cm
      * TODO: Balance values according to test where on sensor its measured from
