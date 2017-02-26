@@ -284,6 +284,7 @@ public class RobotUtilities {
     //TODO: Change for Blue or Red
     public boolean alignWithWallUsingGyro() {
         RobotMovement robotMovement = new RobotMovement(robot);
+
         if (robot.imu.getHeading() < RobotConstants.perfectGyroAngleMin) {
             while (robot.imu.getHeading() < RobotConstants.perfectGyroAngleMin) {
                 robotMovement.rotate(RobotMovement.Direction.ROTATE_LEFT,
@@ -298,11 +299,16 @@ public class RobotUtilities {
         return false;
     }
 
+    public double getGyroAngle() {
+        return (robot.imu.getHeading() - RobotConstants.homeHeadingAngle);
+    }
+
     /**
      * Returns distance in cm
      * TODO: Balance values according to test where on sensor its measured from
      * @return distance from target
      */
+    @Deprecated
     public double getUltrasonicLevel(UltrasonicSensor sensor) {
         double distance = 0;
         if (sensor == robot.ultrasonicSensorLeft) {

@@ -27,6 +27,8 @@ public class AdaTest extends LinearVisionOpMode {
                 while (gamepad1.a){}
                 robotUtilities.alignWithWallUsingGyro();
             }
+
+            telemetry.addData("Calc Heading", robotUtilities.getGyroAngle());
             telemetry.addData("Heading", robot.imu.getHeading());
 
             telemetry.addData("Pitch", robot.imu.getPitch());

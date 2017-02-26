@@ -331,6 +331,7 @@ public class RobotMovement {
     /**
      * Uses gyro to rotate instead of encoders
      * @param angle
+     * TODO: Find what happens to angle if rotate right or left
      */
     public void rotate(double angle) {
         double startingAngle = robot.imu.getHeading();
