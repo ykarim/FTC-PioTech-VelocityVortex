@@ -34,7 +34,7 @@ public class MainTeleOp extends OpMode{
         robotMovement.move(convertGamepadToMovement());
         convertGamepadToIntake(-gamepad2.left_stick_y);
         convertGamepadToShoot(-gamepad2.right_stick_y);
-//        convertGamepadToCap(-gamepad2.right_stick_y);
+        convertGamepadToCap();
 
         if (gamepad1.a) { //Gamepad 1 - X Button
 
@@ -63,7 +63,7 @@ public class MainTeleOp extends OpMode{
 
             //Unimplemented
 
-        } else if (gamepad2.b) { //Gamepad 2 - B Button
+        } else if (gamepad2.y) { //Gamepad 2 - B Button
 
             //Unimplemented
 
@@ -72,17 +72,16 @@ public class MainTeleOp extends OpMode{
             while (gamepad2.x) { }
             robotUtilities.continuousIntake();
 
-        } else if (gamepad2.y) { //Gamepad 2 - Y Button : Toggles continuous intake
+        } else if (gamepad2.b) { //Gamepad 2 - Y Button : Toggles continuous shoot
 
-            while (gamepad2.y) { }
+            while (gamepad2.b) { }
             robotUtilities.continuousShoot();
 
         } else if (gamepad2.left_bumper) { //Gamepad 2 - Left Bumper
 
-
+            robot.capServo.setPosition(0.5);
 
         } else if (gamepad2.right_bumper) { //Gamepad 2 - Right Bumper
-
 
 
         } else if (inThresholdRange(gamepad2.left_trigger)) { //Gamepad 2 - Left Trigger : Increases shoot speed
@@ -162,6 +161,16 @@ public class MainTeleOp extends OpMode{
             if (!robotUtilities.continuousShoot) {
                 robot.shoot.setPower(0);
             }
+        }
+    }
+
+    private void convertGamepadToCap() {
+        if(gamepad2.dpad_up) {
+            robot.cap.setPower(1.0);
+        } else if (gamepad2.dpad_down) {
+            robot.cap.setPower(-1.0);
+        } else {
+            robot.cap.setPower(0);
         }
     }
 

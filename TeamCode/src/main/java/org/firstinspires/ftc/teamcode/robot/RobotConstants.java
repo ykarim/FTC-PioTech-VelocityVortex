@@ -14,6 +14,7 @@ public class RobotConstants {
     static String intakeMotor = "INTAKE";
     static String shootMotor = "SHOOT";
     static String capMotor = "CAP";
+    static String capServo = "CAPSERVO";
 
     static String opticalSensor = "OPTICAL";
     static String voltageSensor = "Motor Controller 1";

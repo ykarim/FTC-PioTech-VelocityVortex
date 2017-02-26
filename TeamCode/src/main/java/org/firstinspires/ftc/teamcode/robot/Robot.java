@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
@@ -29,6 +30,7 @@ public class Robot {
     public DcMotor shoot = null; //Shoot Motor (Config == "SHOOT")
 
     public DcMotor cap = null; //Cap Motor (Config == "CAP")
+    public Servo capServo = null;
 
     public ArrayList<DcMotor> driveMotors = new ArrayList<>(); //stores all drive motors
     public ArrayList<DcMotor> ballMotors = new ArrayList<>(); //stores all ball motors (intake, shoot)
@@ -49,7 +51,7 @@ public class Robot {
         this.hwMap = hwMap;
         initDrive();
         initBall();
-//        initCap();
+        initCap();
         initSensors();
 
         for(DcMotor driveMotor : driveMotors) {
@@ -122,6 +124,7 @@ public class Robot {
             ballMotor.setDirection(DcMotorSimple.Direction.FORWARD);
             ballMotor.setPower(0);
         }
+        intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 //        cap.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 //        cap.setDirection(DcMotorSimple.Direction.FORWARD);
 //        cap.setPower(0);
@@ -149,6 +152,13 @@ public class Robot {
 
     private void initCap() {
         cap = hwMap.dcMotor.get(RobotConstants.capMotor);
+
+        cap.setDirection(DcMotorSimple.Direction.FORWARD);
+        cap.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        cap.setPower(0);
+
+        capServo = hwMap.servo.get(RobotConstants.capServo);
+        capServo.setPosition(0.9);
     }
 
     private void initSensors() {
