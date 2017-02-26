@@ -43,34 +43,44 @@ public class Path2AutoOp extends LinearVisionOpMode {
             //TODO: Fix rotation where appropriate through testing
             if (teamColor == Color.RED) {
                 robotMovement.orient(RobotMovement.Orientation.BACK);
+
+                //Move to beacon and align with line and push beacon
                 robotMovement.strafe(RobotMovement.Direction.NORTHWEST, 70);
                 robotMovement.move(RobotMovement.Direction.NORTH, 5);
                 robotUtilities.alignWithLine(RobotMovement.Direction.WEST, 3);
                 robotUtilities.alignWithWallUsingGyro();
-
-                telemetry.addData(TAG, "Aligned with line and wall");
-                telemetry.update();
-
                 robotMovement.orient(RobotMovement.Orientation.RIGHT);
-
                 robotUtilities.pushBeacon(leo, getDesiredColor());
+
+                //Shoot ball
+                robotMovement.move(RobotMovement.Direction.SOUTH, 12);
+                robotMovement.rotate(RobotMovement.Direction.ROTATE_LEFT, 90);
+                robotUtilities.shootDoubleBall(this, 5);
+                robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, 90);
+                robotMovement.move(RobotMovement.Direction.NORTH, 12);
+                robotUtilities.alignWithWallUsingGyro();
+
+                //Analyze beacon and update BeaconStatus
                 beaconUpdate.start();
                 robotMovement.move(RobotMovement.Direction.SOUTH, 12);
                 OpModeUtils.waitFor(this, 1);
                 beaconAnalyzer.stop();
-                robotMovement.move(RobotMovement.Direction.NORTH, 12);
+                robotMovement.move(RobotMovement.Direction.NORTH, 10);
                 robotUtilities.alignWithWallUsingGyro();
 
+                //Push beacon if incorrect
                 if (BeaconStatus.getLeftColor() != getDesiredColor() &&
                         BeaconStatus.getRightColor() != getDesiredColor()) {
                     robotUtilities.pushBeacon(leo, getDesiredColor());
                 }
 
+                //Move onto next beacon on right and push
                 robotMovement.move(RobotMovement.Direction.EAST, 5);
                 robotUtilities.alignWithLine(RobotMovement.Direction.EAST, 5);
                 robotUtilities.alignWithWallUsingGyro();
                 robotUtilities.pushBeacon(leo, getDesiredColor());
 
+                //Analyze 2nd beacon
                 beaconAnalyzer.resume();
                 robotMovement.move(RobotMovement.Direction.SOUTH, 12);
                 OpModeUtils.waitFor(this, 1);
@@ -78,43 +88,58 @@ public class Path2AutoOp extends LinearVisionOpMode {
                 robotMovement.move(RobotMovement.Direction.NORTH, 12);
                 robotUtilities.alignWithWallUsingGyro();
 
+                //Push beacon if incorrect
                 if (BeaconStatus.getLeftColor() != getDesiredColor() &&
                         BeaconStatus.getRightColor() != getDesiredColor()) {
                     robotUtilities.pushBeacon(leo, getDesiredColor());
                 }
 
+                //Go onto center vortex
                 robotMovement.strafe(RobotMovement.Direction.SOUTHWEST, 85);
-                robotMovement.strafe(RobotMovement.Direction.NORTHWEST, 40); //change
+
+                //Move onto corner
+                robotMovement.strafe(RobotMovement.Direction.NORTHWEST, 40);
             } else if (teamColor == Color.BLUE) {
                 robotMovement.orient(RobotMovement.Orientation.FRONT);
+
+                //Move onto beacon and align with line and push beacon
                 robotMovement.strafe(RobotMovement.Direction.NORTHEAST, 70);
                 robotMovement.move(RobotMovement.Direction.NORTH, 5);
                 robotUtilities.alignWithLine(RobotMovement.Direction.EAST, 3);
                 robotUtilities.alignWithWallUsingGyro();
-
-                telemetry.addData(TAG, "Aligned with line and wall");
-                telemetry.update();
-
                 robotMovement.orient(RobotMovement.Orientation.RIGHT);
-
                 robotUtilities.pushBeacon(leo, getDesiredColor());
+
+                //Shoot Ball
+                robotMovement.move(RobotMovement.Direction.SOUTH, 12);
+                robotMovement.rotate(RobotMovement.Direction.ROTATE_LEFT, 90);
+                robotUtilities.shootDoubleBall(this, 5);
+                robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, 90);
+                robotMovement.move(RobotMovement.Direction.NORTH, 12);
+                robotUtilities.alignWithWallUsingGyro();
+
+                //Observe the beacon again to ensure correct color
+                //Try not to hit beacon again
                 beaconUpdate.start();
                 robotMovement.move(RobotMovement.Direction.SOUTH, 12);
                 OpModeUtils.waitFor(this, 1);
                 beaconAnalyzer.stop();
-                robotMovement.move(RobotMovement.Direction.NORTH, 12);
+                robotMovement.move(RobotMovement.Direction.NORTH, 10);
                 robotUtilities.alignWithWallUsingGyro();
 
+                //Push if incorrect color
                 if (BeaconStatus.getLeftColor() != getDesiredColor() &&
                         BeaconStatus.getRightColor() != getDesiredColor()) {
                     robotUtilities.pushBeacon(leo, getDesiredColor());
                 }
 
+                //Move onto next beacon which is on left and push
                 robotMovement.move(RobotMovement.Direction.WEST, 5);
                 robotUtilities.alignWithLine(RobotMovement.Direction.WEST, 5);
                 robotUtilities.alignWithWallUsingGyro();
                 robotUtilities.pushBeacon(leo, getDesiredColor());
 
+                //Analyze beacon to ensure correct color
                 beaconAnalyzer.resume();
                 robotMovement.move(RobotMovement.Direction.SOUTH, 12);
                 OpModeUtils.waitFor(this, 1);
@@ -122,12 +147,16 @@ public class Path2AutoOp extends LinearVisionOpMode {
                 robotMovement.move(RobotMovement.Direction.NORTH, 12);
                 robotUtilities.alignWithWallUsingGyro();
 
+                //Push beacon if incorrect color
                 if (BeaconStatus.getLeftColor() != getDesiredColor() &&
                         BeaconStatus.getRightColor() != getDesiredColor()) {
                     robotUtilities.pushBeacon(leo, getDesiredColor());
                 }
 
+                //Move to center to push ball
                 robotMovement.strafe(RobotMovement.Direction.SOUTHEAST, 85);
+
+                //Move onto corner vortex
                 robotMovement.strafe(RobotMovement.Direction.NORTHEAST, 40); //change
             }
 
