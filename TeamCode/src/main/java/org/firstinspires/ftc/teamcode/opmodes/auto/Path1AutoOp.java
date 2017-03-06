@@ -51,7 +51,6 @@ public class Path1AutoOp extends LinearVisionOpMode {
             //Move back a bit more and align with wall via gyro and ultra
             robotMovement.move(RobotMovement.Direction.SOUTH, 6);
             beaconAnalyzer.stop();
-            robotUtilities.alignWithWallUsingRotation();
 
             robotUtilities.alignWithLine(RobotMovement.Direction.WEST, 5);
             robotUtilities.pushBeacon(leo, getDesiredColor());

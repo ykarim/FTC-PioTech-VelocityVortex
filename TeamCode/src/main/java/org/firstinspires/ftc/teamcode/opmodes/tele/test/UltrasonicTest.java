@@ -28,21 +28,7 @@ public class UltrasonicTest extends LinearOpMode {
         telemetry.addData(TAG, "Status : READY");
         waitForStart();
 
-        while (opModeIsActive()) {
-            updateTelemetryData();
 
-            robotMovement.move(convertGamepadToMovement());
-            if (gamepad1.x) {
-                while (gamepad1.x) {}
-                robotUtilities.alignWithWall();
-            } else if (gamepad1.y) {
-                while (gamepad1.y) {}
-                robotUtilities.alignWithWallUsingPID(this);
-            } else if (gamepad1.b) {
-                while (gamepad1.b) {}
-                robotUtilities.alignWithWallUsingRotation();
-            }
-        }
     }
 
     /**
@@ -74,16 +60,5 @@ public class UltrasonicTest extends LinearOpMode {
     private boolean inThresholdRange(double val) {
         return (val > RobotConstants.gamepadThreshold ||
                 val < -RobotConstants.gamepadThreshold);
-    }
-
-    private void updateTelemetryData() {
-        telemetry.addData(TAG, "Status : RUNNING");
-
-        telemetry.addData(TAG, "Left Ultrasonic Detected : " +
-                robotUtilities.getUltrasonicLevel(robot.ultrasonicSensorLeft));
-        telemetry.addData(TAG, "Right Ultrasonic Detected : " +
-                robotUtilities.getUltrasonicLevel(robot.ultrasonicSensorRight));
-
-        telemetry.update();
     }
 }

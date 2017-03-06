@@ -52,14 +52,6 @@ public class Path2AutoOp extends LinearVisionOpMode {
                 robotMovement.orient(RobotMovement.Orientation.RIGHT);
                 robotUtilities.pushBeacon(leo, getDesiredColor());
 
-                //Shoot ball
-                robotMovement.move(RobotMovement.Direction.SOUTH, 12);
-                robotMovement.rotate(RobotMovement.Direction.ROTATE_LEFT, 90);
-                robotUtilities.shootDoubleBall(this, 5);
-                robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, 90);
-                robotMovement.move(RobotMovement.Direction.NORTH, 12);
-                robotUtilities.alignWithWallUsingGyro();
-
                 //Analyze beacon and update BeaconStatus
                 beaconUpdate.start();
                 robotMovement.move(RobotMovement.Direction.SOUTH, 12);
@@ -109,14 +101,6 @@ public class Path2AutoOp extends LinearVisionOpMode {
                 robotUtilities.alignWithWallUsingGyro();
                 robotMovement.orient(RobotMovement.Orientation.RIGHT);
                 robotUtilities.pushBeacon(leo, getDesiredColor());
-
-                //Shoot Ball
-                robotMovement.move(RobotMovement.Direction.SOUTH, 12);
-                robotMovement.rotate(RobotMovement.Direction.ROTATE_LEFT, 90);
-                robotUtilities.shootDoubleBall(this, 5);
-                robotMovement.rotate(RobotMovement.Direction.ROTATE_RIGHT, 90);
-                robotMovement.move(RobotMovement.Direction.NORTH, 12);
-                robotUtilities.alignWithWallUsingGyro();
 
                 //Observe the beacon again to ensure correct color
                 //Try not to hit beacon again

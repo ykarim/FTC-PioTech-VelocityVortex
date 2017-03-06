@@ -37,8 +37,6 @@ public class Robot {
 
     public OpticalDistanceSensor lightSensor = null; //Distance Sensor (Config == "OPTICAL")
     public VoltageSensor voltageSensor = null; //Voltage Sensor (Config == "Motor Controller 1")
-    public UltrasonicSensor ultrasonicSensorLeft = null; //Ultrasonic Sensor (Config == "ULTRALEFT")
-    public UltrasonicSensor ultrasonicSensorRight = null; //Ultrasoonic Sensor (Config =="ULTRARIGHT")
 
     public AdafruitIMU imu = null;
 
@@ -64,6 +62,7 @@ public class Robot {
             ballMotor.setDirection(DcMotorSimple.Direction.FORWARD);
             ballMotor.setPower(0);
         }
+        intake.setDirection(DcMotorSimple.Direction.REVERSE);
 //        cap.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 //        cap.setDirection(DcMotorSimple.Direction.FORWARD);
 //        cap.setPower(0);
@@ -158,7 +157,7 @@ public class Robot {
         cap.setPower(0);
 
         capServo = hwMap.servo.get(RobotConstants.capServo);
-        capServo.setPosition(0.9);
+        capServo.setPosition(0.2);
     }
 
     private void initSensors() {
@@ -166,9 +165,6 @@ public class Robot {
         lightSensor.enableLed(true);
 
         voltageSensor = hwMap.voltageSensor.get(RobotConstants.voltageSensor);
-
-        ultrasonicSensorLeft = hwMap.ultrasonicSensor.get(RobotConstants.ultrasonicSensorLeft);
-        ultrasonicSensorRight = hwMap.ultrasonicSensor.get(RobotConstants.ultrasonicSensorRight);
 
         imu = new AdafruitIMU("IMU", hwMap);
         RobotConstants.homeHeadingAngle = imu.getHeading();

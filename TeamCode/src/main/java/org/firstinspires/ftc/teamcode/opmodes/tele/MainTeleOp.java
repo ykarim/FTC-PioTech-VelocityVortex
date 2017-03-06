@@ -23,7 +23,7 @@ public class MainTeleOp extends OpMode{
         robot.initTeleOp(hardwareMap);
         gamepad1.setJoystickDeadzone(.1f);
         gamepad2.setJoystickDeadzone(.1f);
-
+        robotMovement.orient(RobotMovement.Orientation.FRONT);
         telemetry.addData(TAG, "Status : READY");
     }
 
@@ -72,10 +72,6 @@ public class MainTeleOp extends OpMode{
             while (gamepad2.x) { }
             robotUtilities.continuousIntake();
 
-        } else if (gamepad2.b) { //Gamepad 2 - Y Button : Toggles continuous shoot
-
-            while (gamepad2.b) { }
-            robotUtilities.continuousShoot();
 
         } else if (gamepad2.left_bumper) { //Gamepad 2 - Left Bumper
 
