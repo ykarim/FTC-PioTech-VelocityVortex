@@ -52,8 +52,8 @@ public class TankRobot extends Robot {
     @Override
     public void initMotors() {
         super.initMotors();
-        intake = getHardwareMap().dcMotor.get("INTAKE");
-        shoot = getHardwareMap().dcMotor.get("SHOOT");
+        intake = getDevice(getHardwareMap().dcMotor, "INTAKE");
+        shoot = getDevice(getHardwareMap().dcMotor, "SHOOT");
     }
 
     /**

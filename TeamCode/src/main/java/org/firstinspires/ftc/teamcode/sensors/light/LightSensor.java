@@ -1,7 +1,11 @@
 package org.firstinspires.ftc.teamcode.sensors.light;
 
+import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
+import com.qualcomm.robotcore.util.RobotLog;
+
+import java.util.Map;
 
 public class LightSensor {
 
@@ -30,7 +34,26 @@ public class LightSensor {
     }
 
     public LightSensor(String deviceName, HardwareMap hardwareMap) {
-        this.sensor = hardwareMap.opticalDistanceSensor.get(deviceName);
+        this.sensor = getDevice(hardwareMap.opticalDistanceSensor, deviceName);
+    }
+
+    /**
+     * Get the value associated with an id and instead of raising an error return null and log it
+     *
+     * @param map  the hardware map from the HardwareMap
+     * @param name The ID in the hardware map
+     * @param <T>  the type of hardware map
+     * @return the hardware device associated with the name
+     */
+    private <T extends HardwareDevice> T getDevice(HardwareMap.DeviceMapping<T> map, String name) {
+        for (Map.Entry<String, T> item : map.entrySet()) {
+            if (!item.getKey().equalsIgnoreCase(name)) {
+                continue;
+            }
+            return item.getValue();
+        }
+        RobotLog.e("ERROR: " + name + " not found!");
+        return null;
     }
 
     public Status getStatus() {

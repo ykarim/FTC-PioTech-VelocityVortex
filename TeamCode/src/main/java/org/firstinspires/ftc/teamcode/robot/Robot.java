@@ -1,14 +1,16 @@
 package org.firstinspires.ftc.teamcode.robot;
 
-
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
+import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.teamcode.sensors.gyro.AdafruitIMU;
 import org.firstinspires.ftc.teamcode.sensors.light.LightSensor;
 import org.firstinspires.ftc.teamcode.utils.Power;
+
+import java.util.Map;
 
 public abstract class Robot {
 
@@ -88,22 +90,39 @@ public abstract class Robot {
     }
 
     public void initMotors() {
-        leftRearMotor = hardwareMap.dcMotor.get("RL");
-        leftFrontMotor = hardwareMap.dcMotor.get("RR");
-        rightRearMotor = hardwareMap.dcMotor.get("FL");
-        rightFrontMotor = hardwareMap.dcMotor.get("FR");
+        leftRearMotor = getDevice(hardwareMap.dcMotor, "RL");
+        leftFrontMotor = getDevice(hardwareMap.dcMotor, "RR");
+        rightRearMotor = getDevice(hardwareMap.dcMotor, "FL");
+        rightFrontMotor = getDevice(hardwareMap.dcMotor, "FR");
 
         setMotorDirections();
         setMotorModes(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    public void initServos() {
-
-    }
+    public abstract void initServos();
 
     public void initSensors() {
         adafruitIMU = new AdafruitIMU("imu", hardwareMap);
         ods = new LightSensor("ods", hardwareMap);
+    }
+
+    /**
+     * Get the value associated with an id and instead of raising an error return null and log it
+     *
+     * @param map  the hardware map from the HardwareMap
+     * @param name The ID in the hardware map
+     * @param <T>  the type of hardware map
+     * @return the hardware device associated with the name
+     */
+    public final <T extends HardwareDevice> T getDevice(HardwareMap.DeviceMapping<T> map, String name) {
+        for (Map.Entry<String, T> item : map.entrySet()) {
+            if (!item.getKey().equalsIgnoreCase(name)) {
+                continue;
+            }
+            return item.getValue();
+        }
+        RobotLog.e("ERROR: " + name + " not found!");
+        return null;
     }
 
     public final void move(DriveTrainDirections direction) {
