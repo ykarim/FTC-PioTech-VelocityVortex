@@ -7,8 +7,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.Quaternion;
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 
 public class AdafruitIMU {
+
     private final BNO055IMU imu;
     private final String name;
+
+    private double startingHeading;
+
     public AdafruitIMU(String name, HardwareMap hardwareMap) {
         this.name = name;
         imu = hardwareMap.get(BNO055IMU.class, name);
@@ -23,6 +27,7 @@ public class AdafruitIMU {
         parameters.loggingEnabled = true;
         parameters.loggingTag = "IMU";
         imu.initialize(parameters);
+        startingHeading = getHeading();
     }
     private double[] getAngles() {
         Quaternion quatAngles = imu.getQuaternionOrientation();
@@ -44,6 +49,7 @@ public class AdafruitIMU {
         while (angle <= -180) angle += 360;
         return angle;
     } //puts angle from 0-360 to -180 to 180
+
     public double getHeading() {
         return getAngles()[0];
     }
@@ -52,5 +58,9 @@ public class AdafruitIMU {
     }
     public double getRoll() {
         return getAngles()[2];
+    }
+
+    public double getStartingHeading() {
+        return startingHeading;
     }
 }

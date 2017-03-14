@@ -2,9 +2,7 @@ package org.firstinspires.ftc.teamcode.sensors.gyro;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.RobotConstants;
-import org.firstinspires.ftc.teamcode.robot.RobotMovement;
 import org.firstinspires.ftc.teamcode.robot.RobotUtilities;
 import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 

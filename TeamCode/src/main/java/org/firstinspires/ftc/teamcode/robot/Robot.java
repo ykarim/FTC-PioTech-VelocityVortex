@@ -1,184 +1,167 @@
 package org.firstinspires.ftc.teamcode.robot;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.UltrasonicSensor;
-import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.teamcode.sensors.gyro.AdafruitIMU;
-import org.lasarobotics.vision.opmode.LinearVisionOpMode;
 
-import java.util.ArrayList;
-
-/**
- * TODO: Use getters for hardware and ensure that if not present, app won't crash
- */
+// May need to be abstract //
 public class Robot {
 
-    private HardwareMap hwMap = null;
+    private DcMotor rearLeftMotor, rearRightMotor, frontLeftMotor, frontRightMotor;
+    private HardwareMap hardwareMap = null;
+    private AdafruitIMU adafruitIMU = null;
+    private OpticalDistanceSensor ods = null;
 
-    public DcMotor fl = null; //Front - Left Motor (Config == "FL")
-    public DcMotor fr = null; //Front - Right Motor (Config == "FR")
-    public DcMotor bl = null; //Back - Left Motor (Config == "BL")
-    public DcMotor br = null; //Back - Right Motor (Config == "BR")
+    public enum Directions implements DriveTrainDirections{
 
-    public DcMotor intake = null; //Intake Motor (Config == "INTAKE")
-    public DcMotor shoot = null; //Shoot Motor (Config == "SHOOT")
+        NORTH(0, 0, 0, 0), SOUTH(0, 0, 0, 0),
+        EAST(0, 0, 0, 0), WEST(0, 0, 0, 0),
+        NORTHEAST(0, 0, 0, 0), NORTHWEST(0, 0, 0, 0),
+        SOUTHEAST(0, 0, 0, 0), SOUTHWEST(0, 0, 0, 0),
+        ROTATE_RIGHT(0, 0, 0, 0), ROTATE_LEFT(0, 0, 0, 0);
 
-    public DcMotor cap = null; //Cap Motor (Config == "CAP")
-    public Servo capServo = null;
+        private final double rearLeftPower, rearRightPower, frontLeftPower, frontRightPower;
 
-    public ArrayList<DcMotor> driveMotors = new ArrayList<>(); //stores all drive motors
-    public ArrayList<DcMotor> ballMotors = new ArrayList<>(); //stores all ball motors (intake, shoot)
+        @Override
+        public double getRearLeftPower() {
+            return rearLeftPower;
+        }
 
-    public OpticalDistanceSensor lightSensor = null; //Distance Sensor (Config == "OPTICAL")
-    public VoltageSensor voltageSensor = null; //Voltage Sensor (Config == "Motor Controller 1")
+        @Override
+        public double getRearRightPower() {
+            return rearRightPower;
+        }
 
-    public AdafruitIMU imu = null;
+        @Override
+        public double getFrontLeftPower() {
+            return frontLeftPower;
+        }
 
+        @Override
+        public double getFrontRightPower() {
+            return frontRightPower;
+        }
 
-    /**
-     * Initializes all drive and ball motors in NO ENCODERS mode
-     * @param hwMap
-     */
-    public void initTeleOp(HardwareMap hwMap) {
-        this.hwMap = hwMap;
-        initDrive();
-        initBall();
-        initCap();
+        Directions(double rearLeftPower, double rearRightPower, double frontLeftPower, double frontRightPower) {
+            this.rearLeftPower = rearLeftPower;
+            this.rearRightPower = rearRightPower;
+            this.frontLeftPower = frontLeftPower;
+            this.frontRightPower = frontRightPower;
+        }
+    }
+
+    public DcMotor getFrontRightMotor() {
+        return frontRightMotor;
+    }
+
+    public DcMotor getFrontLeftMotor() {
+        return frontLeftMotor;
+    }
+
+    public DcMotor getRearRightMotor() {
+        return rearRightMotor;
+    }
+
+    public DcMotor getRearLeftMotor() {
+        return rearLeftMotor;
+    }
+
+    public HardwareMap getHardwareMap() {
+        return hardwareMap;
+    }
+
+    public AdafruitIMU getAdafruitIMU() {
+        return adafruitIMU;
+    }
+
+    public OpticalDistanceSensor getOds() {
+        return ods;
+    }
+
+    public final void init(HardwareMap hardwareMap) {
+        this.hardwareMap = hardwareMap;
+        initMotors();
+        initServos();
         initSensors();
 
-        for(DcMotor driveMotor : driveMotors) {
-            driveMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            driveMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-            driveMotor.setPower(0);
-        }
-        for(DcMotor ballMotor : ballMotors) {
-            ballMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            ballMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-            ballMotor.setPower(0);
-        }
-        intake.setDirection(DcMotorSimple.Direction.REVERSE);
-//        cap.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//        cap.setDirection(DcMotorSimple.Direction.FORWARD);
-//        cap.setPower(0);
+    }
+
+    public void initMotors() {
+        rearLeftMotor = hardwareMap.dcMotor.get("RL");
+        rearRightMotor = hardwareMap.dcMotor.get("RR");
+        frontLeftMotor = hardwareMap.dcMotor.get("FL");
+        frontRightMotor = hardwareMap.dcMotor.get("FR");
+
+        setMotorDirections();
+        setMotorModes(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+    public void initServos() {
+
+    }
+
+    public void initSensors() {
+        adafruitIMU = new AdafruitIMU("imu", hardwareMap);
+        ods = hardwareMap.opticalDistanceSensor.get("ods");
+    }
+
+    public final void move(DriveTrainDirections directions) {
+        rearLeftMotor.setPower(directions.getRearLeftPower());
+        rearRightMotor.setPower(directions.getRearRightPower());
+        frontLeftMotor.setPower(directions.getFrontLeftPower());
+        frontRightMotor.setPower(directions.getFrontRightPower());
     }
 
     /**
-     * Initializes all drive and ball motors in USING ENCODERS mode
-     * @param hwMap
+     * Moves robot a given distance using encoders
+     * @param direction
+     * @param distance
      */
-    public void initAutoOp(LinearOpMode opMode, HardwareMap hwMap) {
-        this.hwMap = hwMap;
-
-        initDrive();
-        initBall();
-//        initCap();
-        initSensors();
-
-        for(DcMotor driveMotor : driveMotors) {
-            driveMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            opMode.idle();
-            driveMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            driveMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-            driveMotor.setPower(0);
-        }
-        for(DcMotor ballMotor : ballMotors) {
-            ballMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            opMode.idle();
-            ballMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            ballMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-            ballMotor.setPower(0);
-        }
-//        cap.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//        cap.setDirection(DcMotorSimple.Direction.FORWARD);
-//        cap.setPower(0);
-    }
+    public void move(DriveTrainDirections direction, double distance) {}
 
     /**
-     * Initializes all drive and ball motors in USING ENCODERS mode
-     * @param hwMap
+     * Rotates the robot a certain angle with a given direction
+     * Uses Encoders
+     * @param direction
+     * @param angle
      */
-    public void initAutoOp(LinearVisionOpMode opMode, HardwareMap hwMap) {
-        this.hwMap = hwMap;
+    public void rotateEncoders(DriveTrainDirections direction, int angle) {}
 
-        initDrive();
-        initBall();
-//        initCap();
-        initSensors();
+    /**
+     * @see #rotateEncoders(DriveTrainDirections, int)
+     * Uses IMU
+     * @param direction
+     * @param angle
+     */
+    public void rotateIMU(DriveTrainDirections direction, int angle) {}
 
-        for(DcMotor driveMotor : driveMotors) {
-            driveMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            driveMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            driveMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-            driveMotor.setPower(0);
-        }
-        for(DcMotor ballMotor : ballMotors) {
-            ballMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            ballMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            ballMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-            ballMotor.setPower(0);
-        }
-        intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        cap.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//        cap.setDirection(DcMotorSimple.Direction.FORWARD);
-//        cap.setPower(0);
+    /**
+     * Rotates robot to a certain angle compared to the starting position declared in initialization
+     * @param angle
+     */
+    public void robotAlignToAngle(int angle) {
+
     }
 
-    private void initDrive() {
-        fl = hwMap.dcMotor.get(RobotConstants.frontLeftMotor);
-        fr = hwMap.dcMotor.get(RobotConstants.frontRightMotor);
-        bl = hwMap.dcMotor.get(RobotConstants.backLeftMotor);
-        br = hwMap.dcMotor.get(RobotConstants.backRightMotor);
-
-        driveMotors.add(fl);
-        driveMotors.add(fr);
-        driveMotors.add(bl);
-        driveMotors.add(br);
-    }
-
-    private void initBall() {
-        intake = hwMap.dcMotor.get(RobotConstants.intakeMotor);
-        shoot = hwMap.dcMotor.get(RobotConstants.shootMotor);
-
-        ballMotors.add(intake);
-        ballMotors.add(shoot);
-    }
-
-    private void initCap() {
-        cap = hwMap.dcMotor.get(RobotConstants.capMotor);
-
-        cap.setDirection(DcMotorSimple.Direction.FORWARD);
-        cap.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        cap.setPower(0);
-
-        capServo = hwMap.servo.get(RobotConstants.capServo);
-        capServo.setPosition(0.2);
-    }
-
-    private void initSensors() {
-        lightSensor = hwMap.opticalDistanceSensor.get(RobotConstants.opticalSensor);
-        lightSensor.enableLed(true);
-
-        voltageSensor = hwMap.voltageSensor.get(RobotConstants.voltageSensor);
-
-        imu = new AdafruitIMU("IMU", hwMap);
-        RobotConstants.homeHeadingAngle = imu.getHeading();
-    }
-
-    public void setDriveMotorMode(DcMotor.RunMode mode) {
-        for (DcMotor motor : driveMotors) {
-            motor.setMode(mode);
+    public final void setMotorDirections(DcMotorSimple.Direction... directions){
+        if (directions.length == 4) {
+            rearLeftMotor.setDirection(directions[0]);
+            rearRightMotor.setDirection(directions[1]);
+            frontLeftMotor.setDirection(directions[2]);
+            frontRightMotor.setDirection(directions[3]);
+        } else {
+            //error out
         }
     }
 
-    public void setDriveMotorPower(double power) {
-        for (DcMotor motor : driveMotors) {
-            motor.setPower(power);
-        }
+    public final void setMotorModes(DcMotor.RunMode mode) {
+        rearLeftMotor.setMode(mode);
+        rearRightMotor.setMode(mode);
+        frontLeftMotor.setMode(mode);
+        frontRightMotor.setMode(mode);
     }
 }
