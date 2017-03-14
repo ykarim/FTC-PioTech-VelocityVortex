@@ -4,6 +4,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.sensors.light.LightSensor;
+import org.firstinspires.ftc.teamcode.utils.Power;
+
 public class TankRobot extends Robot {
 
     private DcMotor intake = null, shoot = null;
@@ -51,6 +54,38 @@ public class TankRobot extends Robot {
         super.initMotors();
         intake = getHardwareMap().dcMotor.get("INTAKE");
         shoot = getHardwareMap().dcMotor.get("SHOOT");
+    }
+
+    /**
+     * Sort of a hack to decrease robot speed
+     * Since default power is always 1 or -1 can simply subtract desired power by 1 and
+     * add/subtract that from default power to achieve the desired speed.
+     * @param direction
+     * @param power
+     */
+    public void move(DriveTrainDirections direction, Power power) {
+        double powerDecrease = 1 - power.getPower();
+        if (direction == Directions.NORTH) {
+            getLeftRearMotor().setPower(direction.getLeftRearPower() - powerDecrease);
+            getLeftFrontMotor().setPower(direction.getLeftFrontPower() - powerDecrease);
+            getRightRearMotor().setPower(direction.getRightRearPower() + powerDecrease);
+            getRightFrontMotor().setPower(direction.getRightFrontPower() + powerDecrease);
+        } else if (direction == Directions.SOUTH) {
+            getLeftRearMotor().setPower(direction.getLeftRearPower() + powerDecrease);
+            getLeftFrontMotor().setPower(direction.getLeftFrontPower() + powerDecrease);
+            getRightRearMotor().setPower(direction.getRightRearPower() - powerDecrease);
+            getRightFrontMotor().setPower(direction.getRightFrontPower() - powerDecrease);
+        } else if (direction == Directions.ROTATE_LEFT) {
+            getLeftRearMotor().setPower(direction.getLeftRearPower() + powerDecrease);
+            getLeftFrontMotor().setPower(direction.getLeftFrontPower() + powerDecrease);
+            getRightRearMotor().setPower(direction.getRightRearPower() + powerDecrease);
+            getRightFrontMotor().setPower(direction.getRightFrontPower() + powerDecrease);
+        } else if (direction == Directions.ROTATE_RIGHT) {
+            getLeftRearMotor().setPower(direction.getLeftRearPower() - powerDecrease);
+            getLeftFrontMotor().setPower(direction.getLeftFrontPower() - powerDecrease);
+            getRightRearMotor().setPower(direction.getRightRearPower() - powerDecrease);
+            getRightFrontMotor().setPower(direction.getRightFrontPower() - powerDecrease);
+        }
     }
 
     /**
@@ -102,7 +137,7 @@ public class TankRobot extends Robot {
         double radians = Math.toRadians(angle);
         double distanceToMove = radians * RobotConstants.distFromCenterToWheel;
 
-        //Set target position
+        //Set target positions
         int flTarget = 0;
         int frTarget = 0;
         int rlTarget = 0;
@@ -158,6 +193,7 @@ public class TankRobot extends Robot {
      * Rotates robot to a certain angle compared to the starting position declared in initialization
      * @param angle
      */
+    @Override
     public void robotAlignToAngle(int angle) {
         if (getAdafruitIMU().getHeading() > getAdafruitIMU().getStartingHeading()) {
             rotateIMU(Directions.ROTATE_RIGHT,
@@ -165,6 +201,16 @@ public class TankRobot extends Robot {
         } else if (getAdafruitIMU().getHeading() < getAdafruitIMU().getStartingHeading()) {
             rotateIMU(Directions.ROTATE_LEFT,
                     (int) (getAdafruitIMU().getHeading()- getAdafruitIMU().getStartingHeading()));
+        }
+    }
+
+    /**
+     * Uses robot's light sensor to move in a given direction until it reaches the line
+     * @param direction
+     */
+    public void robotAlignToLine(Directions direction) {
+        while(getOds().getStatus() == LightSensor.Status.FLOOR) {
+            move(direction, Power.LOW);
         }
     }
 }

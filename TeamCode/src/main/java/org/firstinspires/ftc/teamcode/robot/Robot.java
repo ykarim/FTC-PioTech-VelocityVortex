@@ -7,14 +7,15 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 
 import org.firstinspires.ftc.teamcode.sensors.gyro.AdafruitIMU;
+import org.firstinspires.ftc.teamcode.sensors.light.LightSensor;
+import org.firstinspires.ftc.teamcode.utils.Power;
 
-// May need to be abstract //
 public abstract class Robot {
 
     private DcMotor leftRearMotor, leftFrontMotor, rightRearMotor, rightFrontMotor;
     private HardwareMap hardwareMap = null;
     private AdafruitIMU adafruitIMU = null;
-    private OpticalDistanceSensor ods = null;
+    private LightSensor ods = null;
 
     public enum Directions implements DriveTrainDirections{
 
@@ -74,7 +75,7 @@ public abstract class Robot {
         return adafruitIMU;
     }
 
-    public OpticalDistanceSensor getOds() {
+    public LightSensor getOds() {
         return ods;
     }
 
@@ -102,15 +103,17 @@ public abstract class Robot {
 
     public void initSensors() {
         adafruitIMU = new AdafruitIMU("imu", hardwareMap);
-        ods = hardwareMap.opticalDistanceSensor.get("ods");
+        ods = new LightSensor("ods", hardwareMap);
     }
 
-    public final void move(DriveTrainDirections directions) {
-        leftRearMotor.setPower(directions.getLeftRearPower());
-        leftFrontMotor.setPower(directions.getLeftFrontPower());
-        rightRearMotor.setPower(directions.getRightRearPower());
-        rightFrontMotor.setPower(directions.getRightFrontPower());
+    public final void move(DriveTrainDirections direction) {
+        leftRearMotor.setPower(direction.getLeftRearPower());
+        leftFrontMotor.setPower(direction.getLeftFrontPower());
+        rightRearMotor.setPower(direction.getRightRearPower());
+        rightFrontMotor.setPower(direction.getRightFrontPower());
     }
+
+    public abstract void move(DriveTrainDirections direction, Power power);
 
     /**
      * Moves robot a given distance using encoders
