@@ -1,19 +1,17 @@
 package org.firstinspires.ftc.teamcode.sensors;
 
-import com.qualcomm.robotcore.hardware.HardwareMap;
-
-public abstract class Sensor {
+public interface Sensor {
 
     /**
      * Starts sensor and performs all required initialization tasks
      */
-    public abstract void start(HardwareMap hwMap);
+    void start();
 
-    public abstract void stop();
+    void stop();
 
     /**
      * Returns sensor data
-     * @return Object array
+     * @return <T> of data
      */
-    public abstract Object[] getValues();
+    <T> T getValues();
 }

@@ -15,7 +15,7 @@ public class AdaTest extends LinearVisionOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-
+        robot = new TankRobot(hardwareMap);
         gamepad1.setJoystickDeadzone(.1f);
         gamepad2.setJoystickDeadzone(.1f);
         waitForStart();
@@ -23,11 +23,11 @@ public class AdaTest extends LinearVisionOpMode {
             moveLeftWheels();
             moveRightWheels();
 
-            telemetry.addData("Heading", robot.getAdafruitIMU().getHeading());
+            telemetry.addData("Heading", robot.getAdafruitIMU().getValues()[0]);
 
-            telemetry.addData("Pitch", robot.getAdafruitIMU().getPitch());
+            telemetry.addData("Pitch", robot.getAdafruitIMU().getValues()[1]);
 
-            telemetry.addData("Roll", robot.getAdafruitIMU().getRoll());
+            telemetry.addData("Roll", robot.getAdafruitIMU().getValues()[2]);
             telemetry.update();
         }
     }
@@ -56,10 +56,5 @@ public class AdaTest extends LinearVisionOpMode {
             robot.getRightRearMotor().setPower(Power.NONE.getPower());
             robot.getRightFrontMotor().setPower(Power.NONE.getPower());
         }
-    }
-
-    private boolean inThresholdRange(double val) {
-        return (val > RobotConstants.gamepadThreshold ||
-                val < -RobotConstants.gamepadThreshold);
     }
 }

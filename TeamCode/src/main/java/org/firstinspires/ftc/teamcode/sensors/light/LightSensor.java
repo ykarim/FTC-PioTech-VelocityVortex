@@ -5,9 +5,11 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.util.RobotLog;
 
+import org.firstinspires.ftc.teamcode.sensors.Sensor;
+
 import java.util.Map;
 
-public class LightSensor {
+public class LightSensor implements Sensor {
 
     private OpticalDistanceSensor sensor = null;
 
@@ -37,6 +39,16 @@ public class LightSensor {
         this.sensor = getDevice(hardwareMap.opticalDistanceSensor, deviceName);
     }
 
+    @Override
+    public void start() {
+        //Sensor automatically started once plugged in
+    }
+
+    @Override
+    public void stop() {
+        //Can't stop sensor
+    }
+
     /**
      * Get the value associated with an id and instead of raising an error return null and log it
      *
@@ -64,5 +76,10 @@ public class LightSensor {
         } else {
             return Status.NONE;
         }
+    }
+
+    @Override
+    public Status getValues() {
+        return getStatus();
     }
 }

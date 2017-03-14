@@ -103,6 +103,7 @@ public abstract class Robot {
 
     public void initSensors() {
         adafruitIMU = new AdafruitIMU("imu", hardwareMap);
+        adafruitIMU.start();
         ods = new LightSensor("ods", hardwareMap);
     }
 

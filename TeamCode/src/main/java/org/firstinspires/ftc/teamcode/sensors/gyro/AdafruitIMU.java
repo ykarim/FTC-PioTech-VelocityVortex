@@ -4,20 +4,37 @@ import com.qualcomm.hardware.adafruit.BNO055IMU;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Quaternion;
-import org.lasarobotics.vision.opmode.LinearVisionOpMode;
+import org.firstinspires.ftc.teamcode.sensors.Sensor;
 
-public class AdafruitIMU {
+public class AdafruitIMU implements Sensor {
 
     private final BNO055IMU imu;
     private final String name;
 
     private double startingHeading;
+    private double startingPitch;
+    private double startingRoll;
 
     public AdafruitIMU(String name, HardwareMap hardwareMap) {
         this.name = name;
         imu = hardwareMap.get(BNO055IMU.class, name);
         setParameters();
     }
+
+    /**
+     * After initialization in constructor must call this method to record initial values
+     */
+    public void start() {
+        startingHeading = getHeading();
+        startingPitch = getPitch();
+        startingRoll = getRoll();
+    }
+
+
+    public void stop() {
+        //Can't stop this sensor
+    }
+
     private void setParameters() {
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.mode = BNO055IMU.SensorMode.IMU;
@@ -27,7 +44,6 @@ public class AdafruitIMU {
         parameters.loggingEnabled = true;
         parameters.loggingTag = "IMU";
         imu.initialize(parameters);
-        startingHeading = getHeading();
     }
     private double[] getAngles() {
         Quaternion quatAngles = imu.getQuaternionOrientation();
@@ -50,17 +66,34 @@ public class AdafruitIMU {
         return angle;
     } //puts angle from 0-360 to -180 to 180
 
-    public double getHeading() {
+    private double getHeading() {
         return getAngles()[0];
     }
-    public double getPitch() {
+    private double getPitch() {
         return getAngles()[1];
     }
-    public double getRoll() {
+    private double getRoll() {
         return getAngles()[2];
     }
 
     public double getStartingHeading() {
         return startingHeading;
+    }
+
+    public double getStartingRoll() {
+        return startingRoll;
+    }
+
+    public double getStartingPitch() {
+        return startingPitch;
+    }
+
+    /**
+     * @see Sensor#getValues()
+     * @return [0] : heading, [1] : pitch, [2] : roll
+     */
+    @Override
+    public double[] getValues() {
+        return new double[]{getHeading(), getPitch(), getRoll()};
     }
 }

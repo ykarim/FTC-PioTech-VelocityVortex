@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.robot;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -9,7 +10,8 @@ import org.firstinspires.ftc.teamcode.utils.Power;
 
 public class TankRobot extends Robot {
 
-    private DcMotor intake = null, shoot = null;
+    private DcMotor shoot = null;
+    private CRServo collector = null;
 
     public enum Directions implements DriveTrainDirections{
 
@@ -52,9 +54,22 @@ public class TankRobot extends Robot {
     @Override
     public void initMotors() {
         super.initMotors();
-        intake = getDevice(getHardwareMap().dcMotor, "INTAKE");
         shoot = getDevice(getHardwareMap().dcMotor, "SHOOT");
     }
+
+    @Override
+    public void initServos() {
+        collector = getDevice(getHardwareMap().crservo, "INTAKE");
+    }
+
+    public DcMotor getShoot() {
+        return shoot;
+    }
+
+    public CRServo getCollector() {
+        return collector;
+    }
+
 
     /**
      * Sort of a hack to decrease robot speed
@@ -179,11 +194,11 @@ public class TankRobot extends Robot {
     @Override
     public void rotateIMU(DriveTrainDirections direction, int angle) {
         if (direction == Directions.ROTATE_LEFT) {
-            while (getAdafruitIMU().getHeading() < -angle) {
+            while (getAdafruitIMU().getValues()[0] < -angle) {
                 move(Directions.ROTATE_LEFT);
             }
         } else if (direction == Directions.ROTATE_RIGHT) {
-            while (getAdafruitIMU().getHeading() > angle) {
+            while (getAdafruitIMU().getValues()[0] > angle) {
                 move(Directions.ROTATE_RIGHT);
             }
         }
@@ -195,17 +210,18 @@ public class TankRobot extends Robot {
      */
     @Override
     public void robotAlignToAngle(int angle) {
-        if (getAdafruitIMU().getHeading() > getAdafruitIMU().getStartingHeading()) {
+        if (getAdafruitIMU().getValues()[0] > getAdafruitIMU().getStartingHeading()) {
             rotateIMU(Directions.ROTATE_RIGHT,
-                    (int) (getAdafruitIMU().getHeading()- getAdafruitIMU().getStartingHeading()));
-        } else if (getAdafruitIMU().getHeading() < getAdafruitIMU().getStartingHeading()) {
+                    (int) (getAdafruitIMU().getValues()[0] - getAdafruitIMU().getStartingHeading()));
+        } else if (getAdafruitIMU().getValues()[0] < getAdafruitIMU().getStartingHeading()) {
             rotateIMU(Directions.ROTATE_LEFT,
-                    (int) (getAdafruitIMU().getHeading()- getAdafruitIMU().getStartingHeading()));
+                    (int) (getAdafruitIMU().getValues()[0] - getAdafruitIMU().getStartingHeading()));
         }
     }
 
     /**
      * Uses robot's light sensor to move in a given direction until it reaches the line
+     * TODO: has tendency to throw stuck in loop() if taking a while
      * @param direction
      */
     public void robotAlignToLine(Directions direction) {
