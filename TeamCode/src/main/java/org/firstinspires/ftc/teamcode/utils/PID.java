@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.sensors.utils;
+package org.firstinspires.ftc.teamcode.utils;
 
 import android.support.annotation.NonNull;
 
