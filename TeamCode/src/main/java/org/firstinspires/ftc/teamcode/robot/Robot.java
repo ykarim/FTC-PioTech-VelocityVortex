@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.robot;
 
+import android.support.annotation.NonNull;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
@@ -81,7 +83,7 @@ public abstract class Robot {
         return ods;
     }
 
-    public final void init(HardwareMap hardwareMap) {
+    public final void init(@NonNull HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
         initMotors();
         initServos();
@@ -115,7 +117,7 @@ public abstract class Robot {
      * @param <T>  the type of hardware map
      * @return the hardware device associated with the name
      */
-    public final <T extends HardwareDevice> T getDevice(HardwareMap.DeviceMapping<T> map, String name) {
+    public final <T extends HardwareDevice> T getDevice(@NonNull HardwareMap.DeviceMapping<T> map, @NonNull String name) {
         for (Map.Entry<String, T> item : map.entrySet()) {
             if (!item.getKey().equalsIgnoreCase(name)) {
                 continue;
@@ -126,21 +128,21 @@ public abstract class Robot {
         return null;
     }
 
-    public final void move(DriveTrainDirections direction) {
+    public final void move(@NonNull DriveTrainDirections direction) {
         leftRearMotor.setPower(direction.getLeftRearPower());
         leftFrontMotor.setPower(direction.getLeftFrontPower());
         rightRearMotor.setPower(direction.getRightRearPower());
         rightFrontMotor.setPower(direction.getRightFrontPower());
     }
 
-    public abstract void move(DriveTrainDirections direction, Power power);
+    public abstract void move(@NonNull DriveTrainDirections direction, @NonNull Power power);
 
     /**
      * Moves robot a given distance using encoders
      * @param direction
      * @param distance
      */
-    public abstract void move(DriveTrainDirections direction, double distance);
+    public abstract void move(@NonNull DriveTrainDirections direction, double distance);
 
     /**
      * Rotates the robot a certain angle with a given direction
@@ -148,7 +150,7 @@ public abstract class Robot {
      * @param direction
      * @param angle
      */
-    public abstract void rotateEncoders(DriveTrainDirections direction, int angle);
+    public abstract void rotateEncoders(@NonNull DriveTrainDirections direction, int angle);
 
     /**
      * @see #rotateEncoders(DriveTrainDirections, int)
@@ -156,7 +158,7 @@ public abstract class Robot {
      * @param direction
      * @param angle
      */
-    public abstract void rotateIMU(DriveTrainDirections direction, int angle);
+    public abstract void rotateIMU(@NonNull DriveTrainDirections direction, int angle);
 
     /**
      * Rotates robot to a certain angle compared to the starting position declared in initialization
@@ -164,7 +166,7 @@ public abstract class Robot {
      */
     public abstract void robotAlignToAngle(int angle);
 
-    public final void setMotorDirections(DcMotorSimple.Direction... directions){
+    public final void setMotorDirections(@NonNull DcMotorSimple.Direction... directions){
         if (directions.length == 4) {
             leftRearMotor.setDirection(directions[0]);
             leftFrontMotor.setDirection(directions[1]);
@@ -175,7 +177,7 @@ public abstract class Robot {
         }
     }
 
-    public final void setMotorModes(DcMotor.RunMode mode) {
+    public final void setMotorModes(@NonNull DcMotor.RunMode mode) {
         leftRearMotor.setMode(mode);
         leftFrontMotor.setMode(mode);
         rightRearMotor.setMode(mode);

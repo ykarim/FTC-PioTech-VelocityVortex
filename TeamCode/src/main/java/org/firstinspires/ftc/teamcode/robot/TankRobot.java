@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.robot;
 
+import android.support.annotation.NonNull;
+
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -45,7 +47,7 @@ public class TankRobot extends Robot {
         }
     }
 
-    public TankRobot(HardwareMap hwMap) {
+    public TankRobot(@NonNull HardwareMap hwMap) {
         init(hwMap);
         setMotorDirections(DcMotorSimple.Direction.FORWARD, DcMotorSimple.Direction.FORWARD,
                 DcMotorSimple.Direction.REVERSE, DcMotorSimple.Direction.REVERSE);
@@ -70,7 +72,6 @@ public class TankRobot extends Robot {
         return collector;
     }
 
-
     /**
      * Sort of a hack to decrease robot speed
      * Since default power is always 1 or -1 can simply subtract desired power by 1 and
@@ -78,7 +79,7 @@ public class TankRobot extends Robot {
      * @param direction
      * @param power
      */
-    public void move(DriveTrainDirections direction, Power power) {
+    public void move(@NonNull DriveTrainDirections direction, @NonNull Power power) {
         double powerDecrease = 1 - power.getPower();
         if (direction == Directions.NORTH) {
             getLeftRearMotor().setPower(direction.getLeftRearPower() - powerDecrease);
@@ -109,7 +110,7 @@ public class TankRobot extends Robot {
      * @param distance
      */
     @Override
-    public void move(DriveTrainDirections direction, double distance) {
+    public void move(@NonNull DriveTrainDirections direction, double distance) {
         int flTarget = 0;
         int frTarget = 0;
         int rlTarget = 0;
@@ -148,7 +149,7 @@ public class TankRobot extends Robot {
      * @param angle
      */
     @Override
-    public void rotateEncoders(DriveTrainDirections direction, int angle) {
+    public void rotateEncoders(@NonNull DriveTrainDirections direction, int angle) {
         double radians = Math.toRadians(angle);
         double distanceToMove = radians * RobotConstants.distFromCenterToWheel;
 
@@ -192,7 +193,7 @@ public class TankRobot extends Robot {
      * @param angle
      */
     @Override
-    public void rotateIMU(DriveTrainDirections direction, int angle) {
+    public void rotateIMU(@NonNull DriveTrainDirections direction, int angle) {
         if (direction == Directions.ROTATE_LEFT) {
             while (getAdafruitIMU().getValues()[0] < -angle) {
                 move(Directions.ROTATE_LEFT);
@@ -224,7 +225,7 @@ public class TankRobot extends Robot {
      * TODO: has tendency to throw stuck in loop() if taking a while
      * @param direction
      */
-    public void robotAlignToLine(Directions direction) {
+    public void robotAlignToLine(@NonNull Directions direction) {
         while(getOds().getStatus() == LightSensor.Status.FLOOR) {
             move(direction, Power.LOW);
         }

@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.sensors.gyro;
 
+import android.support.annotation.NonNull;
+
 import com.qualcomm.hardware.adafruit.BNO055IMU;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -15,7 +17,7 @@ public class AdafruitIMU implements Sensor {
     private double startingPitch;
     private double startingRoll;
 
-    public AdafruitIMU(String name, HardwareMap hardwareMap) {
+    public AdafruitIMU(@NonNull String name, @NonNull HardwareMap hardwareMap) {
         this.name = name;
         imu = hardwareMap.get(BNO055IMU.class, name);
         setParameters();

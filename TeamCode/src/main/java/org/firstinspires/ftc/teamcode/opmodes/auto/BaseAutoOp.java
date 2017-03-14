@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes.auto;
 
+import android.support.annotation.NonNull;
+
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
@@ -70,14 +72,14 @@ public abstract class BaseAutoOp extends LinearVisionOpMode {
         cameraControl.setAutoExposureCompensation();
     }
 
-    public final void write(String... text) {
+    public final void write(@NonNull String... text) {
         for (String msg : text) {
             telemetry.addData(TAG, msg);
         }
         telemetry.update();
     }
 
-    public final void setTag(String opName) {
+    public final void setTag(@NonNull String opName) {
         TAG += opName;
     }
 

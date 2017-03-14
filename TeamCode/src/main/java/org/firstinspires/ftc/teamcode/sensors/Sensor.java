@@ -7,6 +7,9 @@ public interface Sensor {
      */
     void start();
 
+    /**
+     * Stops sensor and performs all closing tasks
+     */
     void stop();
 
     /**

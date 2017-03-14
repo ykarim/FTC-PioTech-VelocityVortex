@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.sensors.light;
 
+import android.support.annotation.NonNull;
+
 import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
@@ -35,7 +37,7 @@ public class LightSensor implements Sensor {
         }
     }
 
-    public LightSensor(String deviceName, HardwareMap hardwareMap) {
+    public LightSensor(@NonNull String deviceName, @NonNull HardwareMap hardwareMap) {
         this.sensor = getDevice(hardwareMap.opticalDistanceSensor, deviceName);
     }
 
@@ -57,7 +59,7 @@ public class LightSensor implements Sensor {
      * @param <T>  the type of hardware map
      * @return the hardware device associated with the name
      */
-    private <T extends HardwareDevice> T getDevice(HardwareMap.DeviceMapping<T> map, String name) {
+    private <T extends HardwareDevice> T getDevice(@NonNull HardwareMap.DeviceMapping<T> map, String name) {
         for (Map.Entry<String, T> item : map.entrySet()) {
             if (!item.getKey().equalsIgnoreCase(name)) {
                 continue;
