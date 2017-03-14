@@ -9,9 +9,9 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import org.firstinspires.ftc.teamcode.sensors.gyro.AdafruitIMU;
 
 // May need to be abstract //
-public class Robot {
+public abstract class Robot {
 
-    private DcMotor rearLeftMotor, rearRightMotor, frontLeftMotor, frontRightMotor;
+    private DcMotor leftRearMotor, leftFrontMotor, rightRearMotor, rightFrontMotor;
     private HardwareMap hardwareMap = null;
     private AdafruitIMU adafruitIMU = null;
     private OpticalDistanceSensor ods = null;
@@ -24,50 +24,46 @@ public class Robot {
         SOUTHEAST(0, 0, 0, 0), SOUTHWEST(0, 0, 0, 0),
         ROTATE_RIGHT(0, 0, 0, 0), ROTATE_LEFT(0, 0, 0, 0);
 
-        private final double rearLeftPower, rearRightPower, frontLeftPower, frontRightPower;
+        private final double leftRearPower, leftFrontPower, rightRearPower, rightFrontPower;
 
-        @Override
-        public double getRearLeftPower() {
-            return rearLeftPower;
+        public double getLeftRearPower() {
+            return leftRearPower;
         }
 
-        @Override
-        public double getRearRightPower() {
-            return rearRightPower;
+        public double getLeftFrontPower() {
+            return leftFrontPower;
         }
 
-        @Override
-        public double getFrontLeftPower() {
-            return frontLeftPower;
+        public double getRightRearPower() {
+            return rightRearPower;
         }
 
-        @Override
-        public double getFrontRightPower() {
-            return frontRightPower;
+        public double getRightFrontPower() {
+            return rightFrontPower;
         }
 
-        Directions(double rearLeftPower, double rearRightPower, double frontLeftPower, double frontRightPower) {
-            this.rearLeftPower = rearLeftPower;
-            this.rearRightPower = rearRightPower;
-            this.frontLeftPower = frontLeftPower;
-            this.frontRightPower = frontRightPower;
+        Directions(double leftRearPower, double leftFrontPower, double rightRearPower, double rightFrontPower) {
+            this.leftRearPower = leftRearPower;
+            this.leftFrontPower = leftFrontPower;
+            this.rightRearPower = rightRearPower;
+            this.rightFrontPower = rightFrontPower;
         }
     }
 
-    public DcMotor getFrontRightMotor() {
-        return frontRightMotor;
+    public DcMotor getRightFrontMotor() {
+        return rightFrontMotor;
     }
 
-    public DcMotor getFrontLeftMotor() {
-        return frontLeftMotor;
+    public DcMotor getRightRearMotor() {
+        return rightRearMotor;
     }
 
-    public DcMotor getRearRightMotor() {
-        return rearRightMotor;
+    public DcMotor getLeftFrontMotor() {
+        return leftFrontMotor;
     }
 
-    public DcMotor getRearLeftMotor() {
-        return rearLeftMotor;
+    public DcMotor getLeftRearMotor() {
+        return leftRearMotor;
     }
 
     public HardwareMap getHardwareMap() {
@@ -91,10 +87,10 @@ public class Robot {
     }
 
     public void initMotors() {
-        rearLeftMotor = hardwareMap.dcMotor.get("RL");
-        rearRightMotor = hardwareMap.dcMotor.get("RR");
-        frontLeftMotor = hardwareMap.dcMotor.get("FL");
-        frontRightMotor = hardwareMap.dcMotor.get("FR");
+        leftRearMotor = hardwareMap.dcMotor.get("RL");
+        leftFrontMotor = hardwareMap.dcMotor.get("RR");
+        rightRearMotor = hardwareMap.dcMotor.get("FL");
+        rightFrontMotor = hardwareMap.dcMotor.get("FR");
 
         setMotorDirections();
         setMotorModes(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -110,10 +106,10 @@ public class Robot {
     }
 
     public final void move(DriveTrainDirections directions) {
-        rearLeftMotor.setPower(directions.getRearLeftPower());
-        rearRightMotor.setPower(directions.getRearRightPower());
-        frontLeftMotor.setPower(directions.getFrontLeftPower());
-        frontRightMotor.setPower(directions.getFrontRightPower());
+        leftRearMotor.setPower(directions.getLeftRearPower());
+        leftFrontMotor.setPower(directions.getLeftFrontPower());
+        rightRearMotor.setPower(directions.getRightRearPower());
+        rightFrontMotor.setPower(directions.getRightFrontPower());
     }
 
     /**
@@ -121,7 +117,7 @@ public class Robot {
      * @param direction
      * @param distance
      */
-    public void move(DriveTrainDirections direction, double distance) {}
+    public abstract void move(DriveTrainDirections direction, double distance);
 
     /**
      * Rotates the robot a certain angle with a given direction
@@ -129,7 +125,7 @@ public class Robot {
      * @param direction
      * @param angle
      */
-    public void rotateEncoders(DriveTrainDirections direction, int angle) {}
+    public abstract void rotateEncoders(DriveTrainDirections direction, int angle);
 
     /**
      * @see #rotateEncoders(DriveTrainDirections, int)
@@ -137,31 +133,29 @@ public class Robot {
      * @param direction
      * @param angle
      */
-    public void rotateIMU(DriveTrainDirections direction, int angle) {}
+    public abstract void rotateIMU(DriveTrainDirections direction, int angle);
 
     /**
      * Rotates robot to a certain angle compared to the starting position declared in initialization
      * @param angle
      */
-    public void robotAlignToAngle(int angle) {
-
-    }
+    public abstract void robotAlignToAngle(int angle);
 
     public final void setMotorDirections(DcMotorSimple.Direction... directions){
         if (directions.length == 4) {
-            rearLeftMotor.setDirection(directions[0]);
-            rearRightMotor.setDirection(directions[1]);
-            frontLeftMotor.setDirection(directions[2]);
-            frontRightMotor.setDirection(directions[3]);
+            leftRearMotor.setDirection(directions[0]);
+            leftFrontMotor.setDirection(directions[1]);
+            rightRearMotor.setDirection(directions[2]);
+            rightFrontMotor.setDirection(directions[3]);
         } else {
             //error out
         }
     }
 
     public final void setMotorModes(DcMotor.RunMode mode) {
-        rearLeftMotor.setMode(mode);
-        rearRightMotor.setMode(mode);
-        frontLeftMotor.setMode(mode);
-        frontRightMotor.setMode(mode);
+        leftRearMotor.setMode(mode);
+        leftFrontMotor.setMode(mode);
+        rightRearMotor.setMode(mode);
+        rightFrontMotor.setMode(mode);
     }
 }

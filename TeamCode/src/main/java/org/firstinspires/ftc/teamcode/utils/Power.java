@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.utils;
 
 public enum Power {
+    NONE(0.0),
     LOW(0.25),
     MEDIUM(0.5),
     MIDHIGH(0.75),

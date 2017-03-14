@@ -42,7 +42,7 @@ public class RobotConstants {
     public static double shotWaitPeriod = 2; //seconds to wait before shooting ball
     public static double intakeWaitPeriod = 3;
 
-    public static double gamepadThreshold = 0.35;
+    public static double gamepadThreshold = 0.25;
     public static double gamepadDiagonalThreshold = 0.5;
     public static final double whiteLineValue = 0.5;
     public static final double perfectWhiteLineValue = 0.8;

@@ -14,33 +14,29 @@ public class TankRobot extends Robot {
         ROTATE_RIGHT(1.0, 1.0, 1.0, 1.0), ROTATE_LEFT(-1.0, -1.0, -1.0, -1.0),
         NONE(0, 0, 0, 0);
 
-        private final double rearLeftPower, rearRightPower, frontLeftPower, frontRightPower;
+        private final double leftRearPower, leftFrontPower, rightRearPower, rightFrontPower;
 
-        @Override
-        public double getRearLeftPower() {
-            return rearLeftPower;
+        public double getLeftRearPower() {
+            return leftRearPower;
         }
 
-        @Override
-        public double getRearRightPower() {
-            return rearRightPower;
+        public double getLeftFrontPower() {
+            return leftFrontPower;
         }
 
-        @Override
-        public double getFrontLeftPower() {
-            return frontLeftPower;
+        public double getRightRearPower() {
+            return rightRearPower;
         }
 
-        @Override
-        public double getFrontRightPower() {
-            return frontRightPower;
+        public double getRightFrontPower() {
+            return rightFrontPower;
         }
 
-        Directions(double rearLeftPower, double rearRightPower, double frontLeftPower, double frontRightPower) {
-            this.rearLeftPower = rearLeftPower;
-            this.rearRightPower = rearRightPower;
-            this.frontLeftPower = frontLeftPower;
-            this.frontRightPower = frontRightPower;
+        Directions(double leftRearPower, double leftFrontPower, double rightRearPower, double rightFrontPower) {
+            this.leftRearPower = leftRearPower;
+            this.leftFrontPower = leftFrontPower;
+            this.rightRearPower = rightRearPower;
+            this.rightFrontPower = rightFrontPower;
         }
     }
 
@@ -70,27 +66,27 @@ public class TankRobot extends Robot {
         int rrTarget = 0;
 
         if (direction == Directions.NORTH) {
-            flTarget = getFrontLeftMotor().getCurrentPosition() - (int) (distance * RobotConstants.INCHES_PER_TICK);
-            frTarget = getFrontRightMotor().getCurrentPosition() - (int) (distance * RobotConstants.INCHES_PER_TICK);
-            rlTarget = getRearLeftMotor().getCurrentPosition() + (int) (distance * RobotConstants.INCHES_PER_TICK);
-            rrTarget = getRearRightMotor().getTargetPosition() + (int) (distance * RobotConstants.INCHES_PER_TICK);
+            flTarget = getRightRearMotor().getCurrentPosition() - (int) (distance * RobotConstants.INCHES_PER_TICK);
+            frTarget = getRightFrontMotor().getCurrentPosition() - (int) (distance * RobotConstants.INCHES_PER_TICK);
+            rlTarget = getLeftRearMotor().getCurrentPosition() + (int) (distance * RobotConstants.INCHES_PER_TICK);
+            rrTarget = getLeftFrontMotor().getTargetPosition() + (int) (distance * RobotConstants.INCHES_PER_TICK);
         } else if (direction == Directions.SOUTH) {
-            flTarget = getFrontLeftMotor().getCurrentPosition() + (int) (distance * RobotConstants.INCHES_PER_TICK);
-            frTarget = getFrontRightMotor().getCurrentPosition() + (int) (distance * RobotConstants.INCHES_PER_TICK);
-            rlTarget = getRearLeftMotor().getCurrentPosition() - (int) (distance * RobotConstants.INCHES_PER_TICK);
-            rrTarget = getRearRightMotor().getTargetPosition() - (int) (distance * RobotConstants.INCHES_PER_TICK);
+            flTarget = getRightRearMotor().getCurrentPosition() + (int) (distance * RobotConstants.INCHES_PER_TICK);
+            frTarget = getRightFrontMotor().getCurrentPosition() + (int) (distance * RobotConstants.INCHES_PER_TICK);
+            rlTarget = getLeftRearMotor().getCurrentPosition() - (int) (distance * RobotConstants.INCHES_PER_TICK);
+            rrTarget = getLeftFrontMotor().getTargetPosition() - (int) (distance * RobotConstants.INCHES_PER_TICK);
         }
 
-        getFrontLeftMotor().setTargetPosition(flTarget);
-        getFrontRightMotor().setTargetPosition(frTarget);
-        getRearLeftMotor().setTargetPosition(rlTarget);
-        getRearRightMotor().setTargetPosition(rrTarget);
+        getRightRearMotor().setTargetPosition(flTarget);
+        getRightFrontMotor().setTargetPosition(frTarget);
+        getLeftRearMotor().setTargetPosition(rlTarget);
+        getLeftFrontMotor().setTargetPosition(rrTarget);
 
         setMotorModes(DcMotor.RunMode.RUN_TO_POSITION);
         move(direction);
 
-        while (getRearLeftMotor().isBusy() && getRearRightMotor().isBusy()
-                && getFrontLeftMotor().isBusy() && getFrontRightMotor().isBusy()) {}
+        while (getLeftRearMotor().isBusy() && getLeftFrontMotor().isBusy()
+                && getRightRearMotor().isBusy() && getRightFrontMotor().isBusy()) {}
 
         move(Directions.NONE);
         setMotorModes(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -113,27 +109,27 @@ public class TankRobot extends Robot {
         int rrTarget = 0;
 
         if (direction == Directions.ROTATE_LEFT) {
-            flTarget = getFrontLeftMotor().getCurrentPosition() - (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
-            frTarget = getFrontRightMotor().getCurrentPosition() - (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
-            rlTarget = getRearLeftMotor().getCurrentPosition() - (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
-            rrTarget = getRearRightMotor().getTargetPosition() - (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
+            flTarget = getRightRearMotor().getCurrentPosition() - (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
+            frTarget = getRightFrontMotor().getCurrentPosition() - (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
+            rlTarget = getLeftRearMotor().getCurrentPosition() - (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
+            rrTarget = getLeftFrontMotor().getTargetPosition() - (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
         } else if (direction == Directions.ROTATE_RIGHT) {
-            flTarget = getFrontLeftMotor().getCurrentPosition() + (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
-            frTarget = getFrontRightMotor().getCurrentPosition() + (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
-            rlTarget = getRearLeftMotor().getCurrentPosition() + (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
-            rrTarget = getRearRightMotor().getTargetPosition() + (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
+            flTarget = getRightRearMotor().getCurrentPosition() + (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
+            frTarget = getRightFrontMotor().getCurrentPosition() + (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
+            rlTarget = getLeftRearMotor().getCurrentPosition() + (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
+            rrTarget = getLeftFrontMotor().getTargetPosition() + (int) (distanceToMove * RobotConstants.INCHES_PER_TICK);
         }
 
-        getFrontLeftMotor().setTargetPosition(flTarget);
-        getFrontRightMotor().setTargetPosition(frTarget);
-        getRearLeftMotor().setTargetPosition(rlTarget);
-        getRearRightMotor().setTargetPosition(rrTarget);
+        getRightRearMotor().setTargetPosition(flTarget);
+        getRightFrontMotor().setTargetPosition(frTarget);
+        getLeftRearMotor().setTargetPosition(rlTarget);
+        getLeftFrontMotor().setTargetPosition(rrTarget);
 
         setMotorModes(DcMotor.RunMode.RUN_TO_POSITION);
         move(direction);
 
-        while (getRearLeftMotor().isBusy() && getRearRightMotor().isBusy()
-                && getFrontLeftMotor().isBusy() && getFrontRightMotor().isBusy()) {}
+        while (getLeftRearMotor().isBusy() && getLeftFrontMotor().isBusy()
+                && getRightRearMotor().isBusy() && getRightFrontMotor().isBusy()) {}
 
         move(Directions.NONE);
         setMotorModes(DcMotor.RunMode.RUN_USING_ENCODER);
