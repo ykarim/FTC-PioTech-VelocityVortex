@@ -86,16 +86,16 @@ public abstract class Robot {
     public final void init(@NonNull HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
         initMotors();
-        initServos();
-        initSensors();
+//        initServos();
+//        initSensors();
 
     }
 
     public void initMotors() {
-        leftRearMotor = getDevice(hardwareMap.dcMotor, "RL");
-        leftFrontMotor = getDevice(hardwareMap.dcMotor, "RR");
-        rightRearMotor = getDevice(hardwareMap.dcMotor, "FL");
-        rightFrontMotor = getDevice(hardwareMap.dcMotor, "FR");
+        leftRearMotor = getDevice(hardwareMap.dcMotor, "LR");
+        leftFrontMotor = getDevice(hardwareMap.dcMotor, "LF");
+        rightRearMotor = getDevice(hardwareMap.dcMotor, "RR");
+        rightFrontMotor = getDevice(hardwareMap.dcMotor, "RF");
 
         setMotorDirections();
         setMotorModes(DcMotor.RunMode.RUN_USING_ENCODER);
