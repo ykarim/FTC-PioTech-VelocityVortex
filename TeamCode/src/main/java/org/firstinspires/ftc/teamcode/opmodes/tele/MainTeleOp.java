@@ -32,15 +32,16 @@ public class MainTeleOp extends OpMode{
 
         moveLeftWheels();
         moveRightWheels();
+
     }
 
     private void moveLeftWheels() {
-        if (-gamepad1.left_stick_y > 0.2) {
+        if (-gamepad1.left_stick_y > 0.35) {
+            robot.getLeftRearMotor().setPower(-Power.HIGH.getPower());
+            robot.getLeftFrontMotor().setPower(-Power.HIGH.getPower());
+        } else if (-gamepad1.left_stick_y < -0.35) {
             robot.getLeftRearMotor().setPower(Power.HIGH.getPower());
             robot.getLeftFrontMotor().setPower(Power.HIGH.getPower());
-        } else if (-gamepad1.left_stick_y < -0.2) {
-            robot.getRightRearMotor().setPower(-Power.HIGH.getPower());
-            robot.getRightFrontMotor().setPower(-Power.HIGH.getPower());
         } else {
             robot.getLeftRearMotor().setPower(Power.NONE.getPower());
             robot.getLeftFrontMotor().setPower(Power.NONE.getPower());
@@ -48,15 +49,29 @@ public class MainTeleOp extends OpMode{
     }
 
     private void moveRightWheels() {
-        if (-gamepad1.right_stick_y > 0.2) {
-            robot.getLeftRearMotor().setPower(-Power.HIGH.getPower());
-            robot.getLeftFrontMotor().setPower(-Power.HIGH.getPower());
-        } else if (-gamepad1.right_stick_y < -0.2) {
+        if (-gamepad1.right_stick_y > 0.35) {
+            robot.getRightRearMotor().setPower(-Power.HIGH.getPower());
+            robot.getRightFrontMotor().setPower(-Power.HIGH.getPower());
+        } else if (-gamepad1.right_stick_y < -0.35) {
             robot.getRightRearMotor().setPower(Power.HIGH.getPower());
             robot.getRightFrontMotor().setPower(Power.HIGH.getPower());
         } else {
             robot.getRightRearMotor().setPower(Power.NONE.getPower());
             robot.getRightFrontMotor().setPower(Power.NONE.getPower());
+        }
+    }
+
+    private void rotate() {
+        if(gamepad1.left_trigger > 0.35) {
+            robot.getLeftRearMotor().setPower(Power.HIGH.getPower());
+            robot.getLeftFrontMotor().setPower(Power.HIGH.getPower());
+            robot.getRightRearMotor().setPower(-Power.HIGH.getPower());
+            robot.getRightFrontMotor().setPower(-Power.HIGH.getPower());
+        } else if (gamepad1.right_trigger > 0.35) {
+            robot.getLeftRearMotor().setPower(-Power.HIGH.getPower());
+            robot.getLeftFrontMotor().setPower(-Power.HIGH.getPower());
+            robot.getRightRearMotor().setPower(Power.HIGH.getPower());
+            robot.getRightFrontMotor().setPower(Power.HIGH.getPower());
         }
     }
 
